@@ -1,2 +1,2 @@
-export * from './src/Helper';
-export * from './src/Terse';
+export * as Helper from './src/Helper';
+export * as Terse from './src/Terse';
