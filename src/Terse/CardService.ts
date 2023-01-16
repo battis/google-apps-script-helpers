@@ -1,64 +1,58 @@
-const GCS = CardService;
+export default class TerseCardService {
+    public static replaceStack(card: GoogleAppsScript.Card_Service.Card, url: string = null): GoogleAppsScript.Card_Service.ActionResponse {
+        var action = CardService.newActionResponseBuilder().setNavigation(
+            CardService.newNavigation().popToRoot().updateCard(card)
+        );
 
-namespace Terse {
-    class CardService {
-        public static replaceStack(card: GoogleAppsScript.Card_Service.Card, url: string = null): GoogleAppsScript.Card_Service.ActionResponse {
-            var action = GCS.newActionResponseBuilder().setNavigation(
-                GCS.newNavigation().popToRoot().updateCard(card)
-            );
-
-            if (url) {
-                action = action.setOpenLink(GCS.newOpenLink().setUrl(url));
-            }
-
-            return action.build();
+        if (url) {
+            action = action.setOpenLink(CardService.newOpenLink().setUrl(url));
         }
 
-        public static pushCard(card: GoogleAppsScript.Card_Service.Card, url = null): GoogleAppsScript.Card_Service.ActionResponse {
-            var action = GCS.newActionResponseBuilder()
-                .setNavigation(GCS.newNavigation()
-                    .pushCard(card));
+        return action.build();
+    }
 
-            if (url) {
-                action = action.setOpenLink(GCS.newOpenLink().setUrl(url));
-            }
+    public static pushCard(card: GoogleAppsScript.Card_Service.Card, url = null): GoogleAppsScript.Card_Service.ActionResponse {
+        var action = CardService.newActionResponseBuilder()
+            .setNavigation(CardService.newNavigation()
+                .pushCard(card));
 
-            return action.build();
+        if (url) {
+            action = action.setOpenLink(CardService.newOpenLink().setUrl(url));
         }
 
-        public static newCardHeader(title): GoogleAppsScript.Card_Service.CardHeader {
-            return GCS.newCardHeader().setTitle(title);
-        }
+        return action.build();
+    }
 
-        public static newTextParagraph(text: string): GoogleAppsScript.Card_Service.TextParagraph {
-            return GCS.newTextParagraph().setText(text);
-        }
+    public static newCardHeader(title): GoogleAppsScript.Card_Service.CardHeader {
+        return CardService.newCardHeader().setTitle(title);
+    }
 
-        public static newDecoratedText(topLabel: string = null, text: string, bottomLabel: string = null, wrap: boolean = true): GoogleAppsScript.Card_Service.DecoratedText {
-            var decoratedText = GCS.newDecoratedText().setText(text || " ");
-            if (topLabel) {
-                decoratedText = decoratedText.setTopLabel(topLabel);
-            }
-            if (text) {
-                decoratedText = decoratedText.setWrapText(wrap);
-            }
-            if (bottomLabel) {
-                decoratedText = decoratedText.setBottomLabel(bottomLabel);
-            }
-            return decoratedText;
-        }
+    public static newTextParagraph(text: string): GoogleAppsScript.Card_Service.TextParagraph {
+        return CardService.newTextParagraph().setText(text);
+    }
 
-        public static newTextButton(text: string, functionName: string): GoogleAppsScript.Card_Service.TextButton {
-            return GCS.newTextButton()
-                .setText(text)
-                .setOnClickAction(CardService.newAction(functionName));
+    public static newDecoratedText(topLabel: string = null, text: string, bottomLabel: string = null, wrap: boolean = true): GoogleAppsScript.Card_Service.DecoratedText {
+        var decoratedText = CardService.newDecoratedText().setText(text || " ");
+        if (topLabel) {
+            decoratedText = decoratedText.setTopLabel(topLabel);
         }
-
-        public static newAction(functionName: string): GoogleAppsScript.Card_Service.Action {
-            return GCS.newAction()
-                .setFunctionName(functionName);
+        if (text) {
+            decoratedText = decoratedText.setWrapText(wrap);
         }
-    };
-}
+        if (bottomLabel) {
+            decoratedText = decoratedText.setBottomLabel(bottomLabel);
+        }
+        return decoratedText;
+    }
 
-export default Terse;
+    public static newTextButton(text: string, functionName: string): GoogleAppsScript.Card_Service.TextButton {
+        return CardService.newTextButton()
+            .setText(text)
+            .setOnClickAction(TerseCardService.newAction(functionName));
+    }
+
+    public static newAction(functionName: string): GoogleAppsScript.Card_Service.Action {
+        return CardService.newAction()
+            .setFunctionName(functionName);
+    }
+};
