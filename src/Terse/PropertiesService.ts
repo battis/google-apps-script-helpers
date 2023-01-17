@@ -2,7 +2,10 @@ type PropertyDecoder = (encoded: string) => any;
 type PropertyEncoder = (value: any) => string;
 
 export default class TersePropertiesService {
-    public static getScriptProperty(key: string, decoder: PropertyDecoder = null) {
+    public static getScriptProperty(
+        key: string,
+        decoder: PropertyDecoder = null
+    ) {
         const value = PropertiesService.getScriptProperties().getProperty(key);
         if (decoder) {
             return decoder(value);
@@ -18,7 +21,11 @@ export default class TersePropertiesService {
         return value;
     }
 
-    public static setUserProperty(key: string, value: string, encoder: PropertyEncoder = null) {
+    public static setUserProperty(
+        key: string,
+        value: string,
+        encoder: PropertyEncoder = null
+    ) {
         if (encoder) {
             value = encoder(value);
         }
