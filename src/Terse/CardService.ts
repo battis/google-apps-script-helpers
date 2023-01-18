@@ -1,3 +1,9 @@
+type UnprocessedParameters = { [key: string]: any };
+type Parameters = { [key: string]: string };
+type Callback = (
+    parameters?: Parameters
+) => GoogleAppsScript.Card_Service.ActionResponse;
+
 export default class TerseCardService {
     public static replaceStack(
         card: GoogleAppsScript.Card_Service.Card,
@@ -60,27 +66,38 @@ export default class TerseCardService {
 
     public static newTextButton(
         text: string,
-        functionName: string,
-        parameters = null
+        callback: string | Callback,
+        parameters?: UnprocessedParameters
     ): GoogleAppsScript.Card_Service.TextButton {
         return CardService.newTextButton()
             .setText(text)
-            .setOnClickAction(TerseCardService.newAction(functionName, parameters));
+            .setOnClickAction(TerseCardService.newAction(callback, parameters));
     }
 
     public static newAction(
-        functionName: string,
-        parameters = null
+        callback: string | Callback,
+        parameters?: UnprocessedParameters
     ): GoogleAppsScript.Card_Service.Action {
-        const action = CardService.newAction().setFunctionName(functionName);
+        const action = CardService.newAction().setFunctionName(
+            typeof callback == 'string' ? callback : callback.name
+        );
         if (parameters) {
-            for (const key of Object.keys(parameters)) {
-                if (typeof parameters[key] != 'string') {
-                    parameters[key] = JSON.stringify(parameters[key]);
-                }
-            }
-            return action.setParameters(parameters);
+            return action.setParameters(
+                TerseCardService.stringifyParameters(parameters)
+            );
         }
         return action;
+    }
+
+    private static stringifyParameters(
+        parameters: UnprocessedParameters
+    ): Parameters {
+        for (const key of Object.keys(parameters)) {
+            if (typeof parameters[key] != 'string') {
+                parameters[key] = JSON.stringify(parameters[key]);
+            }
+        }
+
+        return parameters || {};
     }
 }
