@@ -1,8 +1,5 @@
 type UnprocessedParameters = { [key: string]: any };
 type Parameters = { [key: string]: string };
-type Callback = (
-    parameters?: Parameters
-) => GoogleAppsScript.Card_Service.ActionResponse;
 
 export default class TerseCardService {
     public static replaceStack(
@@ -66,21 +63,19 @@ export default class TerseCardService {
 
     public static newTextButton(
         text: string,
-        callback: string | Callback,
+        functionName: string,
         parameters?: UnprocessedParameters
     ): GoogleAppsScript.Card_Service.TextButton {
         return CardService.newTextButton()
             .setText(text)
-            .setOnClickAction(TerseCardService.newAction(callback, parameters));
+            .setOnClickAction(TerseCardService.newAction(functionName, parameters));
     }
 
     public static newAction(
-        callback: string | Callback,
+        functionName: string,
         parameters?: UnprocessedParameters
     ): GoogleAppsScript.Card_Service.Action {
-        const action = CardService.newAction().setFunctionName(
-            typeof callback == 'string' ? callback : callback.name
-        );
+        const action = CardService.newAction().setFunctionName(functionName);
         if (parameters) {
             return action.setParameters(
                 TerseCardService.stringifyParameters(parameters)
