@@ -5,6 +5,7 @@ type CardDefinition = {
     name: string;
     header: string;
     sections: GoogleAppsScript.Card_Service.CardSection[];
+    widgets?: GoogleAppsScript.Card_Service.Widget[];
 };
 
 type CardSectionDefinition = {
@@ -49,6 +50,7 @@ export default class TerseCardService {
         name = null,
         header = null,
         sections = [],
+        widgets = null,
     }: Partial<CardDefinition>) {
         var card = CardService.newCardBuilder();
         if (name !== null) {
@@ -58,6 +60,9 @@ export default class TerseCardService {
             card = card.setHeader(this.newCardHeader(header));
         }
         sections.forEach((section) => (card = card.addSection(section)));
+        if (widgets !== null) {
+            card = card.addSection(this.newCardSection({ widgets }));
+        }
         return card.build();
     }
 
