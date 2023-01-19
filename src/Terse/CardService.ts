@@ -45,10 +45,11 @@ export default class TerseCardService {
         return action.build();
     }
 
-    public static newCard(
-        { name = null, header = null, sections = [] }: Partial<CardDefinition>,
-        build: boolean = true
-    ) {
+    public static newCard({
+        name = null,
+        header = null,
+        sections = [],
+    }: Partial<CardDefinition>) {
         var card = CardService.newCardBuilder();
         if (name !== null) {
             card = card.setName(name);
@@ -57,10 +58,7 @@ export default class TerseCardService {
             card = card.setHeader(this.newCardHeader(header));
         }
         sections.forEach((section) => (card = card.addSection(section)));
-        if (build) {
-            return card.build();
-        }
-        return card;
+        return card.build();
     }
 
     public static newCardHeader(title): GoogleAppsScript.Card_Service.CardHeader {
