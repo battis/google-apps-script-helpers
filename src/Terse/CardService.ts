@@ -5,12 +5,12 @@ type CardDefinition = {
     name: string;
     header: string;
     sections: GoogleAppsScript.Card_Service.CardSection[];
-    widgets?: GoogleAppsScript.Card_Service.Widget[];
+    widgets?: (GoogleAppsScript.Card_Service.Widget | string)[];
 };
 
 type CardSectionDefinition = {
     header: string;
-    widgets: GoogleAppsScript.Card_Service.Widget[];
+    widgets: (GoogleAppsScript.Card_Service.Widget | string)[];
     collapsible: boolean;
     numUncollapsibleWidgets: GoogleAppsScript.Integer;
 };
@@ -85,7 +85,12 @@ export default class TerseCardService {
                 .setCollapsible(collapsible)
                 .setNumUncollapsibleWidgets(numUncollapsibleWidgets);
         }
-        widgets.forEach((widget) => (section = section.addWidget(widget)));
+        widgets.forEach(
+            (widget) =>
+            (section = section.addWidget(
+                typeof widget == 'string' ? this.newTextParagraph(widget) : widget
+            ))
+        );
         return section;
     }
 
