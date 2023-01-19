@@ -1,6 +1,12 @@
 type UnprocessedParameters = { [key: string]: any };
 type Parameters = { [key: string]: string };
 
+type CardDefinition = {
+    name: string;
+    header: string;
+    sections: GoogleAppsScript.Card_Service.CardSection[];
+};
+
 type CardSectionDefinition = {
     header: string;
     widgets: GoogleAppsScript.Card_Service.Widget[];
@@ -37,6 +43,24 @@ export default class TerseCardService {
         }
 
         return action.build();
+    }
+
+    public static newCard(
+        { name = null, header = null, sections = [] }: Partial<CardDefinition>,
+        build: boolean = true
+    ) {
+        var card = CardService.newCardBuilder();
+        if (name !== null) {
+            card = card.setName(name);
+        }
+        if (header !== null) {
+            card = card.setHeader(this.newCardHeader(header));
+        }
+        sections.forEach((section) => (card = card.addSection(section)));
+        if (build) {
+            return card.build();
+        }
+        return card;
     }
 
     public static newCardHeader(title): GoogleAppsScript.Card_Service.CardHeader {
