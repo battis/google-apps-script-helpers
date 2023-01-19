@@ -1,6 +1,13 @@
 type UnprocessedParameters = { [key: string]: any };
 type Parameters = { [key: string]: string };
 
+type CardSectionDefinition = {
+    header: string;
+    widgets: GoogleAppsScript.Card_Service.Widget[];
+    collapsible: boolean;
+    numUncollapsibleWidgets: GoogleAppsScript.Integer;
+};
+
 export default class TerseCardService {
     public static replaceStack(
         card: GoogleAppsScript.Card_Service.Card,
@@ -34,6 +41,25 @@ export default class TerseCardService {
 
     public static newCardHeader(title): GoogleAppsScript.Card_Service.CardHeader {
         return CardService.newCardHeader().setTitle(title);
+    }
+
+    public static newCardSection({
+        header = null,
+        widgets = [],
+        collapsible = null,
+        numUncollapsibleWidgets = 0,
+    }: Partial<CardSectionDefinition>): GoogleAppsScript.Card_Service.CardSection {
+        var section = CardService.newCardSection();
+        if (header) {
+            section = section.setHeader(header);
+        }
+        if (collapsible !== null) {
+            section = section
+                .setCollapsible(collapsible)
+                .setNumUncollapsibleWidgets(numUncollapsibleWidgets);
+        }
+        widgets.forEach((widget) => (section = section.addWidget(widget)));
+        return section;
     }
 
     public static newTextParagraph(
