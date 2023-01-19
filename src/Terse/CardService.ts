@@ -1,6 +1,3 @@
-type UnprocessedParameters = { [key: string]: any };
-type Parameters = { [key: string]: string };
-
 type CardDefinition = {
     name: string;
     header: string;
@@ -13,6 +10,23 @@ type CardSectionDefinition = {
     widgets: (GoogleAppsScript.Card_Service.Widget | string)[];
     collapsible: boolean;
     numUncollapsibleWidgets: GoogleAppsScript.Integer;
+};
+
+type DecoratedTextDefinition = {
+    topLabel: string;
+    text: string;
+    bottomLabel: string;
+    wrap: boolean;
+};
+
+type UnprocessedParameters = { [key: string]: any };
+type Parameters = { [key: string]: string };
+type ActionDefinition = {
+    functionName: string;
+    parameters?: UnprocessedParameters;
+};
+type TextButtonDefinition = ActionDefinition & {
+    text: string;
 };
 
 export default class TerseCardService {
@@ -100,12 +114,12 @@ export default class TerseCardService {
         return CardService.newTextParagraph().setText(text);
     }
 
-    public static newDecoratedText(
-        topLabel: string = null,
-        text: string,
-        bottomLabel: string = null,
-        wrap: boolean = true
-    ): GoogleAppsScript.Card_Service.DecoratedText {
+    public static newDecoratedText({
+        topLabel = null,
+        text = null,
+        bottomLabel = null,
+        wrap = true,
+    }: Partial<DecoratedTextDefinition>): GoogleAppsScript.Card_Service.DecoratedText {
         var decoratedText = CardService.newDecoratedText().setText(text || ' ');
         if (topLabel) {
             decoratedText = decoratedText.setTopLabel(topLabel);
@@ -119,20 +133,22 @@ export default class TerseCardService {
         return decoratedText;
     }
 
-    public static newTextButton(
-        text: string,
-        functionName: string,
-        parameters?: UnprocessedParameters
-    ): GoogleAppsScript.Card_Service.TextButton {
+    public static newTextButton({
+        text,
+        functionName,
+        parameters = null,
+    }: Partial<TextButtonDefinition>): GoogleAppsScript.Card_Service.TextButton {
         return CardService.newTextButton()
             .setText(text)
-            .setOnClickAction(TerseCardService.newAction(functionName, parameters));
+            .setOnClickAction(
+                TerseCardService.newAction({ functionName, parameters })
+            );
     }
 
-    public static newAction(
-        functionName: string,
-        parameters?: UnprocessedParameters
-    ): GoogleAppsScript.Card_Service.Action {
+    public static newAction({
+        functionName,
+        parameters = null,
+    }: ActionDefinition): GoogleAppsScript.Card_Service.Action {
         const action = CardService.newAction().setFunctionName(functionName);
         if (parameters) {
             return action.setParameters(
