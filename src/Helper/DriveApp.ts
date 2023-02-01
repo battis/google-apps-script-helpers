@@ -23,7 +23,7 @@ export default class HelperDriveApp {
     email: string,
     role: Permission.Role = 'writer',
     type: Permission.Type = 'user',
-    optionalArgs = { sendNotificationEmails: false }
+    optionalArgs: object = { sendNotificationEmails: false }
   ) {
     Drive.Permissions.insert(
       {
