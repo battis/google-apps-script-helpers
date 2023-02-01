@@ -1,11 +1,17 @@
 namespace Permission {
-  export type Role =
-    | 'owner'
-    | 'organizer'
-    | 'fileOrganizer'
-    | 'writer'
-    | 'reader';
-  export type Type = 'user' | 'group' | 'domain' | 'anyone';
+  export enum Role {
+    Owner = 'owner',
+    Organizer = 'organizer',
+    FileOrganizer = 'fileOrganizer',
+    Writer = 'writer',
+    Reader = 'reader',
+  }
+  export enum Type {
+    User = 'user',
+    Group = 'group',
+    Domain = 'domain',
+    Anyone = 'anyone',
+  }
 }
 export default class HelperDriveApp {
   /**
@@ -21,8 +27,8 @@ export default class HelperDriveApp {
   public static addPermission(
     fileId: string,
     email: string,
-    role: Permission.Role = 'writer',
-    type: Permission.Type = 'user',
+    role: Permission.Role = Permission.Role.Writer,
+    type: Permission.Type = Permission.Type.User,
     optionalArgs: object = { sendNotificationEmails: false }
   ) {
     Drive.Permissions.insert(
