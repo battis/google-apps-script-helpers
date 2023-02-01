@@ -1,4 +1,4 @@
-import Helper from './src/Helper';
+import Helper, { HelperTypes } from './src/Helper';
 import Terse from './src/Terse';
 
-export { Helper, Terse };
+export { Helper, HelperTypes, Terse };
