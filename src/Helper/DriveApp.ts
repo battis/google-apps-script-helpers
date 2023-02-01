@@ -1,4 +1,4 @@
-namespace Permission {
+export namespace Permission {
   export enum Role {
     Owner = 'owner',
     Organizer = 'organizer',
