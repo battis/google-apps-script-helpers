@@ -27,6 +27,9 @@ export default class Wrapper {
   }
 
   protected getSheet() {
+    if (!this.getSheet()) {
+      throw new Error('no sheet assigned');
+    }
     return this.sheet;
   }
 }

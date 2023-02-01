@@ -21,9 +21,6 @@ export default class DataWrapper extends Wrapper {
   }
 
   public getData(range?: string) {
-    if (!this.getSheet()) {
-      throw new Error('no sheet assigned');
-    }
     return this.getDataFrom(this.getSheet(), range);
   }
 }
