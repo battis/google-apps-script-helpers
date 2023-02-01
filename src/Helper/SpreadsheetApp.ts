@@ -19,14 +19,15 @@ class S {
   public static sort = this.fcn.bind(null, 'SORT');
   public static unique = this.fcn.bind(null, 'UNIQUE');
 
-  public static openByIdAsData(id: string) {
-    return new DataWrapper(id);
+  public static openByIdAsData(id: string, sheet?: string) {
+    return new DataWrapper(id, sheet);
   }
 
   public static getDataWrapperFor(
-    spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet
+    spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet,
+    sheet?: string
   ) {
-    return new DataWrapper(spreadsheet);
+    return new DataWrapper(spreadsheet, sheet);
   }
 
   /**

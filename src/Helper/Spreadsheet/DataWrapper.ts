@@ -4,7 +4,7 @@ export default class DataWrapper {
 
   public constructor(
     spreadsheet: string | GoogleAppsScript.Spreadsheet.Spreadsheet,
-    sheet: string
+    sheet?: string
   ) {
     if (typeof spreadsheet == 'string') {
       this.spreadsheet = SpreadsheetApp.openById(spreadsheet);
