@@ -1,4 +1,5 @@
 import DataWrapper from './Spreadsheet/DataWrapper';
+import AssignableWrapper from './Spreadsheet/AssignableWrapper';
 
 class S {
   public static fcn(name: string, ...args): string {
@@ -24,10 +25,25 @@ class S {
   }
 
   public static getDataWrapperFor(
-    spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet,
-    sheet?: string
+    sheet:
+      | GoogleAppsScript.Spreadsheet.Spreadsheet
+      | GoogleAppsScript.Spreadsheet.Sheet,
+    name?: string
   ) {
-    return new DataWrapper(spreadsheet, sheet);
+    return new DataWrapper(sheet, name);
+  }
+
+  public static openByIdAsAssignable(id: string, sheet?: string) {
+    return new AssignableWrapper(id, sheet);
+  }
+
+  public static getAssignableWrapperFor(
+    sheet:
+      | GoogleAppsScript.Spreadsheet.Spreadsheet
+      | GoogleAppsScript.Spreadsheet.Sheet,
+    name?: string
+  ) {
+    return new AssignableWrapper(sheet, name);
   }
 
   /**

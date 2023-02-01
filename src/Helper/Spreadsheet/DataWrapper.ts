@@ -1,21 +1,6 @@
-export default class DataWrapper {
-  private spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet;
-  private sheet?: GoogleAppsScript.Spreadsheet.Sheet;
+import Wrapper from './Wrapper';
 
-  public constructor(
-    spreadsheet: string | GoogleAppsScript.Spreadsheet.Spreadsheet,
-    sheet?: string
-  ) {
-    if (typeof spreadsheet == 'string') {
-      this.spreadsheet = SpreadsheetApp.openById(spreadsheet);
-    } else {
-      this.spreadsheet = spreadsheet;
-    }
-    if (sheet) {
-      this.sheet = this.spreadsheet.getSheetByName(sheet);
-    }
-  }
-
+export default class DataWrapper extends Wrapper {
   private getDataFrom(
     sheet: GoogleAppsScript.Spreadsheet.Sheet,
     range?: string
@@ -32,13 +17,13 @@ export default class DataWrapper {
   }
 
   public getSheetData(name: string, range?: string) {
-    return this.getDataFrom(this.spreadsheet.getSheetByName(name), range);
+    return this.getDataFrom(this.getSpreadsheet().getSheetByName(name), range);
   }
 
   public getData(range?: string) {
-    if (!this.sheet) {
+    if (!this.getSheet()) {
       throw new Error('no sheet assigned');
     }
-    return this.getDataFrom(this.sheet, range);
+    return this.getDataFrom(this.getSheet(), range);
   }
 }
