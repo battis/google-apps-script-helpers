@@ -1,3 +1,5 @@
+import DataWrapper from './Spreadsheet/DataWrapper';
+
 class S {
   public static fcn(name: string, ...args): string {
     return `${name}(${args.join(',')})`;
@@ -16,6 +18,16 @@ class S {
   public static match = this.fcn.bind(null, 'MATCH');
   public static sort = this.fcn.bind(null, 'SORT');
   public static unique = this.fcn.bind(null, 'UNIQUE');
+
+  public static openByIdAsData(id: string) {
+    return new DataWrapper(id);
+  }
+
+  public static getDataWrapperFor(
+    spreadsheet: GoogleAppsScript.Spreadsheet.Spreadsheet
+  ) {
+    return new DataWrapper(spreadsheet);
+  }
 
   /**
    * Undocumented permissions API call
