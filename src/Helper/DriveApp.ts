@@ -1,4 +1,13 @@
 class D {
+  /**
+   * @link https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services
+   *   Use of this function requires enabling the Drive API service
+   * @param {string} fileId
+   * @param {string} email
+   * @param {D.Permission.Role=D.Permission.Role.Writer} role
+   * @param {D.Permission.Type=D.Permission.Type.User} type
+   * @param {object={sendNotificationEmails:false}} optionalArgs
+   */
   public static addPermission(
     fileId: string,
     email: string,
