@@ -11,7 +11,7 @@ export default class Wrapper {
   ) {
     if (typeof id == 'string') {
       this.spreadsheet = SpreadsheetApp.openById(id);
-    } else if (id.getRange) {
+    } else if ('getParent' in id) {
       this.sheet = id as GoogleAppsScript.Spreadsheet.Sheet;
       this.spreadsheet = this.sheet.getParent();
     } else {
