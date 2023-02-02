@@ -2,6 +2,8 @@ class D {
   /**
    * @link https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services
    *   Use of this function requires enabling the Drive API service
+   * @link https://developers.google.com/drive/api/v2/reference/permissions/insert
+   *   optionalArgs documentation
    * @param {string} fileId
    * @param {string} email
    * @param {D.Permission.Role=D.Permission.Role.Writer} role
@@ -13,7 +15,10 @@ class D {
     email: string,
     role: D.Permission.Role = D.Permission.Role.Writer,
     type: D.Permission.Type = D.Permission.Type.User,
-    optionalArgs: object = { sendNotificationEmails: false }
+    optionalArgs: object = {
+      sendNotificationEmails: false,
+      supportsAllDrives: true,
+    }
   ) {
     Drive.Permissions.insert(
       {
