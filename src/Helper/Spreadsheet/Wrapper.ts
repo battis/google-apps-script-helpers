@@ -13,7 +13,7 @@ export default class Wrapper {
       this.spreadsheet = SpreadsheetApp.openById(id);
     } else if ('getParent' in id) {
       this.sheet = id as GoogleAppsScript.Spreadsheet.Sheet;
-      this.spreadsheet = this.sheet.getParent();
+      this.spreadsheet = id.getParent();
     } else {
       this.spreadsheet = id as GoogleAppsScript.Spreadsheet.Spreadsheet;
     }
