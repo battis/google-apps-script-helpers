@@ -22,7 +22,7 @@ export default class Progress {
     return CacheService.getUserCache().remove(Progress.prefix(key, token));
   }
 
-  private static putAndUpdate(token, key, value) {
+  private static putAndUpdate(token: string, key: string, value: any) {
     Progress.put(token, key, value);
     Progress.update(key);
   }
