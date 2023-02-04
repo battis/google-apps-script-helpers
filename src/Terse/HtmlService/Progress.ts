@@ -81,21 +81,8 @@ export default class Progress {
     return Progress.instances[key];
   }
 
-  public static getProgressForInstance(key: string) {
-    return Progress.getInstance(key).getProgress();
-  }
-
-  public getProgress() {
-    return {
-      status: this.getStatus(),
-      value: this.getValue(),
-      max: this.getMax(),
-      complete: this.getComplete(),
-    };
-  }
-
   public static getProgressBarForInstance(key: string) {
-    Progress.getInstance(key).getProgressBar();
+    return Progress.getInstance(key).getProgressBar();
   }
 
   public getProgressBar() {
