@@ -1,6 +1,3 @@
-import DataWrapper from './Spreadsheet/DataWrapper';
-import AssignableWrapper from './Spreadsheet/AssignableWrapper';
-
 class S {
   public static fcn(name: string, ...args): string {
     return `${name}(${args.join(',')})`;
@@ -19,32 +16,6 @@ class S {
   public static match = this.fcn.bind(null, 'MATCH');
   public static sort = this.fcn.bind(null, 'SORT');
   public static unique = this.fcn.bind(null, 'UNIQUE');
-
-  public static openByIdAsData(id: string, sheet?: string) {
-    return new DataWrapper(id, sheet);
-  }
-
-  public static getDataWrapperFor(
-    sheet:
-      | GoogleAppsScript.Spreadsheet.Spreadsheet
-      | GoogleAppsScript.Spreadsheet.Sheet,
-    name?: string
-  ) {
-    return new DataWrapper(sheet, name);
-  }
-
-  public static openByIdAsAssignable(id: string, sheet?: string) {
-    return new AssignableWrapper(id, sheet);
-  }
-
-  public static getAssignableWrapperFor(
-    sheet:
-      | GoogleAppsScript.Spreadsheet.Spreadsheet
-      | GoogleAppsScript.Spreadsheet.Sheet,
-    name?: string
-  ) {
-    return new AssignableWrapper(sheet, name);
-  }
 
   /**
    * Undocumented permissions API call
