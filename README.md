@@ -1,4 +1,4 @@
-# @battis/google-apps-script-helpers
+# @battis/gas-lighter
 
 ## Caution
 
