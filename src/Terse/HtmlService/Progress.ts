@@ -1,79 +1,63 @@
 import C from '../CacheService';
 
 export default class Progress {
-  private key: string;
-  private status?: string;
-  private value: number;
-  private max: number;
-  private complete: boolean;
-
-  private prefix(token: string, delimiter: string = '.') {
-    return ['battis', 'Terse', 'HtmlService', 'Progress', this.key, token].join(
+  private static prefix(key: string, token: string, delimiter: string = '.') {
+    return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
       delimiter
     );
   }
 
-  private get html() {
-    return this.prefix('html');
+  private static get(token: string, key: string) {
+    return C.getUserCache(this.prefix(key, token));
   }
 
-  private get(key: string) {
-    return C.getUserCache(this.prefix(key));
-  }
-
-  private put(key: string, value: any) {
+  private static put(token: string, key: string, value: any) {
     return C.putUserCache(
-      this.prefix(key),
+      this.prefix(key, token),
       typeof value == 'string' ? value : JSON.stringify(value)
     );
   }
 
-  private remove(key: string) {
-    return CacheService.getUserCache().remove(this.prefix(key));
+  private static remove(token: string, key: string) {
+    return CacheService.getUserCache().remove(this.prefix(key, token));
   }
 
-  public constructor(key: string) {
-    this.key = key;
-    this.reset();
+  private static putAndUpdate(token, key, value) {
+    Progress.put(token, key, value);
+    Progress.update(key);
   }
 
-  private putAndUpdate(key, value) {
-    this[key] = value;
-    this.put(key, value);
-    this.update();
+  public static setStatus = Progress.putAndUpdate.bind(null, 'status');
+  public static getStatus = this.get.bind(null, 'status');
+
+  public static setValue = Progress.putAndUpdate.bind(null, 'value');
+  public static getValue = Progress.get.bind(null, 'value');
+
+  public static setMax = Progress.putAndUpdate.bind(null, 'max');
+  public static getMax = Progress.get.bind(null, 'max');
+
+  public static setComplete = Progress.put.bind(null, 'complete');
+  public static isComplete = Progress.get.bind(null, 'complete');
+
+  private static setHtml = Progress.put.bind(null, 'html');
+  public static getHtml = Progress.get.bind(null, 'html');
+
+  public static reset(key: string) {
+    this.setComplete(key, false);
+    this.remove(key, 'status');
+    this.setValue(key, 0);
   }
 
-  public setStatus = this.putAndUpdate.bind(this, 'status');
-  public getStatus = this.get.bind(this, 'status');
-
-  public setValue = this.putAndUpdate.bind(this, 'value');
-  public getValue = this.get.bind(this, 'value');
-
-  public setMax = this.putAndUpdate.bind(this, 'max');
-  public getMax = this.get.bind(this, 'max');
-
-  public markComplete = this.put.bind(this, 'complete', true);
-  public markIncomplete = this.put.bind(this, 'complete', false);
-  public isComplete = this.get.bind(this, 'complete');
-
-  private setHtml = this.put.bind(this, 'html');
-  public getHtml = this.get.bind(this, 'html');
-
-  public reset() {
-    this.markIncomplete();
-    this.remove('status');
-    this.setValue(0);
-  }
-
-  private update() {
+  private static update(key: string) {
     this.setHtml(
+      key,
       `<div class="battis Terse HtmlService Element Progress">
         <progress
           class="progress"
-          value="${this.value}"
-          max="${this.max}"
+          value="${Progress.getValue(key)}"
+          max="${Progress.getMax(key)}"
         />
-        <div class="status">${this.status || ''}</div>
+        <div class="status">${Progress.getStatus(key) || ''}</div>
       </div>`
     );
   }
