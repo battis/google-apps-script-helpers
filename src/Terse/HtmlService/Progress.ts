@@ -28,7 +28,7 @@ export default class Progress {
   }
 
   public static setStatus = Progress.putAndUpdate.bind(null, 'status');
-  public static getStatus = this.get.bind(null, 'status');
+  public static getStatus = Progress.get.bind(null, 'status');
 
   public static setValue = Progress.putAndUpdate.bind(null, 'value');
   public static getValue = Progress.get.bind(null, 'value');
@@ -43,15 +43,15 @@ export default class Progress {
   public static getHtml = Progress.get.bind(null, 'html');
 
   public static reset(key: string) {
-    this.setComplete(key, false);
-    this.remove(key, 'status');
-    this.setValue(key, 0);
+    Progress.setComplete(key, false);
+    Progress.remove(key, 'status');
+    Progress.setValue(key, 0);
   }
 
   private static update(key: string) {
     const value = Progress.getValue(key);
     const max = Progress.getMax(key);
-    this.setHtml(
+    Progress.setHtml(
       key,
       `<div class="battis Terse HtmlService Element Progress">
         <progress
