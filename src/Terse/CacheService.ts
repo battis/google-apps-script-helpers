@@ -51,12 +51,18 @@ class C {
     return cache().remove(key);
   }
 
-  public static removeScriptCache = C.bind(null, CacheService.getScriptCache);
-  public static removeDocumentCache = C.bind(
+  public static removeScriptCache = C.removeCache.bind(
+    null,
+    CacheService.getScriptCache
+  );
+  public static removeDocumentCache = C.removeCache.bind(
     null,
     CacheService.getDocumentCache
   );
-  public static removeUserCache = C.bind(null, CacheService.getUserCache);
+  public static removeUserCache = C.removeCache.bind(
+    null,
+    CacheService.getUserCache
+  );
 }
 
 module C {
