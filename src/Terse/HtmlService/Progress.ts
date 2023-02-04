@@ -35,14 +35,10 @@ export default class Progress {
   }
 
   private put(key: string, value: any) {
-    const result = C.putUserCache(
+    return C.putUserCache(
       key,
       typeof value == 'string' ? value : JSON.stringify(value)
     );
-    if (key != this.html) {
-      this.update();
-    }
-    return result;
   }
 
   private remove(key: string) {
@@ -55,18 +51,23 @@ export default class Progress {
     this.reset();
   }
 
-  public setStatus = this.put.bind(this, this.status);
+  private putAndUpdate(key, value) {
+    this.put(key, value);
+    this.update();
+  }
+
+  public setStatus = this.putAndUpdate.bind(this, this.status);
   public getStatus() {
     return this.get(this.status) || this.defaultStatus;
   }
 
-  public setValue = this.put.bind(this, this.value);
+  public putValue = this.putAndUpdate.bind(this, this.value);
   public getValue = this.get.bind(this, this.value);
 
-  public setMax = this.put.bind(this, this.max);
+  public setMax = this.putAndUpdate.bind(this, this.max);
   public getMax = this.get.bind(this, this.max);
 
-  public setComplete = this.put.bind(this, this.complete);
+  public setComplete = this.putAndUpdate.bind(this, this.complete);
   public getComplete = this.get.bind(this, this.complete);
 
   private setHtml = this.put.bind(this, this.html);
@@ -75,8 +76,7 @@ export default class Progress {
   public reset() {
     this.remove(this.complete);
     this.remove(this.status);
-    this.put(this.value, 0);
-    this.update();
+    this.putValue(0);
   }
 
   private update() {
