@@ -82,7 +82,7 @@ export default class Progress {
   private update() {
     this.setHtml(
       `<div class="battis Terse HtmlService Element Progress">
-        <progressbar
+        <progress
           class="progress"
           value="${this.getValue()}"
           max="${this.getMax()}"
