@@ -37,7 +37,7 @@ export default class Progress {
   public static getMax = Progress.get.bind(null, 'max');
 
   public static setComplete = Progress.put.bind(null, 'complete');
-  public static isComplete = Progress.get.bind(null, 'complete');
+  public static getComplete = Progress.get.bind(null, 'complete');
 
   private static setHtml = Progress.put.bind(null, 'html');
   public static getHtml = Progress.get.bind(null, 'html');
@@ -49,14 +49,16 @@ export default class Progress {
   }
 
   private static update(key: string) {
+    const value = Progress.getValue(key);
+    const max = Progress.getMax(key);
     this.setHtml(
       key,
       `<div class="battis Terse HtmlService Element Progress">
         <progress
           class="progress"
-          value="${Progress.getValue(key)}"
-          max="${Progress.getMax(key)}"
-        ></progress>
+          value="${value}"
+          max="${max}"
+        >${value} / ${max}</progress>
         <div class="status">${Progress.getStatus(key) || ''}</div>
       </div>`
     );
