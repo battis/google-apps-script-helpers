@@ -63,4 +63,19 @@ export default class Progress {
       </div>`
     );
   }
+
+  public static getInstance(key: string) {
+    return class extends Progress {
+      public static reset = Progress.reset.bind(null, key);
+      public static setStatus = Progress.setStatus.bind(null, key);
+      public static getStatus = Progress.getStatus.bind(null, key);
+      public static setValue = Progress.setValue.bind(null, key);
+      public static getValue = Progress.getValue.bind(null, key);
+      public static setMax = Progress.setMax.bind(null, key);
+      public static getMax = Progress.getMax.bind(null, key);
+      public static setComplete = Progress.setComplete.bind(null, key);
+      public static getComplete = Progress.getComplete.bind(null, key);
+      public static getHtml = Progress.getHtml.bind(null, key);
+    };
+  }
 }
