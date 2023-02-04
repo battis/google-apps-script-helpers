@@ -103,13 +103,13 @@ export default class Progress {
   }
 
   public getProgressBar() {
-    return HtmlService.createHtmlOutput(
-      `<progressbar id="${
-        this.id
-      }" value="${this.getValue()}" max="${this.getMax()}" />
+    return;
+    `<progressbar id="${
+      this.id
+    }" value="${this.getValue()}" max="${this.getMax()}" />
       <div id="${this.id}-status">${this.getStatus()}</div>
       <script>
-        function updateProgress(progress = {value = 0, max = ${this.getMax()}) {
+        function updateProgress(progress = {value = 0, max = ${this.getMax()}}) {
             Object.assign(document.getElementById('${this.id}'), progress);
             document.getElementById('${this.id}-status').innerHTML = p.status;
             if (!p.complete) {
@@ -119,8 +119,7 @@ export default class Progress {
             }
         }
         updateProgress();
-      </script>`
-    ).getContent();
+      </script>`;
   }
 }
 
