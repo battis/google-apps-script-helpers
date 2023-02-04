@@ -67,8 +67,8 @@ export default class Progress {
   public setMax = this.putAndUpdate.bind(this, this.max);
   public getMax = this.get.bind(this, this.max);
 
-  public setComplete = this.putAndUpdate.bind(this, this.complete);
-  public getComplete = this.get.bind(this, this.complete);
+  public markComplete = this.putAndUpdate.bind(this, this.complete, true);
+  public isComplete = this.get.bind(this, this.complete);
 
   private setHtml = this.put.bind(this, this.html);
   public getHtml = this.get.bind(this, this.html);
@@ -80,8 +80,9 @@ export default class Progress {
   }
 
   private update() {
-    this.setHtml(
-      `<div class="battis Terse HtmlService Element Progress">
+    if (!this.isComplete()) {
+      return this.setHtml(
+        `<div class="battis Terse HtmlService Element Progress">
         <progress
           class="progress"
           value="${this.getValue()}"
@@ -89,6 +90,8 @@ export default class Progress {
         />
         <div class="status">${this.getStatus()}</div>
       </div>`
-    );
+      );
+    }
+    return false;
   }
 }
