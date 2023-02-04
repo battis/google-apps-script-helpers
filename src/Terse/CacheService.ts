@@ -26,7 +26,7 @@ class C {
     key: string,
     value: string,
     encoder: C.Cache.Encoder = null,
-    expirationInSeconds?: number
+    expirationInSeconds: number = 600
   ) {
     if (encoder) {
       value = encoder(value);

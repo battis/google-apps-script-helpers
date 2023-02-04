@@ -113,7 +113,9 @@ export default class Progress {
             Object.assign(document.getElementById('${this.id}'), progress);
             document.getElementById('${this.id}-status').innerHTML = p.status;
             if (!p.complete) {
-                google.script.run.withSuccessHandler(updateProgress).progressPoll();
+                google.script.run.withSuccessHandler(updateProgress).progressPoll('${
+                  this.key
+                }');
             }
         }
         updateProgress();
@@ -121,6 +123,3 @@ export default class Progress {
     ).getContent();
   }
 }
-
-global.progressPoll = Progress.getProgressForInstance;
-global.progressBar = Progress.getProgressBarForInstance;
