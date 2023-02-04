@@ -28,10 +28,6 @@ export default class Progress {
     return this.prefix('complete');
   }
 
-  private get id() {
-    return this.prefix('id', '-');
-  }
-
   private get(key: string) {
     return C.getUserCache(key);
   }
@@ -104,23 +100,11 @@ export default class Progress {
 
   public getProgressBar() {
     return;
-    `<progressbar id="${
-      this.id
-    }" value="${this.getValue()}" max="${this.getMax()}" />
-      <div id="${this.id}-status">${this.getStatus()}</div>
-      <script>
-        function updateProgress(progress) {
-            Object.assign(document.getElementById('${this.id}'), progress);
-            document.getElementById('${this.id}-status').innerHTML = p.status;
-            if (!p.complete) {
-                google.script.run.withSuccessHandler(updateProgress).progressPoll('${
-                  this.key
-                }');
-            }
-        }
-        updateProgress({value: 0, max: ${this.getMax()}});
-      </script>`;
+    `<progressbar
+      class="battis Terse htmlService Element Progress progress"
+      value="${this.getValue()}"
+      max="${this.getMax()}"
+    />
+    <div class="battis Terse htmlService Element Progress status">${this.getStatus()}</div>`;
   }
 }
-
-global.DOES_THIS_WORK = Progress.getProgressForInstance;
