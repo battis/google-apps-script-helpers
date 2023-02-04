@@ -39,7 +39,7 @@ export default class Progress {
       key,
       typeof value == 'string' ? value : JSON.stringify(value)
     );
-    if (key !== this.html) {
+    if (key != this.html) {
       this.update();
     }
     return result;
