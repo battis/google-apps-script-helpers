@@ -8,18 +8,18 @@ export default class Progress {
   }
 
   private static get(token: string, key: string) {
-    return C.getUserCache(this.prefix(key, token));
+    return C.getUserCache(Progress.prefix(key, token));
   }
 
   private static put(token: string, key: string, value: any) {
     return C.putUserCache(
-      this.prefix(key, token),
+      Progress.prefix(key, token),
       typeof value == 'string' ? value : JSON.stringify(value)
     );
   }
 
   private static remove(token: string, key: string) {
-    return CacheService.getUserCache().remove(this.prefix(key, token));
+    return CacheService.getUserCache().remove(Progress.prefix(key, token));
   }
 
   private static putAndUpdate(token, key, value) {
