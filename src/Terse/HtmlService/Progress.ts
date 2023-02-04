@@ -63,14 +63,15 @@ export default class Progress {
   public setMax = this.putAndUpdate.bind(this, this.max);
   public getMax = this.get.bind(this, this.max);
 
-  public markComplete = this.putAndUpdate.bind(this, this.complete, true);
+  public markComplete = this.put.bind(this, this.complete, true);
+  public markIncomplete = this.put.bind(this, this.complete, false);
   public isComplete = this.get.bind(this, this.complete);
 
   private setHtml = this.put.bind(this, this.html);
   public getHtml = this.get.bind(this, this.html);
 
   public reset() {
-    this.remove(this.complete);
+    this.markIncomplete();
     this.remove(this.status);
     this.setValue(0);
   }
