@@ -76,7 +76,7 @@ export default class Progress {
   public reset() {
     this.remove(this.complete);
     this.remove(this.status);
-    this.putValue(0);
+    this.setValue(0);
   }
 
   private update() {
