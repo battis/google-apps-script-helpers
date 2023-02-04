@@ -1,22 +1,22 @@
 {
-    "name":"@battis/google-apps-script-helpers",
-    "version": "1.0.0",
-    "author": "Seth Battis <seth@battis.net>",
-    "license": "GPL-3.0",
-    "main": "index.ts",
-    "homepage": "https://github.com/battis/google-apps-script-helpers",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/battis/google-apps-script-helpers.git"
-      },
-      "bugs": {
-        "url": "https://github.com/battis/google-apps-script-helpers/issues"
-         },
-	"dependencies": {
-		"@types/google-apps-script": "^1.0.57"
-	},
-    "devDependencies": {
-        "@battis/prettier-config": "battis/prettier-config"
-    },
-    "prettier": "@battis/prettier-config"
+  "name": "@battis/google-apps-script-helpers",
+  "version": "1.0.0",
+  "author": "Seth Battis <seth@battis.net>",
+  "license": "GPL-3.0",
+  "main": "index.ts",
+  "homepage": "https://github.com/battis/google-apps-script-helpers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/google-apps-script-helpers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/battis/google-apps-script-helpers/issues"
+  },
+  "devDependencies": {
+    "@battis/prettier-config": "battis/prettier-config",
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/google-apps-script": "^1.0.57",
+    "@types/node": "^18.11.18"
+  },
+  "prettier": "@battis/prettier-config"
 }
