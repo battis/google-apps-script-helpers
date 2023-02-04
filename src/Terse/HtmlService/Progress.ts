@@ -74,18 +74,18 @@ export default class Progress {
     this.put(this.value, 0);
   }
 
-  private static getInstance(key: string) {
+  private static getInstance(key: string): Progress {
     if (!Progress.instances[key]) {
       new Progress(key);
     }
     return Progress.instances[key];
   }
 
-  public static getProgressBarForInstance(key: string) {
+  public static getProgressBarForInstance(key: string): string {
     return Progress.getInstance(key).getProgressBar();
   }
 
-  public getProgressBar() {
+  public getProgressBar(): string {
     return;
     `<progressbar
       class="battis Terse htmlService Element Progress progress"
