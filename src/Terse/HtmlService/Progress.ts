@@ -2,7 +2,6 @@ import C from '../CacheService';
 
 export default class Progress {
   private key: string;
-  private defaultStatus: string;
 
   private prefix(token: string, delimiter: string = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', this.key, token].join(
@@ -45,9 +44,8 @@ export default class Progress {
     return CacheService.getUserCache().remove(key);
   }
 
-  public constructor(key: string, defaultStatus: string = 'Working…') {
+  public constructor(key: string) {
     this.key = key;
-    this.defaultStatus = defaultStatus;
     this.reset();
   }
 
@@ -57,9 +55,7 @@ export default class Progress {
   }
 
   public setStatus = this.putAndUpdate.bind(this, this.status);
-  public getStatus() {
-    return this.get(this.status) || this.defaultStatus;
-  }
+  public getStatus = this.get.bind(this, this.status);
 
   public setValue = this.putAndUpdate.bind(this, this.value);
   public getValue = this.get.bind(this, this.value);
@@ -80,9 +76,8 @@ export default class Progress {
   }
 
   private update() {
-    if (!this.isComplete()) {
-      return this.setHtml(
-        `<div class="battis Terse HtmlService Element Progress">
+    this.setHtml(
+      `<div class="battis Terse HtmlService Element Progress">
         <progress
           class="progress"
           value="${this.getValue()}"
@@ -90,8 +85,6 @@ export default class Progress {
         />
         <div class="status">${this.getStatus()}</div>
       </div>`
-      );
-    }
-    return false;
+    );
   }
 }
