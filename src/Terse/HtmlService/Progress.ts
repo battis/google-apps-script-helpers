@@ -19,7 +19,7 @@ export default class Progress {
   }
 
   private static remove(token: string, key: string) {
-    return CacheService.getUserCache().remove(Progress.prefix(key, token));
+    return C.removeUserCache(Progress.prefix(key, token));
   }
 
   private static putAndUpdate(token: string, key: string, value: any) {
