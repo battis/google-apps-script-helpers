@@ -48,6 +48,10 @@ export default class Progress {
     Progress.setValue(key, 0);
   }
 
+  public static getProgress(key: string) {
+    return { html: Progress.getHtml(key), complete: Progress.getComplete(key) };
+  }
+
   private static update(key: string) {
     const value = Progress.getValue(key);
     const max = Progress.getMax(key);
@@ -67,6 +71,7 @@ export default class Progress {
   public static getInstance(key: string) {
     return class extends Progress {
       public static reset = Progress.reset.bind(null, key);
+      public static getProgress = Progress.getProgress.bind(null, key);
       public static setStatus = Progress.setStatus.bind(null, key);
       public static getStatus = Progress.getStatus.bind(null, key);
       public static setValue = Progress.setValue.bind(null, key);
