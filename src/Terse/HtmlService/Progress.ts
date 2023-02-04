@@ -56,7 +56,7 @@ export default class Progress {
           class="progress"
           value="${Progress.getValue(key)}"
           max="${Progress.getMax(key)}"
-        />
+        ></progress>
         <div class="status">${Progress.getStatus(key) || ''}</div>
       </div>`
     );
