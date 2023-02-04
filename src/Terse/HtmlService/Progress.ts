@@ -123,3 +123,5 @@ export default class Progress {
     ).getContent();
   }
 }
+
+global.DOES_THIS_WORK = Progress.getProgressForInstance;
