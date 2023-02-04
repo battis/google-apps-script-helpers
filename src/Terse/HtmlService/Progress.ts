@@ -43,7 +43,7 @@ export default class Progress {
   public static getHtml = Progress.get.bind(null, 'html');
 
   public static reset(key: string) {
-    Progress.setComplete(key, false);
+    Progress.remove(key, 'complete');
     Progress.remove(key, 'status');
     Progress.setValue(key, 0);
   }
