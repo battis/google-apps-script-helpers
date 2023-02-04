@@ -22,7 +22,7 @@ global.action_that_needs_progress_indicator = () => {
     P.setStatus(datum.getSnappyTextLabel());
     doStuffWithData(datum);
   });
-  p.setComplete('all done!');
+  P.setComplete('all done!');
 };
 
 global.helper_to_action_getProgress = P.getProgress;
