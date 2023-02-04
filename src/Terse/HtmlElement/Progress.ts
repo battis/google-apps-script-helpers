@@ -18,6 +18,7 @@ export default class Progress {
     );
   }
 
+  // FIXME I don't think "remove" means what you think it means
   private static remove(token: string, key: string) {
     return C.removeUserCache(Progress.prefix(key, token));
   }
