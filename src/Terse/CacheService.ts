@@ -66,4 +66,4 @@ module C {
   }
 }
 
-export default P;
+export default C;
