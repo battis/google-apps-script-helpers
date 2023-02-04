@@ -1,8 +1,6 @@
 import C from '../CacheService';
 
 export default class Progress {
-  private static instances: { [key: string]: Progress } = {};
-
   private key: string;
   private defaultStatus: string;
 
@@ -28,15 +26,23 @@ export default class Progress {
     return this.prefix('complete');
   }
 
+  private get html() {
+    return this.prefix('html');
+  }
+
   private get(key: string) {
     return C.getUserCache(key);
   }
 
   private put(key: string, value: any) {
-    return C.putUserCache(
+    const result = C.putUserCache(
       key,
       typeof value == 'string' ? value : JSON.stringify(value)
     );
+    if (key !== this.html) {
+      this.update();
+    }
+    return result;
   }
 
   private remove(key: string) {
@@ -46,12 +52,7 @@ export default class Progress {
   public constructor(key: string, defaultStatus: string = 'Working…') {
     this.key = key;
     this.defaultStatus = defaultStatus;
-    if (Progress.instances[key]) {
-      Object.assign(this, Progress.instances[key]);
-    } else {
-      this.reset();
-      Progress.instances[key] = this;
-    }
+    this.reset();
   }
 
   public setStatus = this.put.bind(this, this.status);
@@ -68,30 +69,24 @@ export default class Progress {
   public setComplete = this.put.bind(this, this.complete);
   public getComplete = this.get.bind(this, this.complete);
 
+  private setHtml = this.put.bind(this, this.html);
+  public getHtml = this.get.bind(this, this.html);
+
   public reset() {
     this.remove(this.complete);
     this.remove(this.status);
     this.put(this.value, 0);
+    this.update();
   }
 
-  private static getInstance(key: string): Progress {
-    if (!Progress.instances[key]) {
-      new Progress(key);
-    }
-    return Progress.instances[key];
-  }
-
-  public static getProgressBarForInstance(key: string): string {
-    return Progress.getInstance(key).getProgressBar();
-  }
-
-  public getProgressBar(): string {
-    return;
-    `<progressbar
+  private update() {
+    this.setHtml(
+      `<progressbar
       class="battis Terse htmlService Element Progress progress"
       value="${this.getValue()}"
       max="${this.getMax()}"
     />
-    <div class="battis Terse htmlService Element Progress status">${this.getStatus()}</div>`;
+    <div class="battis Terse htmlService Element Progress status">${this.getStatus()}</div>`
+    );
   }
 }
