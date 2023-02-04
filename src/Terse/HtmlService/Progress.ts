@@ -61,7 +61,7 @@ export default class Progress {
     return this.get(this.status) || this.defaultStatus;
   }
 
-  public putValue = this.putAndUpdate.bind(this, this.value);
+  public setValue = this.putAndUpdate.bind(this, this.value);
   public getValue = this.get.bind(this, this.value);
 
   public setMax = this.putAndUpdate.bind(this, this.max);
