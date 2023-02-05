@@ -1,4 +1,4 @@
-class S {
+export default class S {
   public static fcn(name: string, ...args): string {
     return `${name}(${args.join(',')})`;
   }
@@ -37,9 +37,3 @@ class S {
     );
   }
 }
-
-module S {
-  // any type definitions for Helper.SpreadsheetApp
-}
-
-export default S;
