@@ -1,28 +1,51 @@
-name: jsdoc
+name: phpdoc
 
 on:
   push:
-    branches:
-      - master
+    branches: [main]
+
+  # Allow running the workflow manually from the Actions tab
+  #workflow_dispatch:
+
+# Allow GITHUB_TOKEN to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v1
       - name: Build
         uses: andstor/jsdoc-action@v1
         with:
           source_dir: ./src
-          output_dir: ./out
+          output_dir: ./docs
           config_file: conf.json
           template: minami
           front_page: README.md
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
+          path: docs
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
