@@ -1,4 +1,6 @@
 class D {
+  private constructor() {}
+
   /**
    * @link https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services
    *   Use of this function requires enabling the Drive API service

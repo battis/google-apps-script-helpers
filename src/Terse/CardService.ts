@@ -1,4 +1,6 @@
 class C {
+  private constructor() {}
+
   public static replaceStack(
     card: GoogleAppsScript.Card_Service.Card,
     url: string = null

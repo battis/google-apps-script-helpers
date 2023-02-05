@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Seth Battis <seth@battis.net>",
   "license": "GPL-3.0",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "homepage": "https://github.com/battis/google-apps-script-helpers",
   "repository": {
     "type": "git",

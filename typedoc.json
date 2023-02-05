@@ -1,7 +1,8 @@
 {
   "includeVersion": true,
-  "entryPoints": "src",
   "entryPointStrategy": "expand",
+  "entryPoints": ["src"],
+  "excludePrivate": true,
   "out": "docs",
   "categorizeByGroup": false,
   "plugin": ["./node_modules/typedoc-theme-yaf"],

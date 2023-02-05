@@ -1,4 +1,6 @@
 export default class S {
+  private constructor() {}
+
   public static fcn(name: string, ...args): string {
     return `${name}(${args.join(',')})`;
   }

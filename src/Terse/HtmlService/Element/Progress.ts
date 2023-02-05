@@ -1,7 +1,14 @@
 import C from '../../CacheService';
 
 /**
+
+A progress bar
+
+<progress value="30" max="100">status</progress>
+
 ### `app.ts`
+
+Work with Progress object. Progress on different strands are denoted by different keywords. For convenience, an instance of Progress can be provided by `Progress.getInstance()` bound to a specific keyword/process.
 
 ```ts
 import { Terse } from '@battis/gas-lighter';
@@ -27,53 +34,45 @@ global.action_that_needs_progress_indicator = () => {
 global.helper_to_action_getProgress = P.getProgress;
 ```
 
-### `stylesheet.html`
-
-```html
-<style>
-  .battis.Terse.HtmlService.Element.Progress .progress {
-    width: 100%;
-  }
-</style>
-```
-
-### `frontend.html`
-
-```html
-<script>
-  function updateProgress() {
-    google.script.run
-      .withSuccessHandler((progress) => {
-        if (progress.complete) {
-          google.script.host.close();
-        } else {
-          document.getElementById('content').innerHTML = progress.html;
-          updateProgress();
-        }
-      })
-      .helper_to_action_getProgress();
-  }
-
-  updateProgress();
-</script>
-```
-
 ### `view.html`
+
+For convenience, shown as a single file. [Best practices encourage breaking HTML, CSS, Javascript into separate files](https://developers.google.com/apps-script/guides/html/best-practices) for which [`Terse.HtmlService.include()`](?page=Terse/HtmlService.Class.default#include) is a helpful tool.
 
 ```html
 <!DOCTYPE html lang="en">
 <html>
   <head>
-    <?!= include('stylesheet'); ?>
+    <style>
+      .battis.Terse.HtmlService.Element.Progress .progress {
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <div id="content">Loading…</div>
-    <?!= include('frontend'); ?>
+    <script>
+      function updateProgress() {
+        google.script.run
+          .withSuccessHandler((progress) => {
+            if (progress.complete) {
+              google.script.host.close();
+            } else {
+              document.getElementById('content').innerHTML = progress.html;
+              updateProgress();
+            }
+          })
+          .helper_to_action_getProgress();
+      }
+
+      updateProgress();
+    </script>
   </body>
 </html>
 ```
  */
 export default class Progress {
+  private constructor() {}
+
   private static prefix(key: string, token: string, delimiter: string = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
       delimiter
@@ -143,7 +142,7 @@ export default class Progress {
   }
 
   public static getInstance(key: string) {
-    return class extends Progress {
+    return class KeyedProgress extends Progress {
       public static reset = Progress.reset.bind(null, key);
       public static getProgress = Progress.getProgress.bind(null, key);
       public static setStatus = Progress.setStatus.bind(null, key);

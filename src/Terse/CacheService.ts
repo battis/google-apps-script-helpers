@@ -1,4 +1,6 @@
 class C {
+  private constructor() {}
+
   private static getCache(
     cache: () => GoogleAppsScript.Cache.Cache,
     key: string,

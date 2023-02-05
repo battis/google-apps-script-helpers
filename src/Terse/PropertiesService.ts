@@ -1,4 +1,6 @@
 class P {
+  private constructor() {}
+
   private static getProperty(
     properties: () => GoogleAppsScript.Properties.Properties,
     key: string,
