@@ -82,11 +82,11 @@ function prefix(key: string, token: string, delimiter = '.') {
 }
 
 function get(token: string, key: string) {
-    return getUserCache(prefix(key, token), JSON.parse);
+    return getUserCache(prefix(key, token));
 }
 
 function put(token: string, key: string, value: any) {
-    return putUserCache(prefix(key, token), value, JSON.stringify);
+    return putUserCache(prefix(key, token), value);
 }
 
 // FIXME I don't think "remove" means what you think it means
