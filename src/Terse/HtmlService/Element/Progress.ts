@@ -82,14 +82,11 @@ function prefix(key: string, token: string, delimiter = '.') {
 }
 
 function get(token: string, key: string) {
-    return getUserCache(prefix(key, token));
+    return getUserCache(prefix(key, token), JSON.parse);
 }
 
 function put(token: string, key: string, value: any) {
-    return putUserCache(
-        prefix(key, token),
-        typeof value == 'string' ? value : JSON.stringify(value)
-    );
+    return putUserCache(prefix(key, token), value, JSON.stringify);
 }
 
 // FIXME I don't think "remove" means what you think it means
@@ -118,10 +115,7 @@ export const setHtml = put.bind(null, 'html');
 export const getHtml = get.bind(null, 'html');
 
 export function reset(key: string) {
-    // FIXME this seems redundant, but things also aren't getting removed from the cache, so…
-    setComplete(key, null);
     remove(key, 'complete');
-    setStatus(key, null);
     remove(key, 'status');
     setValue(key, 0);
 }
