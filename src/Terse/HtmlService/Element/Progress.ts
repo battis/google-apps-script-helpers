@@ -1,4 +1,8 @@
-import * as C from '../../CacheService';
+import {
+    getUserCache,
+    putUserCache,
+    removeUserCache
+} from '../../CacheService';
 
 /**
 
@@ -72,30 +76,30 @@ For convenience, shown as a single file. [Best practices encourage breaking HTML
  */
 
 function prefix(key: string, token: string, delimiter = '.') {
-  return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
-    delimiter
-  );
+    return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
+        delimiter
+    );
 }
 
 function get(token: string, key: string) {
-  return C.getUserCache(prefix(key, token));
+    return getUserCache(prefix(key, token));
 }
 
 function put(token: string, key: string, value: any) {
-  return C.putUserCache(
-    prefix(key, token),
-    typeof value == 'string' ? value : JSON.stringify(value)
-  );
+    return putUserCache(
+        prefix(key, token),
+        typeof value == 'string' ? value : JSON.stringify(value)
+    );
 }
 
 // FIXME I don't think "remove" means what you think it means
 function remove(token: string, key: string) {
-  return C.removeUserCache(prefix(key, token));
+    return removeUserCache(prefix(key, token));
 }
 
 function putAndUpdate(token: string, key: string, value: any) {
-  put(token, key, value);
-  update(key);
+    put(token, key, value);
+    update(key);
 }
 
 export const setStatus = putAndUpdate.bind(null, 'status');
@@ -114,21 +118,24 @@ export const setHtml = put.bind(null, 'html');
 export const getHtml = get.bind(null, 'html');
 
 export function reset(key: string) {
-  remove(key, 'complete');
-  remove(key, 'status');
-  setValue(key, 0);
+    // FIXME this seems redundant, but things also aren't getting removed from the cache, so…
+    setComplete(key, null);
+    remove(key, 'complete');
+    setStatus(key, null);
+    remove(key, 'status');
+    setValue(key, 0);
 }
 
 export function getProgress(key: string) {
-  return { html: getHtml(key), complete: getComplete(key) };
+    return { html: getHtml(key), complete: getComplete(key) };
 }
 
 function update(key: string) {
-  const value = getValue(key);
-  const max = getMax(key);
-  setHtml(
-    key,
-    `<div class="battis Terse HtmlService Element Progress">
+    const value = getValue(key);
+    const max = getMax(key);
+    setHtml(
+        key,
+        `<div class="battis Terse HtmlService Element Progress">
         <progress
           class="progress"
           value="${value}"
@@ -136,21 +143,21 @@ function update(key: string) {
         >${value} / ${max}</progress>
         <div class="status">${getStatus(key) || ''}</div>
       </div>`
-  );
+    );
 }
 
 export function getInstance(key: string) {
-  return class {
-    public static reset = reset.bind(null, key);
-    public static getProgress = getProgress.bind(null, key);
-    public static setStatus = setStatus.bind(null, key);
-    public static getStatus = getStatus.bind(null, key);
-    public static setValue = setValue.bind(null, key);
-    public static getValue = getValue.bind(null, key);
-    public static setMax = setMax.bind(null, key);
-    public static getMax = getMax.bind(null, key);
-    public static setComplete = setComplete.bind(null, key);
-    public static getComplete = getComplete.bind(null, key);
-    public static getHtml = getHtml.bind(null, key);
-  };
+    return class {
+        public static reset = reset.bind(null, key);
+        public static getProgress = getProgress.bind(null, key);
+        public static setStatus = setStatus.bind(null, key);
+        public static getStatus = getStatus.bind(null, key);
+        public static setValue = setValue.bind(null, key);
+        public static getValue = getValue.bind(null, key);
+        public static setMax = setMax.bind(null, key);
+        public static getMax = getMax.bind(null, key);
+        public static setComplete = setComplete.bind(null, key);
+        public static getComplete = getComplete.bind(null, key);
+        public static getHtml = getHtml.bind(null, key);
+    };
 }
