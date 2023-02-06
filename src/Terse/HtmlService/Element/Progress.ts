@@ -115,6 +115,8 @@ export const setHtml = put.bind(null, 'html');
 export const getHtml = get.bind(null, 'html');
 
 export function reset(key: string) {
+    setComplete(key, null);
+    setStatus(key, null);
     remove(key, 'complete');
     remove(key, 'status');
     setValue(key, 0);
