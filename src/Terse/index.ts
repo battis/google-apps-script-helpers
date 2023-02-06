@@ -1,11 +1,4 @@
-import Card from './CardService';
-import Properties from './PropertiesService';
-import Cache from './CacheService';
-import Html from './HtmlService';
-
-export namespace Terse {
-  export const CacheService = Cache;
-  export const CardService = Card;
-  export const HtmlService = Html;
-  export const PropertiesService = Properties;
-}
+export * as CacheService from './CacheService';
+export * as CardService from './CardService';
+export * as HtmlService from './HtmlService';
+export * as PropertiesService from './PropertiesService';

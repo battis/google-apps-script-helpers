@@ -1,82 +1,71 @@
-class P {
-  private constructor() {}
+import * as Property from './shared/EncodeDecode';
 
-  private static getProperty(
-    properties: () => GoogleAppsScript.Properties.Properties,
-    key: string,
-    decoder: P.Property.Decoder = null
-  ) {
-    const value = properties().getProperty(key);
-    if (decoder) {
-      return decoder(value);
-    }
-    return value;
+function getProperty(
+  properties: () => GoogleAppsScript.Properties.Properties,
+  key: string,
+  decoder: Property.Decoder = null
+) {
+  const value = properties().getProperty(key);
+  if (decoder) {
+    return decoder(value);
   }
-
-  public static getScriptProperty = P.getProperty.bind(
-    null,
-    PropertiesService.getScriptProperties
-  );
-  public static getDocumentProperty = P.getProperty.bind(
-    null,
-    PropertiesService.getDocumentProperties
-  );
-  public static getUserProperty = P.getProperty.bind(
-    null,
-    PropertiesService.getUserProperties
-  );
-
-  private static setProperty(
-    properties: () => GoogleAppsScript.Properties.Properties,
-    key: string,
-    value: string,
-    encoder: P.Property.Encoder = null
-  ) {
-    if (encoder) {
-      value = encoder(value);
-    }
-    return properties().setProperty(key, value);
-  }
-
-  public static setScriptProperty = P.setProperty.bind(
-    null,
-    PropertiesService.getScriptProperties
-  );
-  public static setDocumentProperty = P.setProperty.bind(
-    null,
-    PropertiesService.getDocumentProperties
-  );
-  public static setUserProperty = P.setProperty.bind(
-    null,
-    PropertiesService.getUserProperties
-  );
-
-  private static deleteProperty(
-    properties: () => GoogleAppsScript.Properties.Properties,
-    key: string
-  ) {
-    return properties().deleteProperty(key);
-  }
-
-  public static deleteScriptProperty = P.deleteProperty.bind(
-    null,
-    PropertiesService.getScriptProperties
-  );
-  public static deleteDocumentProperty = P.deleteProperty.bind(
-    null,
-    PropertiesService.getDocumentProperties
-  );
-  public static deleteUserProperty = P.deleteProperty.bind(
-    null,
-    PropertiesService.getUserProperties
-  );
+  return value;
 }
 
-module P {
-  export namespace Property {
-    export type Decoder = (encoded: string) => any;
-    export type Encoder = (value: any) => string;
+export const getScriptProperty = getProperty.bind(
+  null,
+  PropertiesService.getScriptProperties
+);
+export const getDocumentProperty = getProperty.bind(
+  null,
+  PropertiesService.getDocumentProperties
+);
+export const getUserProperty = getProperty.bind(
+  null,
+  PropertiesService.getUserProperties
+);
+
+function setProperty(
+  properties: () => GoogleAppsScript.Properties.Properties,
+  key: string,
+  value: string,
+  encoder: Property.Encoder = null
+) {
+  if (encoder) {
+    value = encoder(value);
   }
+  return properties().setProperty(key, value);
 }
 
-export default P;
+export const setScriptProperty = setProperty.bind(
+  null,
+  PropertiesService.getScriptProperties
+);
+export const setDocumentProperty = setProperty.bind(
+  null,
+  PropertiesService.getDocumentProperties
+);
+export const setUserProperty = setProperty.bind(
+  null,
+  PropertiesService.getUserProperties
+);
+
+function deleteProperty(
+  properties: () => GoogleAppsScript.Properties.Properties,
+  key: string
+) {
+  return properties().deleteProperty(key);
+}
+
+export const deleteScriptProperty = deleteProperty.bind(
+  null,
+  PropertiesService.getScriptProperties
+);
+export const deleteDocumentProperty = deleteProperty.bind(
+  null,
+  PropertiesService.getDocumentProperties
+);
+export const deleteUserProperty = deleteProperty.bind(
+  null,
+  PropertiesService.getUserProperties
+);

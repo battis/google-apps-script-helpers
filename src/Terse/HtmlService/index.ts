@@ -1,7 +1,6 @@
-import E from './Element';
+export * as Element from './Element';
 
-class H {
-  /**
+/**
   ### `app.ts`
 ```ts
     import { Terse } from '@battis/gas-lighter';
@@ -25,15 +24,8 @@ class H {
      * @param {string} filePath - description
      * @param {object} data - description
      */
-  public static include(filePath: string, data?: object) {
-    const template = HtmlService.createTemplateFromFile(filePath);
-    template.data = data;
-    return template.evaluate().getContent();
-  }
+export function include(filePath: string, data?: object) {
+  const template = HtmlService.createTemplateFromFile(filePath);
+  template.data = data;
+  return template.evaluate().getContent();
 }
-
-module H {
-  export const Element = E;
-}
-
-export default H;

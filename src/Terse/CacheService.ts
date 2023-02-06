@@ -1,77 +1,57 @@
-class C {
-  private constructor() {}
+import * as Cache from './shared/EncodeDecode';
 
-  private static getCache(
-    cache: () => GoogleAppsScript.Cache.Cache,
-    key: string,
-    decoder: C.Cache.Decoder = null
-  ) {
-    const value = cache().get(key);
-    if (decoder) {
-      return decoder(value);
-    }
-    return value;
+function getCache(
+  cache: () => GoogleAppsScript.Cache.Cache,
+  key: string,
+  decoder: Cache.Decoder = null
+) {
+  const value = cache().get(key);
+  if (decoder) {
+    return decoder(value);
   }
-
-  public static getScriptCache = C.getCache.bind(
-    null,
-    CacheService.getScriptCache
-  );
-  public static getDocumentCache = C.getCache.bind(
-    null,
-    CacheService.getDocumentCache
-  );
-  public static getUserCache = C.getCache.bind(null, CacheService.getUserCache);
-
-  private static putCache(
-    cache: () => GoogleAppsScript.Cache.Cache,
-    key: string,
-    value: string,
-    encoder: C.Cache.Encoder = null,
-    expirationInSeconds: number = 600
-  ) {
-    if (encoder) {
-      value = encoder(value);
-    }
-    return cache().put(key, value, expirationInSeconds);
-  }
-
-  public static putScriptCache = C.putCache.bind(
-    null,
-    CacheService.getScriptCache
-  );
-  public static putDocumentCache = C.putCache.bind(
-    null,
-    CacheService.getDocumentCache
-  );
-  public static putUserCache = C.putCache.bind(null, CacheService.getUserCache);
-
-  private static removeCache(
-    cache: () => GoogleAppsScript.Cache.Cache,
-    key: string
-  ) {
-    return cache().remove(key);
-  }
-
-  public static removeScriptCache = C.removeCache.bind(
-    null,
-    CacheService.getScriptCache
-  );
-  public static removeDocumentCache = C.removeCache.bind(
-    null,
-    CacheService.getDocumentCache
-  );
-  public static removeUserCache = C.removeCache.bind(
-    null,
-    CacheService.getUserCache
-  );
+  return value;
 }
 
-module C {
-  export namespace Cache {
-    export type Decoder = (encoded: string) => any;
-    export type Encoder = (value: any) => string;
+export const getScriptCache = getCache.bind(null, CacheService.getScriptCache);
+export const getDocumentCache = getCache.bind(
+  null,
+  CacheService.getDocumentCache
+);
+export const getUserCache = getCache.bind(null, CacheService.getUserCache);
+
+function putCache(
+  cache: () => GoogleAppsScript.Cache.Cache,
+  key: string,
+  value: string,
+  encoder: Cache.Encoder = null,
+  expirationInSeconds = 600
+) {
+  if (encoder) {
+    value = encoder(value);
   }
+  return cache().put(key, value, expirationInSeconds);
 }
 
-export default C;
+export const putScriptCache = putCache.bind(null, CacheService.getScriptCache);
+export const putDocumentCache = putCache.bind(
+  null,
+  CacheService.getDocumentCache
+);
+export const putUserCache = putCache.bind(null, CacheService.getUserCache);
+
+function removeCache(cache: () => GoogleAppsScript.Cache.Cache, key: string) {
+  return cache().remove(key);
+}
+
+export const removeScriptCache = removeCache.bind(
+  null,
+  CacheService.getScriptCache
+);
+export const removeDocumentCache = removeCache.bind(
+  null,
+  CacheService.getDocumentCache
+);
+export const removeUserCache = removeCache.bind(
+  null,
+  CacheService.getUserCache
+);
