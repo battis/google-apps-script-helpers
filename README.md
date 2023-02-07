@@ -1,4 +1,4 @@
-# @battis/gas-lighter
+# [<img src="logo.png" style="height: 1.5em" align="right"/>](https://thenounproject.com/icon/street-lamp-161116/) @battis/gas-lighter
 
 ## Caution
 
