@@ -37,7 +37,9 @@ export const putDocumentCache = putCache.bind(
 export const putUserCache = putCache.bind(null, CacheService.getUserCache);
 
 function removeCache(cache: () => GoogleAppsScript.Cache.Cache, key: string) {
-    return cache().remove(key);
+    const c = cache();
+    c.put(key, null); // FIXME experience suggests that caches don't get removed
+    return c.remove(key);
 }
 
 export const removeScriptCache = removeCache.bind(

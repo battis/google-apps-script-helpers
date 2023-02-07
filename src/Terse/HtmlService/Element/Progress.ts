@@ -115,9 +115,6 @@ export const setHtml = put.bind(null, 'html');
 export const getHtml = get.bind(null, 'html');
 
 export function reset(key: string) {
-    // FIXME shouldn't be necessary to null the cache, but remove seems not to actually remove
-    setComplete(key, null);
-    setStatus(key, null);
     remove(key, 'complete');
     remove(key, 'status');
     setValue(key, 0);
