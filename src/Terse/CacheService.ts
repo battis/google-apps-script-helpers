@@ -18,7 +18,7 @@ export const getUserCache = getCache.bind(null, CacheService.getUserCache);
 function putCache(
     cache: () => GoogleAppsScript.Cache.Cache,
     key: string,
-    value: string,
+    value: any,
     encoder: Cache.Encoder = JSON.stringify,
     expirationInSeconds = 600
 ) {

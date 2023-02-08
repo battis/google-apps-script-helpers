@@ -24,7 +24,7 @@ export const getUserProperty = getProperty.bind(
 function setProperty(
     properties: () => GoogleAppsScript.Properties.Properties,
     key: string,
-    value: string,
+    value: any,
     encoder: Property.Encoder = JSON.stringify
 ) {
     return properties().setProperty(key, Property.encodeWith(encoder, value));
