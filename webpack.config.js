@@ -16,7 +16,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loader: require.resolve('ts-loader'),
+        loader: 'ts-loader',
         options: { allowTsInNodeModules: true },
       },
     ],
