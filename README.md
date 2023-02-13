@@ -5,7 +5,7 @@ In `.npmrc`:
 ```
 auto-install-peers = true
 ```
-
+On the CLI:
 ```bash
 npm add -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
 npx clasp clone <project id>
