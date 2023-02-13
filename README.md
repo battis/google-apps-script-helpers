@@ -8,7 +8,7 @@ auto-install-peers = true
 
 ```bash
 npm add -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
-npx clasp pull <project id>
+npx clasp clone <project id>
 ```
 
 In `webpack.config.js`:
