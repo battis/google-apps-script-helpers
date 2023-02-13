@@ -8,6 +8,7 @@ auto-install-peers = true
 
 ```bash
 npm add -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
+npx clasp pull <project id>
 ```
 
 In `webpack.config.js`:
@@ -29,6 +30,7 @@ In `package.json`:
   "scripts": {
     "clean": "rm -rf build",
     "build": "npx webpack"
+    "deploy": "npx clasp push"
   }
   ...
 }
