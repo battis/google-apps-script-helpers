@@ -4,7 +4,7 @@
   "description": "",
   "main": "./webpack.config.js",
   "keywords": [],
-  "author": "",
+  "author": "Seth Battis <seth@battis.net>",
   "license": "ISC",
   "peerDependencies": {
     "@tsconfig/recommended": "^1.0.2",
