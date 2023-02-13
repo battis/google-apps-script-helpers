@@ -4,8 +4,11 @@
   "description": "",
   "main": "webpack.config.js",
   "keywords": [],
-  "author": "Seth Battis <seth@battis.net>",
-  "license": "ISC",
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "license": "GPL-3.0",
   "peerDependencies": {
     "@tsconfig/recommended": "^1.0.2",
     "@types/google-apps-script": "^1.0.57",
