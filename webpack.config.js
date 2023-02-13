@@ -6,7 +6,6 @@ module.exports = {
     main: './src/index.ts',
   },
   output: {
-    path: './build',
     filename: '[name]-bundle.js',
   },
   resolve: {
