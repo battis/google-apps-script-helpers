@@ -1,4 +1,3 @@
-const path = require('path');
 const GasPlugin = require('gas-webpack-plugin');
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
     main: './src/index.ts',
   },
   output: {
-    path: path.resolve(__dirname, './build'),
+    path: './build',
     filename: '[name]-bundle.js',
   },
   resolve: {
