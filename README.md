@@ -1,4 +1,4 @@
-# @battis/eslint-config
+# @battis/webpack-typescript-gas
 
 In `.npmrc`:
 
