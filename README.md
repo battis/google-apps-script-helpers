@@ -16,9 +16,7 @@ In `webpack.config.js`:
 const path = require('path');
 const config = require('@battis/webpack-typescript-gas');
 
-config.output.path = path.join(__dirname, 'build');
-
-module.exports = config;
+module.exports = config({ root: __dirname });
 ```
 
 In `package.json`:
@@ -28,7 +26,8 @@ In `package.json`:
   ...
   "scripts": {
     "clean": "rm -rf build",
-    "build": "npx webpack"
+    "build": "npx webpack",
+    "deploy": "npx clasp push"
   }
   ...
 }
