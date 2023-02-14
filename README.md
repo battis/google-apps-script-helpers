@@ -7,8 +7,13 @@ auto-install-peers = true
 ```
 
 ```bash
-npm add -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
+npm i -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
 ```
+or
+```bash
+pnpm i -D --shamefully-hoist @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
+```
+(because not all tools are good about package resolution)
 
 In `webpack.config.js`:
 
