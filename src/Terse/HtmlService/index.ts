@@ -25,7 +25,13 @@ export * as Element from './Element';
      * @param {object} data - description
      */
 export function include(filePath: string, data?: object) {
-  const template = HtmlService.createTemplateFromFile(filePath);
-  template.data = data;
-  return template.evaluate().getContent();
+    const template = HtmlService.createTemplateFromFile(filePath);
+    template.data = data;
+    return template.evaluate().getContent();
+}
+
+export function createTemplateFromFile(filePath: string, data?: object) {
+    const template = HtmlService.createTemplateFromFile(filePath);
+    template.data = data;
+    return template.evaluate();
 }
