@@ -124,6 +124,8 @@ export function getProgress(key: string) {
     return { html: getHtml(key), complete: getComplete(key) };
 }
 
+// TODO add indeterminate option
+// TODO add timer display/estimate
 function update(key: string) {
     const value = getValue(key);
     const max = getMax(key);
