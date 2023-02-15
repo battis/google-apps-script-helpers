@@ -17,30 +17,31 @@ Work with Progress object. Progress on different strands are denoted by differen
 ```ts
 import { Terse } from '@battis/gas-lighter';
 
-const P = Terse.HtmlService.Element.Progress.getInstance('keyword');
+global.include = Terse.HtmlService.include;
 
 global.action_that_needs_progress_indicator = () => {
-  P.reset();
+  const thread = Uitilities.getUuid();
+  const p = Terse.HtmlService.Element.Progress.getInstance(thread);
+  p.reset();
   const data = listOfStuff();
-  P.setMax(max);
+  p.setMax(max);
   ScriptApp.getUi().showModalDialog(
-    HtmlService.createTemplateFromFile('view').evaluate().setHeight(100),
+    Terse.HtmlService.createTemplateFromFile('view', { thread }).setHeight(100),
     'Doing Things'
   );
   data.forEach((datum, i) => {
-    P.setvalue(i + 1);
+    p.setvalue(i + 1);
     P.setStatus(datum.getSnappyTextLabel());
     doStuffWithData(datum);
   });
   P.setComplete('all done!');
 };
 
-global.helper_to_action_getProgress = P.getProgress;
+global.helper_to_action_getProgress = (thread: string) =>
+  Terse.HtmlService.Element.Progress.getProgress(thread);
 ```
 
 ### `view.html`
-
-For convenience, shown as a single file. [Best practices encourage breaking HTML, CSS, Javascript into separate files](https://developers.google.com/apps-script/guides/html/best-practices) for which [`Terse.HtmlService.include()`](?page=Terse/HtmlService.Class.default#include) is a helpful tool.
 
 ```html
 <!DOCTYPE html lang="en">
@@ -54,25 +55,33 @@ For convenience, shown as a single file. [Best practices encourage breaking HTML
   </head>
   <body>
     <div id="content">Loading…</div>
-    <script>
-      function updateProgress() {
-        google.script.run
-          .withSuccessHandler((progress) => {
-            if (progress.complete) {
-              google.script.host.close();
-            } else {
-              document.getElementById('content').innerHTML = progress.html;
-              updateProgress();
-            }
-          })
-          .helper_to_action_getProgress();
-      }
-
-      updateProgress();
-    </script>
+    <!?= include('script', data); ?>
   </body>
 </html>
 ```
+
+### `script.html`
+<script>
+  const thread = '<?= data.thread ?>';
+
+  function updateProgress() {
+    google.script.run
+      .withSuccessHandler((progress) => {
+        if (progress.complete) {
+          google.script.host.close();
+        } else {
+          document.getElementById('content').innerHTML = progress.html;
+          updateProgress();
+        }
+      })
+      .helper_to_action_getProgress(thread);
+  }
+
+  updateProgress();
+</script>
+```html
+```
+
  */
 
 function prefix(key: string, token: string, delimiter = '.') {
