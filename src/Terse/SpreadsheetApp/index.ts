@@ -31,3 +31,10 @@ export function setValue(
         range.offset(0, 0, 1, 1).setValue(value);
     }
 }
+
+export const getSheetDisplayValues = (
+    sheet: GoogleAppsScript.Spreadsheet.Sheet
+) =>
+    sheet
+        .getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns())
+        .getDisplayValues();
