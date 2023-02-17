@@ -113,6 +113,10 @@ export const getStatus = get.bind(null, 'status');
 
 export const setValue = putAndUpdate.bind(null, 'value');
 export const getValue = get.bind(null, 'value');
+export const incrementValue = (key: string, increment = 1) =>
+    setValue(key, getValue(key) + increment);
+export const decrementValue = (key: string, decrement = 1) =>
+    setValue(key, getValue(key) - decrement);
 
 export const setMax = putAndUpdate.bind(null, 'max');
 export const getMax = get.bind(null, 'max');
@@ -159,6 +163,8 @@ export function getInstance(key: string) {
         public static getStatus = getStatus.bind(null, key);
         public static setValue = setValue.bind(null, key);
         public static getValue = getValue.bind(null, key);
+        public static incrementValue = incrementValue.bind(null, key);
+        public static decrementValue = decrementValue.bind(null, key);
         public static setMax = setMax.bind(null, key);
         public static getMax = getMax.bind(null, key);
         public static setComplete = setComplete.bind(null, key);
