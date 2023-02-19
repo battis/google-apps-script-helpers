@@ -1,4 +1,4 @@
-import '@battis/webpack-typescript-gas/types';
+import '@battis/webpack-typescript-gas/types.d.ts';
 import * as Html from '../../';
 import * as Cache from '../../../CacheService';
 import html from './index.html';
