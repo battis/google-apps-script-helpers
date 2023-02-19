@@ -16,7 +16,6 @@
     "update": "pnpm update --shamefully-hoist; npm update --package-lock-only"
   },
   "peerDependencies": {
-    "@battis/webpack-typescript-gas": "github:battis/webpack-typescript-gas",
     "@tsconfig/recommended": "^1.0.2",
     "@types/google-apps-script": "^1.0.57",
     "@types/node": "^18.11.19",
@@ -25,7 +24,6 @@
   "devDependencies": {
     "@battis/eslint-config": "github:battis/eslint-config",
     "@battis/prettier-config": "github:battis/prettier-config",
-    "@battis/webpack-typescript-gas": "github:battis/webpack-typescript-gas",
     "@tsconfig/recommended": "^1.0.2",
     "@types/google-apps-script": "^1.0.57",
     "@types/node": "^18.14.0",
