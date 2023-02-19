@@ -29,5 +29,8 @@
     "extends": [
       "@battis/eslint-config"
     ]
+  },
+  "dependencies": {
+    "raw-loader": "^4.0.2"
   }
 }

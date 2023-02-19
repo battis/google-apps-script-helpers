@@ -26,6 +26,10 @@ module.exports = ({
           loader: 'ts-loader',
           options: { allowTsInNodeModules: true },
         },
+        {
+          test: /\.(css|html)$/,
+          use: 'raw-loader',
+        },
       ],
     },
     plugins: [new GasPlugin()],

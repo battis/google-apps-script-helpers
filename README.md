@@ -1,19 +1,18 @@
 # @battis/webpack-typescript-gas
 
+## Use
+
 In `.npmrc`:
 
 ```
 auto-install-peers = true
 ```
 
+Then run:
+
 ```bash
 npm i -D @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
 ```
-or
-```bash
-pnpm i -D --shamefully-hoist @battis/webpack-typescript-gas@github:battis/webpack-typescript-gas
-```
-(because not all tools are good about package resolution)
 
 In `webpack.config.js`:
 
@@ -22,6 +21,8 @@ const config = require('@battis/webpack-typescript-gas');
 
 module.exports = config({ root: __dirname });
 ```
+
+## Configuration
 
 Configuration options include, with defaults:
 
@@ -47,3 +48,21 @@ In `package.json`:
   ...
 }
 ```
+
+## Development
+
+I use `pnpm` over `npm` preferentially (there are only so many hours of progress bars and only so much disk space that I can allocate to this stuff). But… `webpack` does not resolve packages in a standard way, and implicily relies on `npm`'s `node_modules` layout. So…
+
+```bash
+pnpm i --shamefully-hoist
+```
+
+sets up `node_modules` to work with `webpack` and
+
+```bash
+npm i --package-lock-only
+```
+
+updates `package-lock.json` for distribution.
+
+Blergh.
