@@ -1,5 +1,6 @@
 import '@battis/webpack-typescript-gas/types';
-import * as g from '../../..';
+import * as Html from '../../';
+import * as Cache from '../../../CacheService';
 import html from './index.html';
 
 function prefix(key: string, token: string, delimiter = '.') {
@@ -9,16 +10,16 @@ function prefix(key: string, token: string, delimiter = '.') {
 }
 
 function get(token: string, key: string) {
-    return g.CacheService.getUserCache(prefix(key, token));
+    return Cache.getUserCache(prefix(key, token));
 }
 
 function put(token: string, key: string, value: any) {
-    return g.CacheService.putUserCache(prefix(key, token), value);
+    return Cache.putUserCache(prefix(key, token), value);
 }
 
 // FIXME I don't think "remove" means what you think it means
 function remove(token: string, key: string) {
-    return g.CacheService.removeUserCache(prefix(key, token));
+    return Cache.removeUserCache(prefix(key, token));
 }
 
 function putAndUpdate(token: string, key: string, value: any) {
@@ -74,7 +75,7 @@ function update(key: string) {
 }
 
 export const getHtmlOutput = (thread: string) =>
-    g.HtmlService.createTemplate(html, { thread }).setHeight(100);
+    Html.createTemplate(html, { thread }).setHeight(100);
 
 export function getInstance(key: string) {
     return class {

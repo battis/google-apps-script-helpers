@@ -12,7 +12,7 @@ specifiers:
 devDependencies:
   '@battis/eslint-config': github.com/battis/eslint-config/b75f95c693836225c0dffb657a34ef3260c365f7_olqzgoudjanskusljexhgqvvhe
   '@battis/prettier-config': github.com/battis/prettier-config/e11904608d5b51e2e196f98c853ec5a2f7894e10_prettier@2.8.4
-  '@battis/webpack-typescript-gas': github.com/battis/webpack-typescript-gas/1d0ffcb02ce47925c071cf6cc74ac9f83bd01672_aurfrwnlapcmwwrjhauqhnysru
+  '@battis/webpack-typescript-gas': github.com/battis/webpack-typescript-gas/cafeebfa1561b9e2231d3cd531a0224ac87d2525_aurfrwnlapcmwwrjhauqhnysru
   '@tsconfig/recommended': 1.0.2
   '@types/google-apps-script': 1.0.57
   '@types/node': 18.14.0
@@ -3402,9 +3402,9 @@ packages:
       prettier: 2.8.4
     dev: true
 
-  github.com/battis/webpack-typescript-gas/1d0ffcb02ce47925c071cf6cc74ac9f83bd01672_aurfrwnlapcmwwrjhauqhnysru:
-    resolution: {tarball: https://codeload.github.com/battis/webpack-typescript-gas/tar.gz/1d0ffcb02ce47925c071cf6cc74ac9f83bd01672}
-    id: github.com/battis/webpack-typescript-gas/1d0ffcb02ce47925c071cf6cc74ac9f83bd01672
+  github.com/battis/webpack-typescript-gas/cafeebfa1561b9e2231d3cd531a0224ac87d2525_aurfrwnlapcmwwrjhauqhnysru:
+    resolution: {tarball: https://codeload.github.com/battis/webpack-typescript-gas/tar.gz/cafeebfa1561b9e2231d3cd531a0224ac87d2525}
+    id: github.com/battis/webpack-typescript-gas/cafeebfa1561b9e2231d3cd531a0224ac87d2525
     name: '@battis/webpack-typescript-gas'
     version: 1.0.0
     peerDependencies:
