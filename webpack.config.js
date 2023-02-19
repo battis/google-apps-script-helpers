@@ -28,7 +28,7 @@ module.exports = ({
         },
         {
           test: /\.(css|html)$/,
-          use: 'raw-loader',
+          type: 'asset/source',
         },
       ],
     },
