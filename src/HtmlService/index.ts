@@ -21,17 +21,19 @@ export * as Element from './Element';
 </html>
 ```
 
-     * @param {string} filePath - description
-     * @param {object} data - description
      */
-export function include(filePath: string, data?: object) {
-    const template = HtmlService.createTemplateFromFile(filePath);
+
+export function createTemplate(html: string, data = {}) {
+    const template = HtmlService.createTemplate(html);
     template.data = data;
-    return template.evaluate().getContent();
+    return template.evaluate();
 }
 
-export function createTemplateFromFile(filePath: string, data?: object) {
+export function createTemplateFromFile(filePath: string, data = {}) {
     const template = HtmlService.createTemplateFromFile(filePath);
     template.data = data;
     return template.evaluate();
 }
+
+export const include = (filePath: string, data?: object) =>
+    createTemplateFromFile(filePath, data).getContent();

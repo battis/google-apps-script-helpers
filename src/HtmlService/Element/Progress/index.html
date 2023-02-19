@@ -1,5 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <title>Progress</title>
     <link
       rel="stylesheet"
       href="https://ssl.gstatic.com/docs/script/css/add-ons1.css"
@@ -14,7 +16,6 @@
     <div id="content">Loading…</div>
     <script>
       const thread = '<?= data.thread ?>';
-
       function updateProgress() {
         google.script.run
           .withSuccessHandler((progress) => {
@@ -27,7 +28,6 @@
           })
           .getProgress(thread);
       }
-
       updateProgress();
     </script>
   </body>

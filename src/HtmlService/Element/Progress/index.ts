@@ -1,89 +1,5 @@
-import {
-    getUserCache,
-    putUserCache,
-    removeUserCache
-} from '../../../CacheService';
-const html = require('./index.html');
-
-/**
-
-A progress bar
-
-<progress value="30" max="100">status</progress>
-
-### `app.ts`
-
-Work with Progress object. Progress on different strands are denoted by different keywords. For convenience, an instance of Progress can be provided by `Progress.getInstance()` bound to a specific keyword/process.
-
-```ts
-import { Terse } from '@battis/gas-lighter';
-
-global.include = Terse.HtmlService.include;
-
-global.action_that_needs_progress_indicator = () => {
-  const thread = Uitilities.getUuid();
-  const p = Terse.HtmlService.Element.Progress.getInstance(thread);
-  p.reset();
-  const data = listOfStuff();
-  p.setMax(max);
-  ScriptApp.getUi().showModalDialog(
-    Terse.HtmlService.createTemplateFromFile('view', { thread }).setHeight(100),
-    'Doing Things'
-  );
-  data.forEach((datum, i) => {
-    p.setvalue(i + 1);
-    P.setStatus(datum.getSnappyTextLabel());
-    doStuffWithData(datum);
-  });
-  P.setComplete('all done!');
-};
-
-global.helper_to_action_getProgress = (thread: string) =>
-  Terse.HtmlService.Element.Progress.getProgress(thread);
-```
-
-### `view.html`
-
-```html
-<!DOCTYPE html lang="en">
-<html>
-  <head>
-    <style>
-      .battis.Terse.HtmlService.Element.Progress .progress {
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content">Loading…</div>
-    <!?= include('script', data); ?>
-  </body>
-</html>
-```
-
-### `script.html`
-<script>
-  const thread = '<?= data.thread ?>';
-
-  function updateProgress() {
-    google.script.run
-      .withSuccessHandler((progress) => {
-        if (progress.complete) {
-          google.script.host.close();
-        } else {
-          document.getElementById('content').innerHTML = progress.html;
-          updateProgress();
-        }
-      })
-      .helper_to_action_getProgress(thread);
-  }
-
-  updateProgress();
-</script>
-```html
-```
-
- */
+import * as g from '../../..';
+import html from './index.html';
 
 function prefix(key: string, token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
@@ -92,16 +8,16 @@ function prefix(key: string, token: string, delimiter = '.') {
 }
 
 function get(token: string, key: string) {
-    return getUserCache(prefix(key, token));
+    return g.CacheService.getUserCache(prefix(key, token));
 }
 
 function put(token: string, key: string, value: any) {
-    return putUserCache(prefix(key, token), value);
+    return g.CacheService.putUserCache(prefix(key, token), value);
 }
 
 // FIXME I don't think "remove" means what you think it means
 function remove(token: string, key: string) {
-    return removeUserCache(prefix(key, token));
+    return g.CacheService.removeUserCache(prefix(key, token));
 }
 
 function putAndUpdate(token: string, key: string, value: any) {
@@ -156,11 +72,8 @@ function update(key: string) {
     );
 }
 
-export function getHtmlOutput(thread: string) {
-    const template = HtmlService.createTemplate(html);
-    template.data = { thread };
-    return template.evaluate().setHeight(100);
-}
+export const getHtmlOutput = (thread: string) =>
+    g.HtmlService.createTemplate(html, { thread }).setHeight(100);
 
 export function getInstance(key: string) {
     return class {
