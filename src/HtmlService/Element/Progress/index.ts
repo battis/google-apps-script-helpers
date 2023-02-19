@@ -1,3 +1,4 @@
+import '@battis/webpack-typescript-gas/types';
 import * as g from '../../..';
 import html from './index.html';
 
