@@ -1,6 +1,3 @@
-export * as DeveloperMetadata from './DeveloperMetadata';
-export * as Protection from './Protection';
-
 export function replaceWithDisplayValues(
     range: GoogleAppsScript.Spreadsheet.Range
 ) {
@@ -15,7 +12,7 @@ export function replaceAllWithDisplayValues(
     );
 }
 
-export function setValue(
+export function set(
     sheet: GoogleAppsScript.Spreadsheet.Sheet,
     a1notation: string,
     value: any
