@@ -17,7 +17,7 @@ export function stringify(parameters: UnprocessedParameters): Parameters {
 }
 
 // FIXME fix typing to reflect requirement for functionName or openLink, etc.
-export function newAction({
+export function create({
     functionName,
     parameters = null,
 }: Action): GoogleAppsScript.Card_Service.Action {

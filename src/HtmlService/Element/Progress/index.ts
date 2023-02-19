@@ -2,7 +2,8 @@ import {
     getUserCache,
     putUserCache,
     removeUserCache
-} from '../../CacheService';
+} from '../../../CacheService';
+const html = require('./index.html');
 
 /**
 
@@ -144,7 +145,7 @@ function update(key: string) {
     const max = getMax(key);
     setHtml(
         key,
-        `<div class="battis Terse HtmlService Element Progress">
+        `<div class="battis GasLighter HtmlService Element Progress">
         <progress
           class="progress"
           value="${value}"
@@ -153,6 +154,12 @@ function update(key: string) {
         <div class="status">${getStatus(key) || ''}</div>
       </div>`
     );
+}
+
+export function getHtmlOutput(thread: string) {
+    const template = HtmlService.createTemplate(html);
+    template.data = { thread };
+    return template.evaluate().setHeight(100);
 }
 
 export function getInstance(key: string) {

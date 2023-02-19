@@ -1,9 +1,14 @@
 import * as F from './Function';
+import * as P from './Permission';
 import * as V from './Value';
 
 export * as DeveloperMetadata from './DeveloperMetadata';
-export * as Permission from './Permission';
 export * as Protection from './Protection';
+
+/** @deprecated */
+export const addImportrangePermission = P.addImportrangePermission;
+
+export const Permission = P;
 
 /** @deprecated */
 export const setValue = V.set;
