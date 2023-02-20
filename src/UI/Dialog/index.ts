@@ -12,7 +12,7 @@ type HtmlOptions = {
     message: string;
     height?: number;
     buttons?: (Button | string)[];
-    functionName: string;
+    functionName?: string;
 };
 type RootlessDialogOptions = HtmlOptions & {
     title: string;
