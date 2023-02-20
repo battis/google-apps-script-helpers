@@ -1,4 +1,5 @@
 export * as Element from './Element';
+import html from './helpers.html';
 
 /**
   ### `app.ts`
@@ -37,3 +38,5 @@ export function createTemplateFromFile(filePath: string, data = {}) {
 
 export const include = (filePath: string, data?: object) =>
     createTemplateFromFile(filePath, data).getContent();
+
+export const helpers = () => html;
