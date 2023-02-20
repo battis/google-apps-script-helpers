@@ -25,6 +25,7 @@ function handleResponse_<?!= data.id ?>(html) {
 }
 
 attachEvent(document.getElementById('dialog_<?!= data.id ?>'), 'submit', function(e) {
+    console.log('attaching to dialog_<?!= data.id ?>');
     if (e.preventDefault) {
         e.preventDefault();
     }
