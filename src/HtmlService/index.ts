@@ -41,5 +41,5 @@ export function createTemplateFromFile(filePath: string, data = {}) {
     return template.evaluate();
 }
 
-export const include = (filePath: string, data?: object) =>
+global.include = (filePath: string, data?: object) =>
     createTemplateFromFile(filePath, data).getContent();

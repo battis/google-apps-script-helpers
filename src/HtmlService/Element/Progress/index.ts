@@ -51,9 +51,10 @@ export function reset(key: string) {
     setValue(key, 0);
 }
 
-export function getProgress(key: string) {
-    return { html: getHtml(key), complete: getComplete(key) };
-}
+global.getProgress = (key: string) => ({
+    html: getHtml(key),
+    complete: getComplete(key),
+});
 
 // TODO add indeterminate option
 // TODO add timer display/estimate

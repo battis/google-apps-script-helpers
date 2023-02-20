@@ -37,11 +37,14 @@ function show(
 export const showModal = show.bind(null, 'showModalDialog');
 export const showModeless = show.bind(null, 'showModelessDialog');
 
+global.dialogClose = () => null;
+const CLOSE = 'dialogClose';
+
 export function getHtmlOutput({
     message,
     buttons = [{ name: 'Ok' }],
     height = 100,
-    functionName = null,
+    functionName = CLOSE,
 }: HtmlOptions) {
     return Html.createTemplate(html, {
         message,
@@ -53,8 +56,6 @@ export function getHtmlOutput({
 
 export const getHtml = (options: HtmlOptions) =>
     getHtmlOutput(options).getContent();
-
-export const close = () => null;
 
 export function bindTo(root: Root) {
     return class {
