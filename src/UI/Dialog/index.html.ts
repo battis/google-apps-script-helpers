@@ -7,7 +7,7 @@ export default `<html>
   </head>
   <body>
     <div id="content">
-      <form id="dialog">
+      <form id="dialog<?!= data.id ?>">
         <div><?= data.message ?></div>
         <div class="bottom-right">
           <? for (const button of data.buttons) { ?>
@@ -24,11 +24,11 @@ export default `<html>
       </form>
     </div>
     <script>
-      function replaceContent(html) {
+      function replaceContent<?!= data.id ?>(html) {
         document.getElementById('content').innerHTML = html;
       }
 
-      function attachEvent(element, event, handler) {
+      function attachEvent<?!= data.id ?>(element, event, handler) {
         if (element.attachEvent) {
           element.attachEvent(event, handler);
         } else {
@@ -36,22 +36,22 @@ export default `<html>
         }
       }
 
-      function handleResponse(value) {
+      function handleResponse<?!= data.id ?>(value) {
         if (value) {
-          replaceContent(value)
+          replaceContent<?!= data.id ?>(value)
         } else {
           google.script.host.close();
         }
       }
 
-      attachEvent(document.getElementById('dialog'), 'submit', function(e) {
+      attachEvent<?!= data.id ?>(document.getElementById('dialog<?!= data.id ?>'), 'submit', function(e) {
         if (e.preventDefault) {
           e.preventDefault();
         }
-        for (const button of document.querySelectorAll('#dialog button')) {
+        for (const button of document.querySelectorAll('#dialog<?!= data.id ?> button')) {
           button.disabled = true;
         }
-        google.script.run.withSuccessHandler(handleResponse).<?!= data.functionName ?>(e.submitter.value);
+        google.script.run.withSuccessHandler(handleResponse<?!= data.id ?>).<?!= data.functionName ?>(e.submitter.value);
         return false;
       });
     </script>
