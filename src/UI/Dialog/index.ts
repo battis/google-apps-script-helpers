@@ -50,7 +50,7 @@ export function getHtmlOutput({
         message,
         buttons: buttons.map(standardizeButton),
         functionName,
-        id: Utilities.getUuid().replaceAll(/[^a-z0-9]/i, ''),
+        id: Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, ''),
     }).setHeight(height);
 }
 
