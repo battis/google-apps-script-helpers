@@ -23,28 +23,17 @@ export default `<html>
         </div>
       </form>
     </div>
+    <?!= include('lib', data) ?>
     <script>
-      function replaceContent_<?!= data.id ?>(html) {
-        document.getElementById('content').innerHTML = html;
-      }
-
-      function attachEvent_<?!= data.id ?>(element, event, handler) {
-        if (element.attachEvent) {
-          element.attachEvent(event, handler);
-        } else {
-          element.addEventListener(event, handler);
-        }
-      }
-
-      function handleResponse_<?!= data.id ?>(value) {
-        if (value) {
-          replaceContent_<?!= data.id ?>(value)
+      function handleResponse_<?!= data.id ?>(html) {
+        if (html) {
+          replaceContent(html)
         } else {
           google.script.host.close();
         }
       }
 
-      attachEvent_<?!= data.id ?>(document.getElementById('dialog_<?!= data.id ?>'), 'submit', function(e) {
+      attachEvent(document.getElementById('dialog_<?!= data.id ?>'), 'submit', function(e) {
         if (e.preventDefault) {
           e.preventDefault();
         }
