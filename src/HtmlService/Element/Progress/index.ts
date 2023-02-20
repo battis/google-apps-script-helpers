@@ -76,7 +76,7 @@ function update(key: string) {
 export const getHtmlOutput = (thread: string) =>
     Html.createTemplate(html, { thread }).setHeight(100);
 
-export function getInstance(key: string) {
+export function bindTo(key: string) {
     return class {
         public static reset = reset.bind(null, key);
         public static getProgress = getProgress.bind(null, key);
@@ -93,3 +93,5 @@ export function getInstance(key: string) {
         public static getHtml = getHtml.bind(null, key);
     };
 }
+/** @deprecated */
+export const getInstance = bindTo;

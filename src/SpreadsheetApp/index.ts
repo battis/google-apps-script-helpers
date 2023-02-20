@@ -6,11 +6,7 @@ import * as V from './Value';
 export * as DeveloperMetadata from './DeveloperMetadata';
 export * as Protection from './Protection';
 
-export const Dialog = {
-    showModal: (options) => D.showModal({ ...options, root: SpreadsheetApp }),
-    showModeless: (options) =>
-        D.showModeless({ ...options, root: SpreadsheetApp }),
-};
+export const Dialog = D.bindTo(SpreadsheetApp);
 
 /** @deprecated */
 export const addImportrangePermission = P.addImportrangePermission;

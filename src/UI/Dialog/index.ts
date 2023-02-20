@@ -13,9 +13,11 @@ type HtmlOptions = {
     buttons?: (Button | string)[];
     functionName: string;
 };
-type DialogOptions = HtmlOptions & {
-    root: Root;
+type RootlessDialogOptions = HtmlOptions & {
     title: string;
+};
+type DialogOptions = RootlessDialogOptions & {
+    root: Root;
 };
 
 function standardizeButton(button: Button | string) {
@@ -48,7 +50,18 @@ export function getHtmlOutput({
     }).setHeight(height);
 }
 
-export const getHtml = (options: DialogOptions) =>
+export const getHtml = (options: HtmlOptions) =>
     getHtmlOutput(options).getContent();
 
 export const close = () => null;
+
+export function bindTo(root: Root) {
+    return class {
+        showModal = (options: RootlessDialogOptions) =>
+            showModal({ ...options, root });
+        showModeless = (options: RootlessDialogOptions) =>
+            showModeless({ ...options, root });
+        getHtmlOutput = (options: HtmlOptions) => getHtmlOutput(options);
+        getHtml = (options: HtmlOptions) => getHtml(options);
+    };
+}
