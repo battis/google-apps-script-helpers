@@ -48,6 +48,9 @@ export default `<html>
         if (e.preventDefault) {
           e.preventDefault();
         }
+        for (const button of document.querySelectorAll('#dialog button')) {
+          button.disabled = true;
+        }
         google.script.run.withSuccessHandler(handleResponse).<?!= data.functionName ?>(e.submitter.value);
         return false;
       });
