@@ -24,7 +24,7 @@ function standardizeButton(button: Button | string) {
 }
 
 function show(
-    show: string,
+    showFunctionName: string,
     {
         root,
         message,
@@ -34,7 +34,7 @@ function show(
         functionName = null,
     }: Options
 ) {
-    root.getUi()[show](
+    root.getUi()[showFunctionName](
         Html.createTemplate(html, {
             message,
             buttons: buttons.map(standardizeButton),
@@ -44,7 +44,7 @@ function show(
     );
 }
 
-export const showModal = show.bind(null, 'showModal');
-export const showModeless = show.bind(null, 'showModeless');
+export const showModal = show.bind(null, 'showModalDialog');
+export const showModeless = show.bind(null, 'showModelessDialog');
 
 export const close = () => null;
