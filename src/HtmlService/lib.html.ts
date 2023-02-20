@@ -1,8 +1,11 @@
 export default `<script>
   if (!replaceContent) {
+      console.log('defining replaceContent()')
       replaceContent = (html) => {
           document.getElementById('content').innerHTML = html;
       }
+  } else {
+      console.log('replaceContent() alreadu defined')
   }
 
   if (!attachEvent) {
