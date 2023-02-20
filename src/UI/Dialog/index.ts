@@ -20,6 +20,8 @@ type RootlessDialogOptions = HtmlOptions & {
 type DialogOptions = RootlessDialogOptions & {
     root: Root;
 };
+export type Callback = { functionName: string; args?: any[] };
+export type ResponseHandler = (response: string) => string | Callback | void;
 
 function standardizeButton(button: Button | string) {
     if (typeof button == 'string') {
