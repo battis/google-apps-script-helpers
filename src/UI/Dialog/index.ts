@@ -35,7 +35,7 @@ function show(
     root
         .getUi()
     [showFunctionName](
-        Html.createTemplate(html, { content: getHtmlOutput(dialog) }),
+        Html.createTemplate(html, { content: getHtml(dialog) }),
         title
     );
 }
