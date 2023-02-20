@@ -58,11 +58,12 @@ export const close = () => null;
 
 export function bindTo(root: Root) {
     return class {
-        showModal = (options: RootlessDialogOptions) =>
+        public static showModal = (options: RootlessDialogOptions) =>
             showModal({ ...options, root });
-        showModeless = (options: RootlessDialogOptions) =>
+        public static showModeless = (options: RootlessDialogOptions) =>
             showModeless({ ...options, root });
-        getHtmlOutput = (options: HtmlOptions) => getHtmlOutput(options);
-        getHtml = (options: HtmlOptions) => getHtml(options);
+        public static getHtmlOutput = (options: HtmlOptions) =>
+            getHtmlOutput(options);
+        public static getHtml = (options: HtmlOptions) => getHtml(options);
     };
 }
