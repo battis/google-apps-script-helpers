@@ -1,4 +1,5 @@
 export default `<script>
+  console.log('lib loaded')
   if (!replaceContent) {
       console.log('defining replaceContent()')
       replaceContent = (html) => {
