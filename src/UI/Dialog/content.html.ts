@@ -16,9 +16,12 @@ export default `
 </form>
 <script>
 
-function handleResponse_<?!= data.id ?>(html) {
-    if (html) {
+function handleResponse_<?!= data.id ?>(response) {
+    if (typeof response == 'string') {
         replaceContent(html);
+    } else if ('callback' in response) {
+        const args = callback.args || [];
+        window[callback.functionName](...args);
     } else {
         google.script.host.close();
     }
