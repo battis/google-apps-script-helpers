@@ -1,8 +1,6 @@
 export default `
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <title>Progress</title>
     <link
       rel="stylesheet"
       href="https://ssl.gstatic.com/docs/script/css/add-ons1.css"

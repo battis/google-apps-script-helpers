@@ -1,9 +1,16 @@
+import * as D from '../UI/Dialog';
 import * as F from './Function';
 import * as P from './Permission';
 import * as V from './Value';
 
 export * as DeveloperMetadata from './DeveloperMetadata';
 export * as Protection from './Protection';
+
+export const Dialog = {
+    showModal: (options) => D.showModal({ ...options, root: SpreadsheetApp }),
+    showModeless: (options) =>
+        D.showModeless({ ...options, root: SpreadsheetApp }),
+};
 
 /** @deprecated */
 export const addImportrangePermission = P.addImportrangePermission;
