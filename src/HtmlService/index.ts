@@ -1,5 +1,5 @@
 export * as Element from './Element';
-import html from './helpers.html';
+import lib from './lib.html';
 
 /**
   ### `app.ts`
@@ -31,12 +31,15 @@ export function createTemplate(html: string, data = {}) {
 }
 
 export function createTemplateFromFile(filePath: string, data = {}) {
-    const template = HtmlService.createTemplateFromFile(filePath);
+    let template: GoogleAppsScript.HTML.HtmlTemplate;
+    if (filePath == 'lib') {
+        template = HtmlService.createTemplate(lib);
+    } else {
+        template = HtmlService.createTemplateFromFile(filePath);
+    }
     template.data = data;
     return template.evaluate();
 }
 
 export const include = (filePath: string, data?: object) =>
     createTemplateFromFile(filePath, data).getContent();
-
-export const helpers = () => html;
