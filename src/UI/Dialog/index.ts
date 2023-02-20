@@ -1,4 +1,5 @@
 import * as Html from '../../HtmlService';
+import content from './content.html';
 import html from './index.html';
 
 type Root = { getUi: () => GoogleAppsScript.Base.Ui };
@@ -31,7 +32,12 @@ function show(
     showFunctionName: string,
     { root, title, ...dialog }: DialogOptions
 ) {
-    root.getUi()[showFunctionName](getHtmlOutput(dialog), title);
+    root
+        .getUi()
+    [showFunctionName](
+        Html.createTemplate(html, { content: getHtmlOutput(dialog) }),
+        title
+    );
 }
 
 export const showModal = show.bind(null, 'showModalDialog');
@@ -46,7 +52,7 @@ export function getHtmlOutput({
     height = 100,
     functionName = CLOSE,
 }: HtmlOptions) {
-    return Html.createTemplate(html, {
+    return Html.createTemplate(content, {
         message,
         buttons: buttons.map(standardizeButton),
         functionName,
