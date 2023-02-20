@@ -51,7 +51,7 @@ export function reset(key: string) {
     setValue(key, 0);
 }
 
-global.getProgress = (key: string) => ({
+export const getProgress = (key: string) => ({
     html: getHtml(key),
     complete: getComplete(key),
 });

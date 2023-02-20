@@ -37,7 +37,7 @@ function show(
 export const showModal = show.bind(null, 'showModalDialog');
 export const showModeless = show.bind(null, 'showModelessDialog');
 
-global.dialogClose = () => null;
+export const dialogClose = () => null;
 const CLOSE = 'dialogClose';
 
 export function getHtmlOutput({
