@@ -3,7 +3,7 @@ import content from './content.html';
 import html from './index.html';
 
 type Root = { getUi: () => GoogleAppsScript.Base.Ui };
-type Button = {
+export type Button = {
     name: string;
     value?: string;
     class?: string;
