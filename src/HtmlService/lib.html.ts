@@ -1,21 +1,15 @@
 export default `<script>
-  console.log('lib loaded')
-  if (!window.replaceContent) {
-      console.log('defining replaceContent()')
-      window.replaceContent = (html) => {
+  if (!window.GAS_LIGHTER_LIB_LOADED) {
+      window.replaceContent = function(html) {
           document.getElementById('content').innerHTML = html;
       }
-  } else {
-      console.log('replaceContent() alreadu defined')
-  }
-
-  if (!window.attachEvent) {
-      window.attachEvent = (element, event, handler) => {
+      window.attachEvent = function(element, event, handler) {
           if (element.attachEvent) {
               element.attachEvent(event, handler);
           } else {
               element.addEventListener(event, handler);
           }
       }
+      window.GAS_LIGHTER_LIB_LOADED = true;
   }
 </script>`;
