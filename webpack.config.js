@@ -22,7 +22,7 @@ module.exports = ({
     module: {
       rules: [
         {
-          test: /\.ts$/,
+          test: /\.(ts|html)$/,
           loader: 'ts-loader',
           options: { allowTsInNodeModules: true },
         },
