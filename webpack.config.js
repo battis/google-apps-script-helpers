@@ -22,9 +22,13 @@ module.exports = ({
     module: {
       rules: [
         {
-          test: /\.(ts|html)$/,
+          test: /\.ts$/,
           loader: 'ts-loader',
           options: { allowTsInNodeModules: true },
+        },
+        {
+          test: /\.html$/,
+          type: 'asset/source',
         },
       ],
     },
