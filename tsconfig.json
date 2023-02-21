@@ -5,6 +5,9 @@
     "experimentalDecorators": true,
 
     "noImplicitAny": false,
-    "strictNullChecks": false
-  }
+    "strictNullChecks": false,
+
+    "outDir": "./lib"
+  },
+  "include": ["./src"]
 }
