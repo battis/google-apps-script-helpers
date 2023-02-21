@@ -1,6 +1,7 @@
 import * as Html from '../../';
 import * as Cache from '../../../CacheService';
-import html from './index.html';
+import page from './page.html';
+import progress from './progress.html';
 
 function prefix(key: string, token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
@@ -61,22 +62,12 @@ export const getProgress = (key: string) => ({
 function update(key: string) {
     const value = getValue(key);
     const max = getMax(key);
-    setHtml(
-        key,
-        `<div class="battis GasLighter HtmlService Element Progress">
-        <progress
-          style="width: 100%"
-          class="progress"
-          value="${value}"
-          max="${max}"
-        >${value} / ${max}</progress>
-        <div class="status">${getStatus(key) || ''}</div>
-      </div>`
-    );
+    const status = getStatus(key) || '';
+    setHtml(key, Html.createTemplate(progress, { value, max, status }));
 }
 
 export const getHtmlOutput = (thread: string) =>
-    Html.createTemplate(html, { thread }).setHeight(100);
+    Html.createTemplate(page, { thread }).setHeight(100);
 
 export function bindTo(key: string) {
     return class {
