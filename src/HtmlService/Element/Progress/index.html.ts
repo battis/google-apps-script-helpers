@@ -5,11 +5,6 @@ export default `
       rel="stylesheet"
       href="https://ssl.gstatic.com/docs/script/css/add-ons1.css"
     />
-    <style>
-      .battis.GasLighter.HtmlService.Element.Progress .progress {
-        width: 100%;
-      }
-    </style>
   </head>
   <body>
     <div id="content">Loading…</div>

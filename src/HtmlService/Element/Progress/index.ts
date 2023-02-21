@@ -65,6 +65,7 @@ function update(key: string) {
         key,
         `<div class="battis GasLighter HtmlService Element Progress">
         <progress
+          style="width: 100%"
           class="progress"
           value="${value}"
           max="${max}"
