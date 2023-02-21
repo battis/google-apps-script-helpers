@@ -1,13 +1,10 @@
-export default `
 <html>
   <head>
-    <link
-      rel="stylesheet"
-      href="https://ssl.gstatic.com/docs/script/css/add-ons1.css"
-    />
+    <?!= include('style', data) ?>
   </head>
   <body>
     <div id="content">Loading…</div>
+    <?!= include('lib', data) ?>
     <script>
       const thread = '<?= data.thread ?>';
       function updateProgress() {
@@ -16,7 +13,7 @@ export default `
             if (progress.complete) {
               google.script.host.close();
             } else {
-              document.getElementById('content').innerHTML = progress.html;
+              replaceContent(progress.html);
               updateProgress();
             }
           })
@@ -26,4 +23,3 @@ export default `
     </script>
   </body>
 </html>
-`;

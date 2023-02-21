@@ -1,6 +1,6 @@
 import * as Html from '../../HtmlService';
 import content from './content.html';
-import html from './index.html';
+import page from './page.html';
 
 type Root = { getUi: () => GoogleAppsScript.Base.Ui };
 export type Button = {
@@ -14,10 +14,10 @@ type HtmlOptions = {
     buttons?: (Button | string)[];
     functionName?: string;
 };
-type RootlessDialogOptions = HtmlOptions & {
+type RootlessOptions = HtmlOptions & {
     title: string;
 };
-type DialogOptions = RootlessDialogOptions & {
+type Options = RootlessOptions & {
     root: Root;
 };
 export type Callback = { functionName: string; args?: any[] };
@@ -30,14 +30,11 @@ function standardizeButton(button: Button | string) {
     return { value: button.name, ...button };
 }
 
-function show(
-    showFunctionName: string,
-    { root, title, ...dialog }: DialogOptions
-) {
+function show(showFunctionName: string, { root, title, ...dialog }: Options) {
     root
         .getUi()
     [showFunctionName](
-        Html.createTemplate(html, { content: getHtml(dialog) }),
+        Html.createTemplate(page, { content: getHtml(dialog) }),
         title
     );
 }
@@ -67,9 +64,9 @@ export const getHtml = (options: HtmlOptions) =>
 
 export function bindTo(root: Root) {
     return class {
-        public static showModal = (options: RootlessDialogOptions) =>
+        public static showModal = (options: RootlessOptions) =>
             showModal({ ...options, root });
-        public static showModeless = (options: RootlessDialogOptions) =>
+        public static showModeless = (options: RootlessOptions) =>
             showModeless({ ...options, root });
         public static getHtmlOutput = (options: HtmlOptions) =>
             getHtmlOutput(options);

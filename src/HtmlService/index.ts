@@ -1,5 +1,6 @@
 export * as Element from './Element';
 import lib from './lib.html';
+import style from './style.html';
 
 /**
   ### `app.ts`
@@ -32,10 +33,15 @@ export function createTemplate(html: string, data = {}) {
 
 export function createTemplateFromFile(filePath: string, data = {}) {
     let template: GoogleAppsScript.HTML.HtmlTemplate;
-    if (filePath == 'lib') {
-        template = HtmlService.createTemplate(lib);
-    } else {
-        template = HtmlService.createTemplateFromFile(filePath);
+    switch (filePath) {
+        case 'lib':
+            template = HtmlService.createTemplate(lib);
+            break;
+        case 'style':
+            template = HtmlService.createTemplate(style);
+            break;
+        default:
+            template = HtmlService.createTemplateFromFile(filePath);
     }
     template.data = data;
     return template.evaluate();
