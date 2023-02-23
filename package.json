@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Seth Battis <seth@battis.net>",
   "license": "GPL-3.0",
-  "main": "./src/index.ts",
+  "main": "./src/index.js",
   "types": "./src/types.d.ts",
   "homepage": "https://github.com/battis/gas-lighter",
   "repository": {
@@ -14,9 +14,12 @@
     "url": "https://github.com/battis/gas-lighter/issues"
   },
   "scripts": {
-    "update": "pnpm update --shamefully-hoist && npm update --package-lock-only && cp package.json publish/package.json && cp *-lock.* publish/",
+    "dev": "git add worktree publish publish",
+    "update-dependencies": "pnpm update --shamefully-hoist && npm update --package-lock-only",
+    "transfer-package-to-publish": "copyfiles package.json package-lock.json pnpm-lock.yaml publish",
+    "update": "npm run update-dependencies && npm run transfer-package-to-publish",
     "clean": "rimraf publish/src",
-    "copy-files": "copyfiles -u 1 \"src/**/*.html\" pubish/src",
+    "copy-files": "copyfiles -u 1 \"src/**/*.html\" publish/src",
     "build": "npm run clean && tsc && npm rum copy-files"
   },
   "peerDependencies": {
