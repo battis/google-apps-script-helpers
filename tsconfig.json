@@ -7,7 +7,8 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
 
-    "outDir": "./lib"
+    "outDir": "./lib/src",
+    "declaration": true
   },
   "include": ["./src"]
 }
