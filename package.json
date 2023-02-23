@@ -14,7 +14,7 @@
     "url": "https://github.com/battis/gas-lighter/issues"
   },
   "scripts": {
-    "update": "pnpm update --shamefully-hoist; npm update --package-lock-only",
+    "update": "pnpm update --shamefully-hoist && npm update --package-lock-only && cp package.json publish/package.json && cp *-lock.* publish/",
     "clean": "rimraf publish/src",
     "copy-files": "copyfiles -u 1 \"src/**/*.html\" pubish/src",
     "build": "npm run clean && tsc && npm rum copy-files"
