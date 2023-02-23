@@ -15,8 +15,8 @@
   },
   "scripts": {
     "update": "pnpm update --shamefully-hoist; npm update --package-lock-only",
-    "clean": "rimraf lib/src",
-    "copy-files": "copyfiles -u 1 \"src/**/*.html\" lib/src",
+    "clean": "rimraf publish/src",
+    "copy-files": "copyfiles -u 1 \"src/**/*.html\" pubish/src",
     "build": "npm run clean && tsc && npm rum copy-files"
   },
   "peerDependencies": {
