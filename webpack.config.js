@@ -24,7 +24,6 @@ module.exports = ({
         {
           test: /\.ts$/,
           loader: 'ts-loader',
-          options: { allowTsInNodeModules: true },
         },
         {
           test: /\.html$/,
