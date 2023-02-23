@@ -8,16 +8,34 @@ export type Button = {
     value?: string;
     class?: string;
 };
-type HtmlOptions = {
+type BaseHtmlOptions = {
     message: string;
     height?: number;
     buttons?: (Button | string)[];
-    functionName?: string;
 };
-type RootlessOptions = HtmlOptions & {
+type HtmlOptionsWithBackEndCallback = BaseHtmlOptions & {
+    functionName?: string;
+    handler?: never;
+    script?: true;
+};
+type HtmlOptionsWithHandler = BaseHtmlOptions & {
+    functionName?: never;
+    handler?: string;
+    script?: true;
+};
+type HtmlOptionsWithoutScript = BaseHtmlOptions & {
+    functionName?: never;
+    handler?: never;
+    script: false;
+};
+export type HtmlOptions =
+    | HtmlOptionsWithHandler
+    | HtmlOptionsWithBackEndCallback
+    | HtmlOptionsWithoutScript;
+export type RootlessOptions = HtmlOptions & {
     title: string;
 };
-type Options = RootlessOptions & {
+export type Options = RootlessOptions & {
     root: Root;
 };
 export type Callback = { functionName: string; args?: any[] };
@@ -44,18 +62,25 @@ export const showModeless = show.bind(null, 'showModelessDialog');
 
 export const dialogClose = () => null;
 const CLOSE = 'dialogClose';
+const HANDLER = 'handleSubmit_{{id}}';
 
 export function getHtmlOutput({
     message,
     buttons = [{ name: 'Ok' }],
     height = 100,
     functionName = CLOSE,
+    handler = HANDLER,
+    script = true,
 }: HtmlOptions) {
+    const id = Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, '');
+    handler = handler.replace('{{id}}', id);
     return Html.createTemplate(content, {
         message,
         buttons: buttons.map(standardizeButton),
+        script,
         functionName,
-        id: Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, ''),
+        handler,
+        id,
     }).setHeight(height);
 }
 
