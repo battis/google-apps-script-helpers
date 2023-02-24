@@ -67,7 +67,7 @@ function update(key: string) {
     const value = getValue(key);
     const max = getMax(key);
     const status = getStatus(key) || '';
-    setHtml(key, createTemplate(progress, { value, max, status }));
+    setHtml(key, createTemplate(progress, { value, max, status }).getContent());
 }
 
 export const getHtmlOutput = (thread: string) =>

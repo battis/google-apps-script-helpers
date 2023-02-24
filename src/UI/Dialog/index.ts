@@ -62,18 +62,21 @@ export const showModeless = show.bind(null, 'showModelessDialog');
 
 export const dialogClose = () => null;
 const CLOSE = 'dialogClose';
-const HANDLER = 'handleSubmit_{{id}}';
 
 export function getHtmlOutput({
     message,
     buttons = [{ name: 'Ok' }],
     height = 100,
-    functionName = CLOSE,
-    handler = HANDLER,
+    functionName,
+    handler,
     script = true,
 }: HtmlOptions) {
     const id = Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, '');
-    handler = handler.replace('{{id}}', id);
+    if (handler) {
+        handler = handler.replace('{{id}}', id);
+    } else if (!functionName && script) {
+        functionName = CLOSE;
+    }
     return createTemplate(content, {
         message,
         buttons: buttons.map(standardizeButton),
