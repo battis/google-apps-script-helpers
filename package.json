@@ -19,7 +19,7 @@
     "transfer-package-to-publish": "copyfiles package.json package-lock.json pnpm-lock.yaml publish",
     "update": "npm run update-dependencies && npm run transfer-package-to-publish",
     "clean": "rimraf publish/src",
-    "copy-files": "copyfiles -u 1 \"src/**/*.html\" publish/src",
+    "copy-files": "copyfiles \"src/**/*.html\" publish",
     "build": "npm run clean && tsc && npm rum copy-files"
   },
   "peerDependencies": {

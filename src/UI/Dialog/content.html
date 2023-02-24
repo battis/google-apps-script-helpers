@@ -33,9 +33,13 @@
         for (const button of document.querySelectorAll('#dialog_<?!= data.id ?> button')) {
             button.disabled = true;
         }
+        <? if (data.functionName) { ?>
         google.script.run
             .withSuccessHandler(handleResponse_<?!= data.id ?>)
-            .<?!= data.functionName ?>(e.submitter.value);
+        .<?!= data.functionName ?>(e.submitter.value);
+        <? } else if (data.handler) { ?>
+        <?!= data.handler ?>(e.submitter.value);
+        <? } ?>
         return false;
     }
 
