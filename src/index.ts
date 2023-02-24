@@ -1,11 +1,23 @@
-export * as CacheService from './CacheService';
-export * as CardService from './CardService';
-export * as DriveApp from './DriveApp';
-export * as Globals from './Globals';
-export * as HtmlService from './HtmlService';
-export * as PropertiesService from './PropertiesService';
-export * as SpreadsheetApp from './SpreadsheetApp';
-export * as UI from './UI';
+import * as CacheService from './CacheService';
+import * as CardService from './CardService';
+import * as DriveApp from './DriveApp';
+import * as Globals from './Globals';
+import * as HtmlService from './HtmlService';
+import * as PropertiesService from './PropertiesService';
+import * as SpreadsheetApp from './SpreadsheetApp';
+import * as UI from './UI';
+
+const g = {
+    CacheService,
+    CardService,
+    DriveApp,
+    Globals,
+    HtmlService,
+    PropertiesService,
+    SpreadsheetApp,
+    UI,
+};
+export default g;
 
 /** @deprecated */
 export const Helper = {

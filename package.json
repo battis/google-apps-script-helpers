@@ -20,7 +20,8 @@
     "update": "npm run update-dependencies && npm run transfer-package-to-publish",
     "clean": "rimraf publish/src",
     "copy-files": "copyfiles -u 1 \"src/**/*.html\" publish/src",
-    "build": "npm run clean && tsc && npm rum copy-files"
+    "build": "npm run clean && tsc && npm rum copy-files",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "@tsconfig/recommended": "^1.0.2",
