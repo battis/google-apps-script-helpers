@@ -7,88 +7,110 @@ import { createTemplate } from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
-function prefix(key: string, token: string, delimiter = '.') {
-    return ['battis', 'Terse', 'HtmlService', 'Progress', key, token].join(
+function prefix(thread: string, token: string, delimiter = '.') {
+    return ['battis', 'Terse', 'HtmlService', 'Progress', thread, token].join(
         delimiter
     );
 }
 
-function get(token: string, key: string) {
-    return getUserCache(prefix(key, token));
+function get(token: string, thread: string) {
+    return getUserCache(prefix(thread, token));
 }
 
-function put(token: string, key: string, value: any) {
-    return putUserCache(prefix(key, token), value);
+function put(token: string, thread: string, value: any) {
+    return putUserCache(prefix(thread, token), value);
 }
 
 // FIXME I don't think "remove" means what you think it means
-function remove(token: string, key: string) {
-    return removeUserCache(prefix(key, token));
+function remove(token: string, thread: string) {
+    return removeUserCache(prefix(thread, token));
 }
 
-function putAndUpdate(token: string, key: string, value: any) {
-    put(token, key, value);
-    update(key);
+function putAndUpdate(token: string, thread: string, value: any) {
+    put(token, thread, value);
+    update(thread);
 }
 
-export const setStatus = putAndUpdate.bind(null, 'status');
-export const getStatus = get.bind(null, 'status');
+export const setStatus = (thread: string, status: string) =>
+    putAndUpdate('status', thread, status);
+export const getStatus = (thread: string) => get('status', thread);
 
-export const setValue = putAndUpdate.bind(null, 'value');
-export const getValue = get.bind(null, 'value');
-export const incrementValue = (key: string, increment = 1) =>
-    setValue(key, getValue(key) + increment);
-export const decrementValue = (key: string, decrement = 1) =>
-    setValue(key, getValue(key) - decrement);
+export const setValue = (thread: string, value: number) =>
+    putAndUpdate('value', thread, value);
+export const getValue = (thread: string) => get('value', thread);
+export const incrementValue = (thread: string, increment = 1) =>
+    setValue(thread, getValue(thread) + increment);
+export const decrementValue = (thread: string, decrement = 1) =>
+    setValue(thread, getValue(thread) - decrement);
 
-export const setMax = putAndUpdate.bind(null, 'max');
-export const getMax = get.bind(null, 'max');
+export const setMax = (thread: string, max: number) =>
+    putAndUpdate('max', thread, max);
+export const getMax = (thread: string) => get('max', thread);
 
-export const setComplete = put.bind(null, 'complete');
-export const getComplete = get.bind(null, 'complete');
+export const setComplete = (thread: string, message: string) =>
+    put('complete', thread, message);
+export const getComplete = (thread: string) => get('complete', thread);
 
-export const setHtml = put.bind(null, 'html');
-export const getHtml = get.bind(null, 'html');
+export const setHtml = (thread: string, html: string) =>
+    put('html', thread, html);
+export const getHtml = (thread: string) => get('html', thread);
 
-export function reset(key: string) {
-    remove(key, 'complete');
-    remove(key, 'status');
-    setValue(key, 0);
+export function reset(thread: string) {
+    remove(thread, 'complete');
+    remove(thread, 'status');
+    setValue(thread, 0);
 }
 
-export const getProgress = (key: string) => ({
-    html: getHtml(key),
-    complete: getComplete(key),
+export const getProgress = (thread: string) => ({
+    html: getHtml(thread),
+    complete: getComplete(thread),
 });
 
 // TODO add indeterminate option
 // TODO add timer display/estimate
-function update(key: string) {
-    const value = getValue(key);
-    const max = getMax(key);
-    const status = getStatus(key) || '';
-    setHtml(key, createTemplate(progress, { value, max, status }).getContent());
+function update(thread: string) {
+    const value = getValue(thread);
+    const max = getMax(thread);
+    const status = getStatus(thread) || '';
+    setHtml(
+        thread,
+        createTemplate(progress, { value, max, status }).getContent()
+    );
 }
 
 export const getHtmlOutput = (thread: string) =>
     createTemplate(page, { thread }).setHeight(100);
 
-export function bindTo(key: string) {
+export type ProgressBinding = {
+    reset: () => void;
+    getProgress: () => { html: string; complete: string };
+    setStatus: (status: string) => void;
+    getStatus: () => string;
+    setValue: (value: number) => void;
+    getValue: () => number;
+    incrementValue: () => void;
+    decrementValue: () => void;
+    setMax: (max: number) => void;
+    getMax: () => number;
+    setComplete: (message: string) => void;
+    getComplete: () => string;
+    getHtml: () => string;
+};
+
+export function bindTo(thread: string): ProgressBinding {
     return class {
-        public static reset = reset.bind(null, key);
-        public static getProgress = getProgress.bind(null, key);
-        public static setStatus = setStatus.bind(null, key);
-        public static getStatus = getStatus.bind(null, key);
-        public static setValue = setValue.bind(null, key);
-        public static getValue = getValue.bind(null, key);
-        public static incrementValue = incrementValue.bind(null, key);
-        public static decrementValue = decrementValue.bind(null, key);
-        public static setMax = setMax.bind(null, key);
-        public static getMax = getMax.bind(null, key);
-        public static setComplete = setComplete.bind(null, key);
-        public static getComplete = getComplete.bind(null, key);
-        public static getHtml = getHtml.bind(null, key);
+        public static reset = reset.bind(null, thread);
+        public static getProgress = getProgress.bind(null, thread);
+        public static setStatus = setStatus.bind(null, thread);
+        public static getStatus = getStatus.bind(null, thread);
+        public static setValue = setValue.bind(null, thread);
+        public static getValue = getValue.bind(null, thread);
+        public static incrementValue = incrementValue.bind(null, thread);
+        public static decrementValue = decrementValue.bind(null, thread);
+        public static setMax = setMax.bind(null, thread);
+        public static getMax = getMax.bind(null, thread);
+        public static setComplete = setComplete.bind(null, thread);
+        public static getComplete = getComplete.bind(null, thread);
+        public static getHtml = getHtml.bind(null, thread);
     };
 }
-/** @deprecated */
-export const getInstance = bindTo;

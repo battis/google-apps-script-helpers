@@ -8,22 +8,22 @@ export type Button = {
     value?: string;
     class?: string;
 };
-type BaseHtmlOptions = {
+export type BaseHtmlOptions = {
     message: string;
     height?: number;
     buttons?: (Button | string)[];
 };
-type HtmlOptionsWithBackEndCallback = BaseHtmlOptions & {
+export type HtmlOptionsWithBackEndCallback = BaseHtmlOptions & {
     functionName?: string;
     handler?: never;
     script?: true;
 };
-type HtmlOptionsWithHandler = BaseHtmlOptions & {
+export type HtmlOptionsWithHandler = BaseHtmlOptions & {
     functionName?: never;
     handler?: string;
     script?: true;
 };
-type HtmlOptionsWithoutScript = BaseHtmlOptions & {
+export type HtmlOptionsWithoutScript = BaseHtmlOptions & {
     functionName?: never;
     handler?: never;
     script: false;
@@ -90,7 +90,13 @@ export function getHtmlOutput({
 export const getHtml = (options: HtmlOptions) =>
     getHtmlOutput(options).getContent();
 
-export function bindTo(root: Root) {
+export type DialogBinding<T> = {
+    showModal: (options: RootlessOptions) => void;
+    showModeless: (options: RootlessOptions) => void;
+    getHtmlOutput: (options: HtmlOptions) => GoogleAppsScript.HTML.HtmlOutput;
+};
+
+export function bindTo<T>(root: T & Root): DialogBinding<T> {
     return class {
         public static showModal = (options: RootlessOptions) =>
             showModal({ ...options, root });

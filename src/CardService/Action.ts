@@ -6,7 +6,7 @@ export type Action = {
     parameters?: UnprocessedParameters;
 };
 
-export function stringify(parameters: UnprocessedParameters): Parameters {
+function stringify(parameters: UnprocessedParameters): Parameters {
     for (const key of Object.keys(parameters)) {
         if (typeof parameters[key] != 'string') {
             parameters[key] = JSON.stringify(parameters[key]);
@@ -16,7 +16,6 @@ export function stringify(parameters: UnprocessedParameters): Parameters {
     return parameters || {};
 }
 
-// FIXME fix typing to reflect requirement for functionName or openLink, etc.
 export function create({
     functionName,
     parameters = null,

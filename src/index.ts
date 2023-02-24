@@ -18,18 +18,3 @@ namespace g {
     export import UI = UI_namespace;
 }
 export default g;
-
-/** @deprecated */
-export namespace Helper {
-    export import DriveApp = DriveApp_namespace;
-    export import SpreadsheetApp = SpreadsheetApp_namespace;
-}
-
-/** @deprecated */
-export namespace Terse {
-    export import CacheService = CacheService_module;
-    export import CardService = CardService_namespace;
-    export import HtmlService = HtmlService_namespace;
-    export import PropertiesService = PropertiesService_module;
-    export import SpreadsheetApp = SpreadsheetApp_namespace;
-}

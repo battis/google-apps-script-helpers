@@ -14,12 +14,13 @@
     "url": "https://github.com/battis/gas-lighter/issues"
   },
   "scripts": {
-    "dev": "git add worktree publish publish",
+    "dev": "git worktree add dist dist && git worktree add docs docs",
+    "docs": "npx typedoc",
     "update-dependencies": "pnpm update --shamefully-hoist && npm update --package-lock-only",
-    "transfer-package-to-publish": "copyfiles package.json package-lock.json pnpm-lock.yaml publish",
-    "update": "npm run update-dependencies && npm run transfer-package-to-publish",
-    "clean": "rimraf publish/src",
-    "copy-files": "copyfiles \"src/**/*.html\" publish",
+    "transfer-package-to-dist": "copyfiles package.json package-lock.json pnpm-lock.yaml dist",
+    "update": "npm run update-dependencies && npm run transfer-package-to-dist",
+    "clean": "rimraf dist/src",
+    "copy-files": "copyfiles \"src/**/*.html\" dist",
     "build": "npm run clean && tsc && npm rum copy-files"
   },
   "peerDependencies": {
@@ -36,6 +37,7 @@
     "@types/node": "^18.14.1",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.1.2",
+    "typedoc": "^0.23.25",
     "typescript": "^4.9.5"
   },
   "prettier": "@battis/prettier-config",

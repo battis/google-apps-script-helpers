@@ -7,9 +7,13 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
 
-    "outDir": "./publish/src",
+    "outDir": "./dist/src",
     "declaration": true
   },
   "include": ["./src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "typedocOptions": {
+    "entryPoints": ["./src/index.ts"],
+    "out": "docs"
+  }
 }
