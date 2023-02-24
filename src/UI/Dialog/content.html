@@ -1,5 +1,5 @@
 <form id="dialog_<?!= data.id ?>">
-  <div><?= data.message ?></div>
+  <div><?!= data.message ?></div>
   <div class="bottom-right">
     <? for (const button of data.buttons) { ?>
     <button
@@ -8,7 +8,7 @@
       type="submit"
       value="<?= button.value ?>"
     >
-      <?= button.name ?>
+      <?!= button.name ?>
     </button>
     <? } ?>
   </div>
