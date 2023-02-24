@@ -1,6 +1,9 @@
-import * as P from './Permission';
+import * as Permission_module from './Permission';
+
+namespace DriveApp {
+    export import Permission = Permission_module;
+}
+export default DriveApp;
 
 /** @deprecated */
-export const addPermission = P.add;
-
-export const Permission = P;
+export const addPermission = Permission_module.add;

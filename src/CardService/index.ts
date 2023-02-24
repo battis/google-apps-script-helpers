@@ -1,33 +1,36 @@
-import * as A from './Action';
-import * as C from './Card';
-import * as N from './Navigation';
-import * as W from './Widget';
+import * as Action_module from './Action';
+import * as Card_module from './Card';
+import * as Navigation_module from './Navigation';
+import * as Widget_module from './Widget';
 
-export const Action = A;
-export const Card = C;
-export const Navigation = N;
-export const Widget = W;
-
-/** @deprecated */
-export const stringify = A.stringify;
-/** @deprecated */
-export const newAction = A.create;
+namespace CardService {
+    export import Action = Action_module;
+    export import Card = Card_module;
+    export import Navigation = Navigation_module;
+    export import Widget = Widget_module;
+}
+export default CardService;
 
 /** @deprecated */
-export const newCard = C.create;
+export const stringify = Action_module.stringify;
 /** @deprecated */
-export const newCardHeader = C.newCardHeader;
-/** @deprecated */
-export const newCardSection = C.newCardSection;
+export const newAction = Action_module.create;
 
 /** @deprecated */
-export const replaceStack = N.replaceStack;
+export const newCard = Card_module.create;
 /** @deprecated */
-export const pushCard = N.pushCard;
+export const newCardHeader = Card_module.newCardHeader;
+/** @deprecated */
+export const newCardSection = Card_module.newCardSection;
 
 /** @deprecated */
-export const newTexdtParagraph = W.newTextParagraph;
+export const replaceStack = Navigation_module.replaceStack;
 /** @deprecated */
-export const newDecordatedTexdt = W.newDecoratedText;
+export const pushCard = Navigation_module.pushCard;
+
 /** @deprecated */
-export const newTextButton = W.newTextButton;
+export const newTexdtParagraph = Widget_module.newTextParagraph;
+/** @deprecated */
+export const newDecordatedTexdt = Widget_module.newDecoratedText;
+/** @deprecated */
+export const newTextButton = Widget_module.newTextButton;

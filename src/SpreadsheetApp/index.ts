@@ -1,48 +1,50 @@
-import * as D from '../UI/Dialog';
-import * as F from './Function';
-import * as P from './Permission';
-import * as V from './Value';
+import * as Dialog_module from '../UI/Dialog';
+import * as DeveloperMetadata_module from './DeveloperMetadata';
+import * as Function_module from './Function';
+import * as Permission_module from './Permission';
+import * as Protection_module from './Protection';
+import * as Value_module from './Value';
 
-export * as DeveloperMetadata from './DeveloperMetadata';
-export * as Protection from './Protection';
-
-export const Dialog = D.bindTo(SpreadsheetApp);
-
-/** @deprecated */
-export const addImportrangePermission = P.addImportrangePermission;
-
-export const Permission = P;
-
-/** @deprecated */
-export const setValue = V.set;
-/** @deprecated */
-export const replaceWithDisplayValues = V.replaceWithDisplayValues;
-/** @deprecated */
-export const getSheetDisplayValues = V.getSheetDisplayValues;
-
-export const Value = V;
+namespace SpreadsheetApp_namespace {
+    export const Dialog = Dialog_module.bindTo(SpreadsheetApp);
+    export import Function = Function_module;
+    export import Permission = Permission_module;
+    export import Value = Value_module;
+    export import DeveloperMetadata = DeveloperMetadata_module;
+    export import Protection = Protection_module;
+}
+export default SpreadsheetApp_namespace;
 
 /** @deprecated */
-export const fcn = F.fcn;
-/** @deprecated */
-export const eq = F.eq;
-/** @deprecated */
-export const CHAR = F.CHAR;
-/** @deprecated */
-export const FILTER = F.FILTER;
-/** @deprecated */
-export const IF = F.IF;
-/** @deprecated */
-export const IFNA = F.IFNA;
-/** @deprecated */
-export const INDEX = F.INDEX;
-/** @deprecated */
-export const JOIN = F.JOIN;
-/** @deprecated */
-export const MATCH = F.MATCH;
-/** @deprecated */
-export const SORT = F.SORT;
-/** @deprecated */
-export const UNIQUE = F.UNIQUE;
+export const addImportrangePermission =
+    Permission_module.addImportrangePermission;
 
-export const Function = F;
+/** @deprecated */
+export const setValue = Value_module.set;
+/** @deprecated */
+export const replaceWithDisplayValues = Value_module.replaceWithDisplayValues;
+/** @deprecated */
+export const getSheetDisplayValues = Value_module.getSheetDisplayValues;
+
+/** @deprecated */
+export const fcn = Function_module.fcn;
+/** @deprecated */
+export const eq = Function_module.eq;
+/** @deprecated */
+export const CHAR = Function_module.CHAR;
+/** @deprecated */
+export const FILTER = Function_module.FILTER;
+/** @deprecated */
+export const IF = Function_module.IF;
+/** @deprecated */
+export const IFNA = Function_module.IFNA;
+/** @deprecated */
+export const INDEX = Function_module.INDEX;
+/** @deprecated */
+export const JOIN = Function_module.JOIN;
+/** @deprecated */
+export const MATCH = Function_module.MATCH;
+/** @deprecated */
+export const SORT = Function_module.SORT;
+/** @deprecated */
+export const UNIQUE = Function_module.UNIQUE;

@@ -1,8 +1,8 @@
-import * as Html from '../../HtmlService';
+import { createTemplate } from '../../HtmlService/Template';
 import content from './content.html';
 import page from './page.html';
 
-type Root = { getUi: () => GoogleAppsScript.Base.Ui };
+export type Root = { getUi: () => GoogleAppsScript.Base.Ui };
 export type Button = {
     name: string;
     value?: string;
@@ -52,7 +52,7 @@ function show(showFunctionName: string, { root, title, ...dialog }: Options) {
     root
         .getUi()
     [showFunctionName](
-        Html.createTemplate(page, { content: getHtml(dialog) }),
+        createTemplate(page, { content: getHtml(dialog) }),
         title
     );
 }
@@ -74,7 +74,7 @@ export function getHtmlOutput({
 }: HtmlOptions) {
     const id = Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, '');
     handler = handler.replace('{{id}}', id);
-    return Html.createTemplate(content, {
+    return createTemplate(content, {
         message,
         buttons: buttons.map(standardizeButton),
         script,

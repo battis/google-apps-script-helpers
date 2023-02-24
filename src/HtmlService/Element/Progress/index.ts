@@ -1,5 +1,9 @@
-import * as Html from '../../';
-import * as Cache from '../../../CacheService';
+import {
+    getUserCache,
+    putUserCache,
+    removeUserCache
+} from '../../../CacheService';
+import { createTemplate } from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
@@ -10,16 +14,16 @@ function prefix(key: string, token: string, delimiter = '.') {
 }
 
 function get(token: string, key: string) {
-    return Cache.getUserCache(prefix(key, token));
+    return getUserCache(prefix(key, token));
 }
 
 function put(token: string, key: string, value: any) {
-    return Cache.putUserCache(prefix(key, token), value);
+    return putUserCache(prefix(key, token), value);
 }
 
 // FIXME I don't think "remove" means what you think it means
 function remove(token: string, key: string) {
-    return Cache.removeUserCache(prefix(key, token));
+    return removeUserCache(prefix(key, token));
 }
 
 function putAndUpdate(token: string, key: string, value: any) {
@@ -63,11 +67,11 @@ function update(key: string) {
     const value = getValue(key);
     const max = getMax(key);
     const status = getStatus(key) || '';
-    setHtml(key, Html.createTemplate(progress, { value, max, status }));
+    setHtml(key, createTemplate(progress, { value, max, status }));
 }
 
 export const getHtmlOutput = (thread: string) =>
-    Html.createTemplate(page, { thread }).setHeight(100);
+    createTemplate(page, { thread }).setHeight(100);
 
 export function bindTo(key: string) {
     return class {

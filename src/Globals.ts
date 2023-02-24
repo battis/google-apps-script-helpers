@@ -1,11 +1,10 @@
-import { include } from './HtmlService';
-import { getProgress } from './HtmlService/Element/Progress';
-import { dialogClose } from './UI/Dialog';
+import HtmlService from './HtmlService';
+import UI from './UI';
 
 // FIXME won't work without improvements in gas-webpack-plugin
 // TODO some sort of fancy filtering
 export function register() {
-    global.include = include;
-    global.getProgress = getProgress;
-    global.dialogClose = dialogClose;
+    global.include = HtmlService.include;
+    global.getProgress = HtmlService.Element.Progress.getProgress;
+    global.dialogClose = UI.Dialog.dialogClose;
 }
