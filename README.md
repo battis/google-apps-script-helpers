@@ -1,6 +1,6 @@
 # @battis/webpack-typescript-gas
 
-## Use
+## Install
 
 In `.npmrc`:
 
