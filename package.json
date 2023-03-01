@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "git worktree add dist dist && git worktree add docs docs",
     "docs": "npx typedoc",
-    "update-dependencies": "pnpm update --shamefully-hoist && npm update --package-lock-only",
+    "update-dependencies": "pnpm up && npm up --package-lock-only",
     "transfer-package-to-dist": "copyfiles package.json package-lock.json pnpm-lock.yaml dist",
     "update": "npm run update-dependencies && npm run transfer-package-to-dist",
     "clean": "rimraf dist/src",
