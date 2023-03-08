@@ -6,8 +6,9 @@ module.exports = ({
   build = 'build',
   bundle = 'main',
   entry = './src/index.ts',
+  production = true,
 }) => {
-  return {
+  const config = {
     mode: 'production',
     entry: {
       [bundle]: entry,
@@ -33,4 +34,9 @@ module.exports = ({
     },
     plugins: [new GasPlugin()],
   };
+  if (!production) {
+    config.mode = 'development';
+    config.devtool = 'inline-source-map';
+  }
+  return config;
 };
