@@ -3,7 +3,9 @@
     <?!= include('style', data) ?>
   </head>
   <body>
-    <div id="content">Loading…</div>
+    <div id="content">
+      <progress style="width: 100%"></progress>
+    </div>
     <?!= include('lib', data) ?>
     <script>
       updateProgress();
