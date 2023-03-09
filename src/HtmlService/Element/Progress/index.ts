@@ -46,6 +46,10 @@ export const decrementValue = (thread: string, decrement = 1) =>
 export const setMax = (thread: string, max: number) =>
     putAndUpdate('max', thread, max);
 export const getMax = (thread: string) => get('max', thread);
+export const incrementMax = (thread: string, increment = 1) =>
+    setMax(thread, getMax(thread) + increment);
+export const decrementMax = (thread: string, decrement = 1) =>
+    setMax(thread, getMax(thread) - decrement);
 
 export const setComplete = (thread: string, message: string) =>
     put('complete', thread, message);
@@ -109,6 +113,8 @@ export function bindTo(thread: string): ProgressBinding {
         public static decrementValue = decrementValue.bind(null, thread);
         public static setMax = setMax.bind(null, thread);
         public static getMax = getMax.bind(null, thread);
+        public static incrementMax = incrementMax.bind(null, thread);
+        public static decrementMax = decrementMax.bind(null, thread);
         public static setComplete = setComplete.bind(null, thread);
         public static getComplete = getComplete.bind(null, thread);
         public static getHtml = getHtml.bind(null, thread);
