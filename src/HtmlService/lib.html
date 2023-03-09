@@ -41,8 +41,8 @@
               wrapper.innerHTML = '<progress class="progress"></progress>';
               return wrapper;
             },
-            getPlaceHolderHtml: () =>
-              g.HtmlService.Element.Progress.getPlaceHolder().outerHTML,
+            getPlaceholderHtml: () =>
+              g.HtmlService.Element.Progress.getPlaceholder().outerHTML,
             thread: '<?!= data.thread ?>',
             updateProgress: () => {
               google.script.run
