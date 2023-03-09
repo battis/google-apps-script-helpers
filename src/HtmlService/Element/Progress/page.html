@@ -6,20 +6,7 @@
     <div id="content">Loading…</div>
     <?!= include('lib', data) ?>
     <script>
-      const thread = '<?!= data.thread ?>';
-      function updateProgress() {
-        google.script.run
-          .withSuccessHandler((progress) => {
-            if (progress.complete) {
-              google.script.host.close();
-            } else {
-              replaceContent(progress.html);
-              updateProgress();
-            }
-          })
-          .getProgress(thread);
-      }
-      updateProgress();
+      g.HtmlService.Element.Progress.updateProgress();
     </script>
   </body>
 </html>

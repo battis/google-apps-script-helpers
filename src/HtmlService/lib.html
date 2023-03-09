@@ -1,26 +1,68 @@
 <script>
-  if (!window.GAS_LIGHTER_LIB_LOADED) {
-    window.replaceContent = function (html) {
-      // https://stackoverflow.com/a/47614491/294171
-      content = document.getElementById('content');
-      content.innerHTML = html;
-      Array.from(content.querySelectorAll('script')).forEach((oldScriptEl) => {
-        const newScriptEl = document.createElement('script');
-        Array.from(oldScriptEl.attributes).forEach((attr) => {
-          newScriptEl.setAttribute(attr.name, attr.value);
-        });
-        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
-        newScriptEl.appendChild(scriptText);
-        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
-      });
+  if (!window.g) {
+    window.g = {
+      script: {
+        attachEvent: (element, event, handler) => {
+          if (element.attachEvent) {
+            element.attachEvent(event, handler);
+          } else {
+            element.addEventListener(event, handler);
+          }
+        },
+        replaceContent: (html) => {
+          // https://stackoverflow.com/a/47614491/294171
+          content = document.getElementById('content');
+          content.innerHTML = html;
+          Array.from(content.querySelectorAll('script')).forEach(
+            (oldScriptEl) => {
+              const newScriptEl = document.createElement('script');
+              Array.from(oldScriptEl.attributes).forEach((attr) => {
+                newScriptEl.setAttribute(attr.name, attr.value);
+              });
+              const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+              newScriptEl.appendChild(scriptText);
+              oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+            }
+          );
+        },
+      },
+      HtmlService: {
+        Element: {
+          Progress: {
+            getPlaceHolder: () => {
+              const wrapper = document.createElement('div');
+              wrapper.classList.add(
+                'battis',
+                'GasLighter',
+                'HtmlService',
+                'Element',
+                'Progress'
+              );
+              wrapper.innerHTML = '<progress class="progress"></progress>';
+              return wrapper;
+            },
+            thread: '<?!= data.thread ?>',
+            updateProgress: () => {
+              google.script.run
+                .withSuccessHandler((progress) => {
+                  if (progress.complete) {
+                    google.script.host.close();
+                  } else {
+                    g.replaceContent(progress.html);
+                    g.HtmlService.Element.Progress.updateProgress();
+                  }
+                })
+                .getProgress(g.HtmlService.Element.Progress.thread);
+            },
+          },
+        },
+      },
     };
-    window.attachEvent = function (element, event, handler) {
-      if (element.attachEvent) {
-        element.attachEvent(event, handler);
-      } else {
-        element.addEventListener(event, handler);
-      }
-    };
-    window.GAS_LIGHTER_LIB_LOADED = true;
+
+    /** @deprecated */
+    window.replaceContent = g.script.replaceContent;
+
+    /** @deprecated */
+    window.attachEvent = g.script.attachEvent;
   }
 </script>
