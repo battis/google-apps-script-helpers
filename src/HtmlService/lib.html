@@ -1,72 +1,46 @@
 <script>
-  if (!window.g) {
-    window.g = {
-      script: {
-        attachEvent: (element, event, handler) => {
-          if (element.attachEvent) {
-            element.attachEvent(event, handler);
-          } else {
-            element.addEventListener(event, handler);
-          }
-        },
-        replaceContent: (html) => {
-          // https://stackoverflow.com/a/47614491/294171
-          content = document.getElementById('content');
-          content.innerHTML = html;
-          Array.from(content.querySelectorAll('script')).forEach(
-            (oldScriptEl) => {
-              const newScriptEl = document.createElement('script');
-              Array.from(oldScriptEl.attributes).forEach((attr) => {
-                newScriptEl.setAttribute(attr.name, attr.value);
-              });
-              const scriptText = document.createTextNode(oldScriptEl.innerHTML);
-              newScriptEl.appendChild(scriptText);
-              oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
-            }
-          );
-        },
-      },
-      HtmlService: {
-        Element: {
-          Progress: {
-            getPlaceHolder: () => {
-              const wrapper = document.createElement('div');
-              wrapper.classList.add(
-                'battis',
-                'GasLighter',
-                'HtmlService',
-                'Element',
-                'Progress'
-              );
-              wrapper.innerHTML = '<progress class="progress"></progress>';
-              return wrapper;
-            },
-            getPlaceholderHtml: () =>
-              g.HtmlService.Element.Progress.getPlaceholder().outerHTML,
-            thread: '<?!= data.thread ?>',
-            updateProgress: () => {
-              google.script.run
-                .withSuccessHandler((progress) => {
-                  if (progress.complete) {
-                    google.script.host.close();
-                  } else {
-                    g.replaceContent(progress.html);
-                    g.HtmlService.Element.Progress.updateProgress();
-                  }
-                })
-                .getProgress(g.HtmlService.Element.Progress.thread);
-            },
-          },
-        },
-      },
+  if (!window.GAS_LIGHTER_LIB_LOADED) {
+    window.replaceContent = (html) => {
+      // https://stackoverflow.com/a/47614491/294171
+      content = document.getElementById('content');
+      content.innerHTML = html;
+      Array.from(content.querySelectorAll('script')).forEach((oldScriptEl) => {
+        const newScriptEl = document.createElement('script');
+        Array.from(oldScriptEl.attributes).forEach((attr) => {
+          newScriptEl.setAttribute(attr.name, attr.value);
+        });
+        const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+        newScriptEl.appendChild(scriptText);
+        oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+      });
     };
 
-    /** @deprecated */
-    window.replaceContent = g.script.replaceContent;
+    window.attachEvent = (element, event, handler) => {
+      if (element.attachEvent) {
+        element.attachEvent(event, handler);
+      } else {
+        element.addEventListener(event, handler);
+      }
+    };
 
-    /** @deprecated */
-    window.attachEvent = g.script.attachEvent;
-    console.log(window.g);
-    console.log(g);
+    window.thread = '<?!= data.thread ?>';
+
+    window.progressPlaceholder = () =>
+      '<div class="battis GasLighter HtmlService Element Progress "><progress class="progress"></progress></div>';
+
+    window.updateProgress = () => {
+      google.script.run
+        .withSuccessHandler((progress) => {
+          if (progress.complete) {
+            google.script.host.close();
+          } else {
+            window.replaceContent(progress.html);
+            window.updateProgress();
+          }
+        })
+        .getProgress(window.thread);
+    };
+
+    window.GAS_LIGHTER_LIB_LOADED = true;
   }
 </script>
