@@ -7,6 +7,8 @@ import { createTemplate } from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
+type Completion = string | true | { html: string };
+
 function prefix(thread: string, token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', thread, token].join(
         delimiter
@@ -51,8 +53,8 @@ export const incrementMax = (thread: string, increment = 1) =>
 export const decrementMax = (thread: string, decrement = 1) =>
     setMax(thread, getMax(thread) - decrement);
 
-export const setComplete = (thread: string, message: string) =>
-    put('complete', thread, message);
+export const setComplete = (thread: string, completion: Completion) =>
+    put('complete', thread, completion);
 export const getComplete = (thread: string) => get('complete', thread);
 
 export const setHtml = (thread: string, html: string) =>

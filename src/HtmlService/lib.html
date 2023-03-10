@@ -32,13 +32,21 @@
       google.script.run
         .withSuccessHandler((progress) => {
           if (progress.complete) {
-            google.script.host.close();
+            window.onProgressComplete(progress.complete);
           } else {
             window.replaceContent(progress.html);
             window.updateProgress();
           }
         })
         .getProgress(window.thread);
+    };
+
+    window.onProgressComplete = (complete) => {
+      if (typeof complete == 'object' && 'html' in complete) {
+        window.replaceContent(complete.html);
+      } else {
+        google.script.host.close();
+      }
     };
 
     window.GAS_LIGHTER_LIB_LOADED = true;
