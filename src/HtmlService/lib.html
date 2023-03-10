@@ -49,6 +49,11 @@
       }
     };
 
+    window.showProgress = () => {
+      window.replaceContent(window.progressPlaceholder());
+      window.updateProgress();
+    };
+
     window.GAS_LIGHTER_LIB_LOADED = true;
   }
 </script>
