@@ -7,7 +7,7 @@ import { createTemplate } from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
-type Completion = string | true | { html: string };
+export type Completion = string | true | { html: string };
 
 function prefix(thread: string, token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', thread, token].join(
@@ -59,7 +59,8 @@ export const getComplete = (thread: string) => get('complete', thread);
 
 export const setHtml = (thread: string, html: string) =>
     put('html', thread, html);
-export const getHtml = (thread: string) => get('html', thread);
+export const getHtml = (thread: string) =>
+    get('html', thread) || createTemplate(progress, {}).getContent();
 
 export function reset(thread: string) {
     remove(thread, 'complete');
