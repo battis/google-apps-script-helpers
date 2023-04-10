@@ -102,6 +102,7 @@ export type ProgressBinding = {
     setComplete: (completion: Completion) => void;
     getComplete: () => Completion;
     getHtml: () => string;
+    getHtmlOutput: () => GoogleAppsScript.HTML.HtmlOutput;
 };
 
 export function bindTo(thread: string): ProgressBinding {
@@ -121,5 +122,6 @@ export function bindTo(thread: string): ProgressBinding {
         public static setComplete = setComplete.bind(null, thread);
         public static getComplete = getComplete.bind(null, thread);
         public static getHtml = getHtml.bind(null, thread);
+        public static getHtmlOutput = getHtmlOutput.bind(null, thread);
     };
 }
