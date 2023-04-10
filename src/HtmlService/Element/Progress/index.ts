@@ -99,8 +99,8 @@ export type ProgressBinding = {
     decrementValue: () => void;
     setMax: (max: number) => void;
     getMax: () => number;
-    setComplete: (message: string) => void;
-    getComplete: () => string;
+    setComplete: (completion: Completion) => void;
+    getComplete: () => Completion;
     getHtml: () => string;
 };
 
