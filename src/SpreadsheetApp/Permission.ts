@@ -11,9 +11,9 @@ export function addImportrangePermission(
     {
       method: 'post',
       headers: {
-        Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
+        Authorization: `Bearer ${ScriptApp.getOAuthToken()}`
       },
-      muteHttpExceptions: true,
+      muteHttpExceptions: true
     }
   );
 }

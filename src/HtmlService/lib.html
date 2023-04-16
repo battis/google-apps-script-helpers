@@ -2,7 +2,7 @@
   if (!window.GAS_LIGHTER_LIB_LOADED) {
     window.replaceContent = (html) => {
       // https://stackoverflow.com/a/47614491/294171
-      content = document.getElementById('content');
+      const content = document.getElementById('content');
       content.innerHTML = html;
       Array.from(content.querySelectorAll('script')).forEach((oldScriptEl) => {
         const newScriptEl = document.createElement('script');
