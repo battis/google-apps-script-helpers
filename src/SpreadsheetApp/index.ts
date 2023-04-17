@@ -1,19 +1,17 @@
-import * as Dialog_module from '../UI/Dialog';
-import * as DeveloperMetadata_module from './DeveloperMetadata';
-import * as Function_module from './Function';
-import * as Permission_module from './Permission';
-import * as Protection_module from './Protection';
-import * as Range_module from './Range';
-import * as Value_module from './Value';
+import * as Dialog from '../UI/Dialog';
+import * as DeveloperMetadata from './DeveloperMetadata';
+import * as Function from './Function';
+import * as Permission from './Permission';
+import * as Protection from './Protection';
+import * as Range from './Range';
+import * as Value from './Value';
 
-namespace SpreadsheetApp_namespace {
-  export import DeveloperMetadata = DeveloperMetadata_module;
-  export const Dialog =
-    Dialog_module.bindTo<typeof SpreadsheetApp>(SpreadsheetApp);
-  export import Function = Function_module;
-  export import Permission = Permission_module;
-  export import Protection = Protection_module;
-  export import Range = Range_module;
-  export import Value = Value_module;
-}
-export default SpreadsheetApp_namespace;
+export default {
+    Dialog: Dialog.bindTo(SpreadsheetApp),
+    DeveloperMetadata,
+    Function,
+    Permission,
+    Protection,
+    Range,
+    Value
+};

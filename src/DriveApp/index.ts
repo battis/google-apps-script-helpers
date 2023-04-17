@@ -1,6 +1,3 @@
-import * as Permission_module from './Permission';
+import * as Permission from './Permission';
 
-namespace DriveApp {
-  export import Permission = Permission_module;
-}
-export default DriveApp;
+export default { Permission };

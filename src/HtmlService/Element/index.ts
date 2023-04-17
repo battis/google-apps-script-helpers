@@ -1,6 +1,3 @@
-import * as Progress_module from './Progress';
+import * as Progress from './Progress';
 
-namespace Element {
-  export import Progress = Progress_module;
-}
-export default Element;
+export default { Progress };

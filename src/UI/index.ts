@@ -1,6 +1,3 @@
-import * as Dialog_module from './Dialog';
+import * as Dialog from './Dialog';
 
-namespace UI {
-  export import Dialog = Dialog_module;
-}
-export default UI;
+export default { Dialog };

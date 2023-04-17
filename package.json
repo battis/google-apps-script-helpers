@@ -51,7 +51,14 @@
           "node": false
         },
         "globals": {
-          "google": "readonly"
+          "google": "readonly",
+          "replaceContent": "readonly",
+          "attachEvent": "readonly",
+          "thread": "readonly",
+          "progressPlaceholder": "readonly",
+          "updateProgress": "readonly",
+          "onProgressComplete": "readonly",
+          "showProgress": "readonly"
         }
       }
     ]
