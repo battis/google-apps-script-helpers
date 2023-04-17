@@ -1,4 +1,2 @@
-import Element from './Element';
-import * as Template from './Template';
-
-export default { Element, ...Template };
+export * as Element from './Element';
+export * as Template from './Template';

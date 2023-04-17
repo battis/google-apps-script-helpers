@@ -1,11 +1,4 @@
-import * as Action from './Action';
-import * as Card from './Card';
-import * as Navigation from './Navigation';
-import * as Widget from './Widget';
-
-export default {
-  Action,
-  Card,
-  Navigation,
-  Widget
-};
+export * as Action from './Action';
+export * as Card from './Card';
+export * as Navigation from './Navigation';
+export * as Widget from './Widget';

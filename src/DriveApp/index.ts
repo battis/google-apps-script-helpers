@@ -1,3 +1,1 @@
-import * as Permission from './Permission';
-
-export default { Permission };
+export * as Permission from './Permission';

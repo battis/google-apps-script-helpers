@@ -1,17 +1,9 @@
-import * as Dialog from '../UI/Dialog';
-import * as DeveloperMetadata from './DeveloperMetadata';
-import * as Function from './Function';
-import * as Permission from './Permission';
-import * as Protection from './Protection';
-import * as Range from './Range';
-import * as Value from './Value';
+import * as UIDialog from '../UI/Dialog';
+export * as DeveloperMetadata from './DeveloperMetadata';
+export * as Function from './Function';
+export * as Permission from './Permission';
+export * as Protection from './Protection';
+export * as Range from './Range';
+export * as Value from './Value';
 
-export default {
-    Dialog: Dialog.bindTo(SpreadsheetApp),
-    DeveloperMetadata,
-    Function,
-    Permission,
-    Protection,
-    Range,
-    Value
-};
+export const Dialog = UIDialog.bindTo(SpreadsheetApp);
