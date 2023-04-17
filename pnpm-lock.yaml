@@ -11,8 +11,8 @@ devDependencies:
     specifier: ^1.0.2
     version: 1.0.2
   '@types/google-apps-script':
-    specifier: ^1.0.59
-    version: 1.0.59
+    specifier: ^1.0.60
+    version: 1.0.60
   '@types/node':
     specifier: ^18.15.11
     version: 18.15.11
@@ -133,8 +133,8 @@ packages:
     resolution: {integrity: sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==}
     dev: true
 
-  /@types/google-apps-script@1.0.59:
-    resolution: {integrity: sha512-vOtsegVU/BrgofBsx6Ckzz4jDNp2zEwGHHc20AAouyP6YzytCF5vIBCSETBjsIHZya+nA8A/f7YaSkCe29jbvQ==}
+  /@types/google-apps-script@1.0.60:
+    resolution: {integrity: sha512-eRPxCH6xeC2pTm3uxwtaqY9tIiIAOJhnupE2YYR001xaM0g/jg8rY+s5m9HAYRDrSCrBLahRa7ZVdV7iGbC+4A==}
     dev: true
 
   /@types/json-schema@7.0.11:

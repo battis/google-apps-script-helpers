@@ -33,7 +33,7 @@
     "@battis/eslint-config": "github:battis/eslint-config",
     "@battis/prettier-config": "github:battis/prettier-config",
     "@tsconfig/recommended": "^1.0.2",
-    "@types/google-apps-script": "^1.0.59",
+    "@types/google-apps-script": "^1.0.60",
     "@types/node": "^18.15.11",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.4.1",
