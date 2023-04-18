@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <?!= include('style', data) ?>
+  </head>
+  <body>
+    <div id="content">
+      <progress style="width: 100%"></progress>
+    </div>
+    <?!= include('lib', data) ?>
+    <script>
+      // eslint-disable-next-line no-redeclare
+      const thread = '<?!= data.thread ?>';
+
+      const picker = {
+        message: '<?!= data.picker.message ?>',
+        list: '<?!= data.picker.list ?>',
+        actionName: '<?!= data.picker.actionName ?>',
+        callback: '<?!= data.picker.callback  ?>',
+        confirmation: '<?!= data.picker.confirmation ?>',
+        confirm: '<?!= data.picker.confirm" ?>'
+      };
+
+      let option = {};
+
+      function displayConfirmation() {
+        replaceContent(`
+          <form id="confirmation">
+          <div>${picker.actionName}: ${option.name}</div>
+          <div>${picker.confirmation}</div>
+          <div class="form-group bottom-right">
+            <button id="cancel" type="cancel" class="button">Cancel</button>
+            <button id="confirm" type="submit" class="red button">
+              ${picker.confirm}
+            </button>
+          </div>
+          </form>
+        `);
+        attachEvent(document.getElementById('confirmation'), 'submit', (e) => {
+          e.preventDefault();
+          showProgress();
+          google.script.run[picker.callback](option.value, thread);
+        });
+        attachEvent(document.getElementById('cancel'), 'click', () => {
+          google.script.host.close();
+        });
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        const opt = document.getElementById('options');
+        option = {
+          value: opt.value,
+          name: document.querySelector(`#options option[value="${opt.value}"]`)
+            .innerText
+        };
+        if (picker.confirmation.length) {
+          displayConfirmation();
+        } else {
+          showProgress();
+          google.script.run[picker.callback](option.value, thread);
+        }
+        return false;
+      }
+
+      function displayPicker(options) {
+        if (picker.callback.length) {
+          replaceContent(`
+            <form id="picker">
+              <p>${picker.message}</p>
+              <div>
+                <select id="options" name="picker">
+                  ${options.map(
+                    ({ name, value }) =>
+                      `<option value="${value}">${name}</option>`
+                  )}
+                </select>
+                <button class="blue button" type="submit">${
+                  picker.actionName
+                }</button>
+              </div>
+            </form>
+          `);
+          attachEvent(
+            document.getElementById('picker'),
+            'submit',
+            handleSubmit
+          );
+        } else {
+          replaceContent(`
+              <div><strong>Error:</strong> <code>data.picker.callback</code> is not defined.</div>
+              <button id="cancel">Cancel</button>
+          `);
+          attachEvent(document.getElementById('#cancel'), () =>
+            google.script.host.close()
+          );
+        }
+      }
+
+      google.script.run.withSuccessHandler(displayPicker)[picker.list]();
+    </script>
+  </body>
+</html>
