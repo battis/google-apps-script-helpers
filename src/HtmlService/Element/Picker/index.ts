@@ -12,6 +12,7 @@ export type Configuration = {
   callback: string;
   confirmation?: string;
   confirm?: string;
+  thread?: string;
 };
 type Arguments = Omit<Configuration, 'list' | 'callback'> & {
   list: string;
@@ -29,7 +30,7 @@ export function getHtmlOutput(config: Configuration) {
     ...config
   };
   return Template.createTemplate(page, {
-    thread: Utilities.getUuid(),
+    thread: config.thread || Utilities.getUuid(),
     picker: args
   });
 }
