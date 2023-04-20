@@ -3,11 +3,10 @@
     <?!= include('style', data) ?>
   </head>
   <body>
-    <div id="content">
-      <progress style="width: 100%"></progress>
-    </div>
+    <div id="content"></div>
     <?!= include('lib', data) ?>
     <script>
+      replaceContent(progressPlaceholder());
       updateProgress();
     </script>
   </body>

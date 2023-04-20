@@ -3,9 +3,7 @@
     <?!= include('style', data) ?>
   </head>
   <body>
-    <div id="content">
-      <progress style="width: 100%"></progress>
-    </div>
+    <div id="content"></div>
     <?!= include('lib', data) ?>
     <script>
       // eslint-disable-next-line no-redeclare
@@ -28,8 +26,8 @@
           <div>${picker.actionName}: ${option.name}</div>
           <div>${picker.confirmation}</div>
           <div class="form-group bottom-right">
-            <button id="cancel" type="cancel" class="button">Cancel</button>
-            <button id="confirm" type="submit" class="red button">
+            <button id="cancel" type="cancel" class="btn btn-secondary">Cancel</button>
+            <button id="confirm" type="submit" class="btn btn-danger">
               ${picker.confirm}
             </button>
           </div>
@@ -66,17 +64,21 @@
         if (picker.callback.length) {
           replaceContent(`
             <form id="picker">
-              <p>${picker.message}</p>
-              <div>
-                <select id="options" name="picker">
-                  ${options.map(
-                    ({ name, value }) =>
-                      `<option value="${value}">${name}</option>`
-                  )}
-                </select>
-                <button class="blue button" type="submit">${
-                  picker.actionName
-                }</button>
+              <div class="form-group">
+                <label for="picker">${picker.message}</label>
+                <div class="input-group">
+                  <select id="options" name="picker" class="custom-select">
+                    ${options.map(
+                      ({ name, value }) =>
+                        `<option value="${value}">${name}</option>`
+                    )}
+                  </select>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">${
+                      picker.actionName
+                    }</button>
+                  </div>
+                </div>
               </div>
             </form>
           `);
@@ -88,7 +90,7 @@
         } else {
           replaceContent(`
               <div><strong>Error:</strong> <code>data.picker.callback</code> is not defined.</div>
-              <button id="cancel">Cancel</button>
+              <button id="cancel" class="btn btn-secondary">Cancel</button>
           `);
           attachEvent(document.getElementById('#cancel'), () =>
             google.script.host.close()
@@ -96,6 +98,7 @@
         }
       }
 
+      replaceContent(progressPlaceholder());
       google.script.run.withSuccessHandler(displayPicker)[picker.list]();
     </script>
   </body>

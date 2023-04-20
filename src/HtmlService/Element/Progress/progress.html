@@ -1,6 +1,10 @@
-<div class="battis GasLighter HtmlService Element Progress">
-  <progress class="progress" <? if (data.value && data.max) { ?>
-    value="<?!= data.value ?>" max="<?!= data.max ?>"<? }?>>
-  </progress>
-  <div class="status"><?!= data.status ?></div>
+<div class="progress">
+  <div
+    class="progress-bar"
+    role="progressbar"
+    aria-valuenow="<?!= data.value ?>"
+    aria-valuemax="<?!= data.max ?>"
+  >
+    <?!= data.status ?>
+  </div>
 </div>
