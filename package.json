@@ -32,8 +32,7 @@
     "build:compile": "tsc --project tsconfig.dist.json",
     "build:config": "copyfiles .npmrc package.* *-lock.* tsconfig.json webpack.config.js dist",
     "build:html": "copyfiles \"src/**/*.html\" dist",
-    "build:docs": "npm run docs",
-    "copy-files": "copyfiles \"src/**/*.html\" dist; copyfiles webpack.config.js dist; copyfiles tsconfig.json dist.json; copyfiles .npmrc dist"
+    "build:docs": "npm run docs"
   },
   "peerDependencies": {
     "@google/clasp": "^2.4.2",
