@@ -1,4 +1,0 @@
-/node_modules
-/.nova/*
-!/.nova/Artwork
-!/.nova/Configuration.json
