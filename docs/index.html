@@ -23,6 +23,28 @@
 <p>This is an idiosyncratic collection of add-ons and helpers for writing TypeScript code to be compiled into Google Apps Script. It is under constant evolution and tweaking. My basic approach has been that, whenever I start to see the same slog of boiler plate repetitivity in my GAS scripts, I try to exile it to this library to a) allow myself to write shorter code and b) ensure that my boilerplate is, in fact, consistent.</p>
 <p>Use at your own peril. And make pull requests with your own improvements.</p>
 <p>-- Seth</p>
+
+<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+  <h2>Install</h2>
+</a>
+<p>In <code>.npmrc</code>:</p>
+<pre><code><span class="hl-0">auto</span><span class="hl-1">-</span><span class="hl-0">install</span><span class="hl-1">-</span><span class="hl-0">peers</span><span class="hl-1">=</span><span class="hl-2">true</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=*</span><span class="hl-0">prettier</span><span class="hl-1">*</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=*</span><span class="hl-0">eslint</span><span class="hl-1">*</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">tsconfig</span><span class="hl-1">/</span><span class="hl-0">recommended</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">google</span><span class="hl-1">/</span><span class="hl-0">clasp</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">tsconfig</span><span class="hl-1">/</span><span class="hl-0">recommended</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">types</span><span class="hl-3">/*</span><br/><span class="hl-3">public-hoist-pattern[]=typescript</span><br/><span class="hl-3">public-hoist-pattern[]=*webpack*</span><br/><span class="hl-3">public-hoist-pattern[]=*loader*</span>
+</code></pre>
+<pre><code class="language-bash"><span class="hl-1">pnpm </span><span class="hl-4">i</span><span class="hl-1"> </span><span class="hl-4">-D</span><span class="hl-1"> </span><span class="hl-4">@battis/gas-lighter@github:battis/gas-lighter#dist</span>
+</code></pre>
+<p>In <code>webpack.config.js</code>:</p>
+<pre><code class="language-js"><span class="hl-2">const</span><span class="hl-1"> </span><span class="hl-5">config</span><span class="hl-1"> = </span><span class="hl-6">require</span><span class="hl-1">(</span><span class="hl-4">&#39;@battis/gas-lighter/webpack.config&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-7">module</span><span class="hl-1">.</span><span class="hl-7">exports</span><span class="hl-1"> = </span><span class="hl-6">config</span><span class="hl-1">({ </span><span class="hl-0">root:</span><span class="hl-1"> </span><span class="hl-0">__dirname</span><span class="hl-1"> });</span>
+</code></pre>
+
+<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
+  <h2>Configuration</h2>
+</a>
+<p>Configuration options include, with defaults:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-8">root,</span><span class="hl-1"> </span><span class="hl-3">// absolute path</span><br/><span class="hl-1">  </span><span class="hl-8">build</span><span class="hl-1">: </span><span class="hl-4">&quot;build&quot;</span><span class="hl-1">, </span><span class="hl-3">// path relative to root</span><br/><span class="hl-1">  </span><span class="hl-8">bundle</span><span class="hl-1">: </span><span class="hl-4">&quot;main&quot;</span><span class="hl-1">, </span><span class="hl-3">// string name</span><br/><span class="hl-1">  </span><span class="hl-8">entry</span><span class="hl-1">: </span><span class="hl-4">&quot;./src/index.ts&quot;</span><span class="hl-1"> </span><span class="hl-3">// path relative to webpack.config.js</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>In <code>package.json</code>:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-9">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-9">&quot;clean&quot;</span><span class="hl-1">: </span><span class="hl-4">&quot;rm -rf build&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-9">&quot;build&quot;</span><span class="hl-1">: </span><span class="hl-4">&quot;npx webpack&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-9">&quot;deploy&quot;</span><span class="hl-1">: </span><span class="hl-4">&quot;npx clasp push&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code></pre>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
