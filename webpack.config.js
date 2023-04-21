@@ -6,33 +6,33 @@ module.exports = ({
   build = 'build',
   bundle = 'main',
   entry = './src/index.ts',
-  production = true,
+  production = true
 }) => {
   const config = {
     mode: 'production',
     entry: {
-      [bundle]: entry,
+      [bundle]: entry
     },
     output: {
       path: path.join(root, build),
-      filename: '[name]-bundle.js',
+      filename: '[name]-bundle.js'
     },
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.js']
     },
     module: {
       rules: [
         {
           test: /\.ts$/,
-          loader: 'ts-loader',
+          loader: 'ts-loader'
         },
         {
           test: /\.html$/,
-          type: 'asset/source',
-        },
-      ],
+          type: 'asset/source'
+        }
+      ]
     },
-    plugins: [new GasPlugin()],
+    plugins: [new GasPlugin()]
   };
   if (!production) {
     config.mode = 'development';
