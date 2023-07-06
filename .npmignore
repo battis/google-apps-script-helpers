@@ -1,5 +1,5 @@
 .*
-!/.eslint.json
+!/.eslintrc.json
 /docs/
 /examples/
 /logo.png
