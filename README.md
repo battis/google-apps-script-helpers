@@ -26,22 +26,61 @@ public-hoist-pattern[]=*loader*
 ```
 
 ```bash
-pnpm i -D @battis/gas-lighter@github:battis/gas-lighter#dist
+pnpm init
+pnpm i -D @battis/gas-lighter shx
+```
+
+If working on an existing Google Apps Script project:
+
+```bash
+npx clasp clone [script ID]
+```
+
+If creating a new project:
+
+```bash
+npx clasp create [Script Title]
+```
+
+In `.gitignore`:
+
+```
+/.clasp.json
+/build/
+```
+
+In `.eslint.json`:
+
+```json
+{
+  "extends": "@battis/gas-lighter/.eslint.json"
+}
+```
+
+In `tsconfig.json`:
+
+```json
+{
+  "extends": "@battis/gas-lighter/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "build"
+  }
+}
 ```
 
 In `webpack.config.js`:
 
 ```js
-const config = require('@battis/gas-lighter/webpack.config');
-
-module.exports = config({ root: __dirname });
+module.exports = require('@battis/gas-lighter/webpack.config')({
+  root: __dirname
+});
 ```
 
 ## Configuration
 
 Configuration options include, with defaults:
 
-```json
+```js
 {
   root, // absolute path
   build: "build", // path relative to root
@@ -55,9 +94,9 @@ In `package.json`:
 ```json
 {
   "scripts": {
-    "clean": "rm -rf build",
-    "build": "npx webpack",
-    "deploy": "npx clasp push"
+    "clean": "shx rm -rf build",
+    "build": "webpack",
+    "deploy": "clasp push"
   }
 }
 ```
