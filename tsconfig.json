@@ -5,6 +5,15 @@
     "experimentalDecorators": true,
 
     "noImplicitAny": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules"],
+  "typedocOptions": {
+    "entryPoints": ["./src/index.ts"],
+    "out": "docs/docs"
   }
 }

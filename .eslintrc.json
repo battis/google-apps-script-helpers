@@ -1,0 +1,22 @@
+{
+  "extends": "@battis/eslint-config",
+  "overrides": [
+    {
+      "files": "*.html",
+      "env": {
+        "browser": true,
+        "node": false
+      },
+      "globals": {
+        "google": "readonly",
+        "replaceContent": "readonly",
+        "attachEvent": "readonly",
+        "thread": "readonly",
+        "progressPlaceholder": "readonly",
+        "updateProgress": "readonly",
+        "onProgressComplete": "readonly",
+        "showProgress": "readonly"
+      }
+    }
+  ]
+}

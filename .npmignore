@@ -1,0 +1,5 @@
+.*
+!/.eslint.json
+/docs/
+/examples/
+/logo.png

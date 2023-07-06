@@ -1,10 +1,10 @@
 {
   "name": "@battis/gas-lighter",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "author": "Seth Battis <seth@battis.net>",
   "license": "GPL-3.0",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "homepage": "https://github.com/battis/gas-lighter",
   "repository": {
     "type": "git",
@@ -15,24 +15,20 @@
   },
   "scripts": {
     "dev": "run-s dev:*",
-    "dev:dist-worktree": "git worktree add dist dist",
-    "dev:docs-workgree": "git worktree add docs docs",
+    "dev:docs-worktree": "git worktree add docs docs",
     "docs": "run-s docs:*",
-    "docs:clean": "rimraf docs/*",
-    "docs:build": "npx typedoc --tsconfig tsconfig.dist.json",
-    "update": "run-s update:*",
-    "update:pnpm": "pnpm update",
-    "update:npmrc": "pnpm install --force",
-    "update:npm": "npm update --package-lock-only",
-    "clean": "run-s clean:*",
-    "clean:visible": "rimraf dist/*",
-    "clean:invisible": "rimraf dist/.npmrc",
+    "docs:clean": "shx rm -rf docs/*",
+    "docs:build": "npx typedoc",
+    "docs:open": "./scripts/docs-launch.mjs",
+    "clean": "shx rm -rf dist",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:compile": "tsc --project tsconfig.dist.json",
-    "build:config": "copyfiles .npmrc package.* *-lock.* tsconfig.json webpack.config.js dist",
-    "build:html": "copyfiles \"src/**/*.html\" dist",
-    "build:docs": "npm run docs"
+    "build:compile": "tsc",
+    "publish": "run-s publish:*",
+    "publish:docs:build": "npm run docs",
+    "publish:docs:publish": "./scripts/docs-publish.mjs",
+    "publish:build": "npm run build",
+    "publish:publish": "np --yolo --omit=dev"
   },
   "peerDependencies": {
     "@google/clasp": "^2.4.2",
@@ -40,51 +36,27 @@
     "@types/google-apps-script": "^1.0.57",
     "@types/node": "^18.11.19",
     "gas-webpack-plugin": "^2.3.0",
+    "npm-run-all": "^4.1.5",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.5",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },
   "devDependencies": {
-    "@battis/eslint-config": "github:battis/eslint-config",
-    "@battis/prettier-config": "github:battis/prettier-config",
+    "@battis/eslint-config": "latest",
+    "@battis/prettier-config": "latest",
     "@google/clasp": "^2.4.2",
     "@tsconfig/recommended": "^1.0.2",
-    "@types/google-apps-script": "^1.0.61",
-    "@types/node": "^18.15.13",
+    "@types/google-apps-script": "^1.0.64",
+    "@types/node": "^18.16.19",
     "copyfiles": "^2.4.1",
-    "gas-webpack-plugin": "^2.4.0",
-    "rimraf": "^4.4.1",
-    "ts-loader": "^9.4.2",
+    "gas-webpack-plugin": "^2.5.0",
+    "shx": "^0.3.4",
+    "ts-loader": "^9.4.4",
     "typedoc": "^0.23.28",
     "typescript": "^4.9.5",
-    "webpack": "^5.80.0",
-    "webpack-cli": "^5.0.1"
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
   },
-  "prettier": "@battis/prettier-config",
-  "eslintConfig": {
-    "extends": "@battis/eslint-config",
-    "overrides": [
-      {
-        "files": "*.html",
-        "env": {
-          "browser": true,
-          "node": false
-        },
-        "globals": {
-          "google": "readonly",
-          "replaceContent": "readonly",
-          "attachEvent": "readonly",
-          "thread": "readonly",
-          "progressPlaceholder": "readonly",
-          "updateProgress": "readonly",
-          "onProgressComplete": "readonly",
-          "showProgress": "readonly"
-        }
-      }
-    ]
-  },
-  "dependencies": {
-    "npm-run-all": "^4.1.5"
-  }
+  "prettier": "@battis/prettier-config"
 }
