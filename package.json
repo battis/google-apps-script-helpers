@@ -27,10 +27,10 @@
     "build": "run-s build:*",
     "build:clean": "npm run clean",
     "build:compile": "tsc",
-    "publish": "run-s publish:*",
-    "publish:build": "npm run build",
-    "publish:docs": "npm run docs:clean && npm run docs:build && ./scripts/docs-publish.mjs",
-    "publish:publish": "np --yolo --omit=dev"
+    "deploy": "run-s deploy:*",
+    "deploy:build": "npm run build",
+    "deploy:docs": "npm run docs:clean && npm run docs:build && ./scripts/docs-publish.mjs",
+    "deploy:publish": "np --yolo --omit=dev"
   },
   "peerDependencies": {
     "@google/clasp": "^2.4.2",
