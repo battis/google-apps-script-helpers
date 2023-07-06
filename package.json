@@ -25,9 +25,8 @@
     "build:clean": "npm run clean",
     "build:compile": "tsc",
     "publish": "run-s publish:*",
-    "publish:docs:build": "npm run docs",
-    "publish:docs:publish": "./scripts/docs-publish.mjs",
     "publish:build": "npm run build",
+    "publish:docs": "npm run docs:clean && npm run docs:build && ./scripts/docs-publish.mjs",
     "publish:publish": "np --yolo --omit=dev"
   },
   "peerDependencies": {
@@ -49,8 +48,12 @@
     "@tsconfig/recommended": "^1.0.2",
     "@types/google-apps-script": "^1.0.64",
     "@types/node": "^18.16.19",
+    "app-root-path": "^3.1.0",
     "copyfiles": "^2.4.1",
     "gas-webpack-plugin": "^2.5.0",
+    "np": "^8.0.4",
+    "open": "^9.1.0",
+    "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "ts-loader": "^9.4.4",
     "typedoc": "^0.23.28",
