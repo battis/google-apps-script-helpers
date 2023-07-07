@@ -47,19 +47,24 @@ If creating a new project:
 npx clasp create [Script Title]
 ```
 
+In `.claspignore`:
+
+```
+**/**
+!appsscript.json
+!build/*.js
+!css/*.html
+!js/*.html
+!templates/*.html
+.git/**
+node_modules/**
+```
+
 In `.gitignore`:
 
 ```
 /.clasp.json
 /build/
-```
-
-In `.eslintrc.json`:
-
-```json
-{
-  "extends": "@battis/gas-lighter/.eslintrc.json"
-}
 ```
 
 In `tsconfig.json`:
@@ -82,19 +87,6 @@ module.exports = require('@battis/gas-lighter/webpack.config')({
 });
 ```
 
-## Configuration
-
-Configuration options include, with defaults:
-
-```js
-{
-  root, // absolute path
-  build: "build", // path relative to root
-  bundle: "main", // string name
-  entry: "./src/index.ts" // path relative to webpack.config.js
-}
-```
-
 In `package.json`:
 
 ```json
@@ -106,6 +98,22 @@ In `package.json`:
     "deploy": "run-s deploy:*",
     "deploy:build": "npm run build",
     "deploy:push": "clasp push"
+  },
+  "eslintConfig": {
+    "extends": "@battis/gas-lighter/.eslintrc.json"
   }
+}
+```
+
+## Configuration
+
+Configuration options include, with defaults:
+
+```js
+{
+  root, // absolute path
+  build: "build", // path relative to root
+  bundle: "main", // string name
+  entry: "./src/index.ts" // path relative to webpack.config.js
 }
 ```
