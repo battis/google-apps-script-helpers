@@ -7,10 +7,9 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
 
-    "outDir": "./dist",
-    "declaration": true
+    "outDir": "dist"
   },
-  "include": ["./src"],
+  "include": ["src"],
   "exclude": ["node_modules"],
   "typedocOptions": {
     "entryPoints": ["./src/index.ts"],

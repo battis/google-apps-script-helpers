@@ -14,24 +14,25 @@
     "url": "https://github.com/battis/gas-lighter/issues"
   },
   "engines": {
-    "node": "*"
+    "node": "^12.17"
   },
   "scripts": {
     "dev": "run-s dev:*",
     "dev:docs-worktree": "git worktree add docs docs",
-    "docs": "run-s docs:*",
+    "docs": "run-s docs:**",
     "docs:clean": "shx rm -rf docs/*",
     "docs:build": "npx typedoc",
-    "docs:open": "./scripts/docs-launch.mjs",
+    "docs:build:open": "./scripts/docs/launch.mjs",
     "clean": "shx rm -rf dist",
     "build": "run-s build:*",
     "build:clean": "npm run clean",
-    "build:compile": "tsc",
+    "build:transpile": "tsc --project tsconfig.build.json",
     "build:html": "copyfiles -u 1 \"src/**/*.html\" dist",
-    "deploy": "run-s deploy:*",
+    "deploy": "run-s deploy:**",
     "deploy:build": "npm run build",
-    "deploy:docs": "npm run docs:clean && npm run docs:build && ./scripts/docs-publish.mjs",
-    "deploy:publish": "np --yolo --omit=dev"
+    "deploy:publish": "np --yolo --omit=dev",
+    "deploy:docs:build": "run-s docs:*",
+    "deploy:docs:publish": "./scripts/docs/publish.mjs"
   },
   "peerDependencies": {
     "@google/clasp": "^2.4.2",
