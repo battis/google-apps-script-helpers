@@ -64,7 +64,8 @@ In `tsconfig.json`:
   "extends": "@battis/gas-lighter/tsconfig.json",
   "compilerOptions": {
     "outDir": "build"
-  }
+  },
+  "include": ["src"]
 }
 ```
 
