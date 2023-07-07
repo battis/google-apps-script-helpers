@@ -31,7 +31,8 @@ Then:
 
 ```bash
 pnpm init
-pnpm i -D @battis/gas-lighter shx
+pnpm i @battis/gas-lighter
+pnpm i -D shx npm-run-all
 ```
 
 If working on an existing Google Apps Script project:
@@ -99,9 +100,12 @@ In `package.json`:
 ```json
 {
   "scripts": {
-    "clean": "shx rm -rf build",
-    "build": "webpack",
-    "deploy": "clasp push"
+    "build": "run-s build:*",
+    "build:clean": "shx rm -rf build",
+    "build:compile": "webpack",
+    "deploy": "run-s deploy:*",
+    "deploy:build": "npm run build",
+    "deploy:push": "clasp push"
   }
 }
 ```
