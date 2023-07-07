@@ -25,6 +25,8 @@ public-hoist-pattern[]=*webpack*
 public-hoist-pattern[]=*loader*
 ```
 
+Then:
+
 ```bash
 pnpm init
 pnpm i -D @battis/gas-lighter shx
@@ -49,11 +51,11 @@ In `.gitignore`:
 /build/
 ```
 
-In `.eslint.json`:
+In `.eslintrc.json`:
 
 ```json
 {
-  "extends": "@battis/gas-lighter/.eslint.json"
+  "extends": "@battis/gas-lighter/.eslintrc.json"
 }
 ```
 
