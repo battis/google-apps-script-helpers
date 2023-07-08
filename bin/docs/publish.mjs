@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import appRootPath from 'app-root-path';
+const appRootPath = require('app-root-path');
 import fs from 'fs';
 import path from 'path';
 import shell from 'shelljs';
