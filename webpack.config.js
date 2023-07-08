@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const GasPlugin = require('gas-webpack-plugin');
 
 module.exports = ({
@@ -32,7 +33,7 @@ module.exports = ({
         }
       ]
     },
-    plugins: [new GasPlugin()]
+    plugins: [new CleanWebpackPlugin(), new GasPlugin()]
   };
   if (!production) {
     config.mode = 'development';

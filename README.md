@@ -13,28 +13,12 @@ Use at your own peril. And make pull requests with your own improvements.
 
 ## Install
 
-In `.npmrc`:
-
-```
-auto-install-peers=true
-public-hoist-pattern[]=*prettier*
-public-hoist-pattern[]=*eslint*
-public-hoist-pattern[]=@tsconfig/recommended
-public-hoist-pattern[]=@google/clasp
-public-hoist-pattern[]=@tsconfig/recommended
-public-hoist-pattern[]=@types/*
-public-hoist-pattern[]=typescript
-public-hoist-pattern[]=*webpack*
-public-hoist-pattern[]=*loader*
-```
-
-Then:
-
 ```bash
-pnpm init
-pnpm i @battis/gas-lighter
-pnpm i -D shx npm-run-all
+npm i @battis/gas-lighter
+npm i -D npm-run-all
 ```
+
+If installing with `pnpm` a postinstall script will "shamefully" hoist dependencies
 
 If working on an existing Google Apps Script project:
 
@@ -93,9 +77,7 @@ In `package.json`:
 ```json
 {
   "scripts": {
-    "build": "run-s build:*",
-    "build:clean": "shx rm -rf build",
-    "build:compile": "webpack",
+    "build": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "npm run build",
     "deploy:push": "clasp push"
