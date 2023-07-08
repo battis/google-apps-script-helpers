@@ -28,11 +28,11 @@
     "build:clean": "npm run clean",
     "build:transpile": "tsc --project tsconfig.build.json",
     "build:html": "copyfiles -u 1 \"src/**/*.html\" dist",
-    "deploy": "run-s deploy:**",
-    "deploy:build": "npm run build",
-    "deploy:publish": "np --yolo --omit=dev",
-    "deploy:docs:build": "run-s docs:*",
-    "deploy:docs:publish": "node ./bin/docs/publish.mjs",
+    "release": "run-s release:**",
+    "release:build": "npm run build",
+    "release:publish": "np --yolo --omit=dev",
+    "release:docs:build": "run-s docs:*",
+    "release:docs:publish": "node ./bin/docs/publish.mjs",
     "postinstall": "node ./bin/postinstall.mjs"
   },
   "dependencies": {
