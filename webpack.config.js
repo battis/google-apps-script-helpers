@@ -7,7 +7,8 @@ module.exports = ({
   build = 'build',
   bundle = 'main',
   entry = './src/index.ts',
-  production = true
+  production = true,
+  plugins = []
 }) => {
   const config = {
     mode: 'production',
@@ -33,7 +34,7 @@ module.exports = ({
         }
       ]
     },
-    plugins: [new CleanWebpackPlugin(), new GasPlugin()]
+    plugins: [new CleanWebpackPlugin(), new GasPlugin(), ...plugins]
   };
   if (!production) {
     config.mode = 'development';
