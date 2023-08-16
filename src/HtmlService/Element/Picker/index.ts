@@ -19,6 +19,10 @@ type Arguments = Omit<Configuration, 'list' | 'callback'> & {
   callback: string;
 };
 
+export interface Pickable {
+  toOption(): Option;
+}
+
 export const DEFAULT_HEIGHT = 100;
 
 export function getHtmlOutput(config: Configuration) {
