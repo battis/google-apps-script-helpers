@@ -30,9 +30,9 @@
     "build:html": "copyfiles -u 1 \"src/**/*.html\" dist",
     "release": "run-s release:**",
     "release:build": "npm run build",
+    "release:publish": "np --yolo --no-release-draft",
     "release:docs:build": "run-s docs:*",
-    "release:docs:publish": "node ./bin/docs/publish.mjs",
-    "release:publish": "np --yolo --no-release-draft"
+    "release:docs:publish": "node ./bin/docs/publish.mjs"
   },
   "dependencies": {
     "@google/clasp": "^2.4.2",
