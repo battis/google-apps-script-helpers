@@ -68,7 +68,12 @@
         'callback' in complete &&
         'step' in complete
       ) {
-        google.script.run[complete.callback](window.thread, complete.step);
+        const args = complete.args || [];
+        google.script.run[complete.callback](
+          window.thread,
+          complete.step,
+          ...args
+        );
         window.updateProgress();
       } else {
         google.script.host.close();

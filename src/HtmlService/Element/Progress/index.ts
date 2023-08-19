@@ -160,7 +160,7 @@ namespace Progress {
     | string
     | true
     | { html: string }
-    | { callback: string; step: number };
+    | { callback: string; step: number; args?: any[] };
   export type Binding = {
     [k in keyof Omit<
       typeof Progress,
