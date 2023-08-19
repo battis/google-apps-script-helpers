@@ -28,7 +28,7 @@
     "build:clean": "npm run clean",
     "build:transpile": "tsc --project tsconfig.build.json",
     "build:html": "copyfiles -u 1 \"src/**/*.html\" dist",
-    "release": "run-s release:*",
+    "release": "run-s release:**",
     "release:build": "npm run build",
     "release:docs:build": "run-s docs:*",
     "release:docs:publish": "node ./bin/docs/publish.mjs",

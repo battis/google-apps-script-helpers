@@ -79,7 +79,7 @@ class Progress {
   public static getProgress(thread: string) {
     const html = this.getHtml(thread);
     const complete = this.getComplete(thread);
-    if (typeof complete === 'object' && 'callback' in complete) {
+    if (complete && typeof complete === 'object' && 'callback' in complete) {
       this.setIncomplete(thread);
     }
     return {
