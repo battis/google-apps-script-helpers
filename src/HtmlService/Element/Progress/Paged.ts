@@ -13,7 +13,7 @@ class Paged<Page = any> {
     private modal: Paged.ModalParameters,
     private loader: Paged.DatasetLoader<Page>,
     private handler: Paged.PageHandler<Page>,
-    private callback: string,
+    private callback: string | { function: string; args: any[] },
     step = 0,
     private completion: Progress.Completion = true,
     private quotaMargin = 1,
@@ -48,8 +48,15 @@ class Paged<Page = any> {
         averagePage = new Date().getTime() - pageStart;
       }
       if (new Date().getTime() + averagePage * this.pageMargin > end) {
+        let args = [];
+        let callback = this.callback;
+        if (typeof this.callback === 'object') {
+          args = this.callback.args;
+          callback = this.callback.function;
+        }
         this.progress.setComplete({
-          callback: this.callback,
+          callback,
+          args,
           step: step + counter
         });
         return;
