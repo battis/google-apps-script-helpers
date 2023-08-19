@@ -2,12 +2,13 @@ import * as LighterCacheService from '../../../CacheService';
 import * as UI from '../../../UI';
 import * as Template from '../../Template';
 import page from './page.html';
+import MPaged from './Paged';
 import progress from './progress.html';
 
 export const DEFAULT_HEIGHT = 100;
 
 class Progress {
-  private constructor() { } // eslint-disable-line @typescript-eslint/no-empty-function
+  protected constructor() { } // eslint-disable-line @typescript-eslint/no-empty-function
 
   public static DEFAULT_HEIGHT = 100;
 
@@ -163,9 +164,10 @@ namespace Progress {
   export type Binding = {
     [k in keyof Omit<
       typeof Progress,
-      'prototype' | 'DEFAULT_HEIGHT' | 'bindTo'
+      'prototype' | 'DEFAULT_HEIGHT' | 'bindTo' | 'Paged'
     >]: Function; // eslint-disable-line @typescript-eslint/ban-types
   };
+  export import Paged = MPaged;
 }
 
 export { Progress as default };
