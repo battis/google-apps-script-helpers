@@ -1,5 +1,8 @@
 {
   "extends": "@battis/eslint-config",
+  "rules": {
+    "@typescript-eslint/no-namespace": "off"
+  },
   "overrides": [
     {
       "files": "*.html",

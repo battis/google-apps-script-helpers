@@ -4,134 +4,168 @@ import * as Template from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
-export type Completion = string | true | { html: string };
-
 export const DEFAULT_HEIGHT = 100;
 
-function prefix(thread: string, token: string, delimiter = '.') {
+class Progress {
+  private constructor() { } // eslint-disable-line @typescript-eslint/no-empty-function
+
+  public static DEFAULT_HEIGHT = 100;
+
+  private static prefix(thread: string, token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', thread, token].join(
-        delimiter
+      delimiter
     );
-}
+  }
 
-function get(token: string, thread: string) {
-    return LighterCacheService.getUserCache(prefix(thread, token));
-}
+  private static get(token: string, thread: string) {
+    return LighterCacheService.getUserCache(this.prefix(thread, token));
+  }
 
-function put(token: string, thread: string, value: any) {
-    return LighterCacheService.putUserCache(prefix(thread, token), value);
-}
+  private static put(token: string, thread: string, value: any) {
+    return LighterCacheService.putUserCache(this.prefix(thread, token), value);
+  }
 
-// FIXME I don't think "remove" means what you think it means
-function remove(token: string, thread: string) {
-    return LighterCacheService.removeUserCache(prefix(thread, token));
-}
+  // FIXME I don't think "remove" means what you think it means
+  private static remove(token: string, thread: string) {
+    return LighterCacheService.removeUserCache(this.prefix(thread, token));
+  }
 
-function putAndUpdate(token: string, thread: string, value: any) {
-    put(token, thread, value);
-    update(thread);
-}
+  private static putAndUpdate(token: string, thread: string, value: any) {
+    this.put(token, thread, value);
+    this.update(thread);
+  }
 
-export const setStatus = (thread: string, status: string) =>
-    putAndUpdate('status', thread, status);
-export const getStatus = (thread: string) => get('status', thread);
+  public static setStatus = (thread: string, status: string) =>
+    this.putAndUpdate('status', thread, status);
+  public static getStatus = (thread: string) => this.get('status', thread);
 
-export const setValue = (thread: string, value: number) =>
-    putAndUpdate('value', thread, value);
-export const getValue = (thread: string) => get('value', thread);
-export const incrementValue = (thread: string, increment = 1) =>
-    setValue(thread, getValue(thread) + increment);
-export const decrementValue = (thread: string, decrement = 1) =>
-    setValue(thread, getValue(thread) - decrement);
+  public static setValue = (thread: string, value: number) =>
+    this.putAndUpdate('value', thread, value);
+  public static getValue = (thread: string) => this.get('value', thread);
+  public static incrementValue = (thread: string, increment = 1) =>
+    this.setValue(thread, this.getValue(thread) + increment);
+  public static decrementValue = (thread: string, decrement = 1) =>
+    this.setValue(thread, this.getValue(thread) - decrement);
 
-export const setMax = (thread: string, max: number) =>
-    putAndUpdate('max', thread, max);
-export const getMax = (thread: string) => get('max', thread);
-export const incrementMax = (thread: string, increment = 1) =>
-    setMax(thread, getMax(thread) + increment);
-export const decrementMax = (thread: string, decrement = 1) =>
-    setMax(thread, getMax(thread) - decrement);
+  public static setMax = (thread: string, max: number) =>
+    this.putAndUpdate('max', thread, max);
+  public static getMax = (thread: string) => this.get('max', thread);
+  public static incrementMax = (thread: string, increment = 1) =>
+    this.setMax(thread, this.getMax(thread) + increment);
+  public static decrementMax = (thread: string, decrement = 1) =>
+    this.setMax(thread, this.getMax(thread) - decrement);
 
-export const setComplete = (thread: string, completion: Completion) =>
-    put('complete', thread, completion);
-export const getComplete = (thread: string) => get('complete', thread);
+  public static setComplete = (
+    thread: string,
+    completion: Progress.Completion
+  ) => this.put('complete', thread, completion);
+  public static getComplete = (thread: string): Progress.Completion =>
+    this.get('complete', thread);
+  private static setIncomplete = (thread: string) =>
+    this.put('complete', thread, false);
 
-export const setHtml = (thread: string, html: string) =>
-    put('html', thread, html);
-export const getHtml = (thread: string): string =>
-    get('html', thread) || Template.createTemplate(progress, {}).getContent();
+  public static setHtml = (thread: string, html: string) =>
+    this.put('html', thread, html);
+  public static getHtml = (thread: string): string =>
+    this.get('html', thread) ||
+    Template.createTemplate(progress, {}).getContent();
 
-export function reset(thread: string) {
-    remove(thread, 'complete');
-    remove(thread, 'status');
-    setValue(thread, 0);
-}
+  public static reset(thread: string) {
+    this.remove(thread, 'complete');
+    this.remove(thread, 'status');
+    this.setValue(thread, 0);
+  }
 
-export const getProgress = (thread: string) => ({
-    html: getHtml(thread),
-    complete: getComplete(thread)
-});
+  public static getProgress(thread: string) {
+    const html = this.getHtml(thread);
+    const complete = this.getComplete(thread);
+    if (typeof complete === 'object' && 'callback' in complete) {
+      this.setIncomplete(thread);
+    }
+    return {
+      html,
+      complete
+    };
+  }
 
-// TODO add indeterminate option
-// TODO add timer display/estimate
-function update(thread: string) {
-    const value = getValue(thread);
-    const max = getMax(thread);
-    const status = getStatus(thread) || '';
-    setHtml(
-        thread,
-        Template.createTemplate(progress, { value, max, status }).getContent()
+  // TODO add indeterminate option
+  // TODO add timer display/estimate
+  private static update(thread: string) {
+    const value = this.getValue(thread);
+    const max = this.getMax(thread);
+    const status = this.getStatus(thread) || '';
+    this.setHtml(
+      thread,
+      Template.createTemplate(progress, { value, max, status }).getContent()
     );
-}
+  }
 
-export const getHtmlOutput = (thread: string, height = DEFAULT_HEIGHT) =>
+  public static getHtmlOutput = (thread: string, height = DEFAULT_HEIGHT) =>
     Template.createTemplate(page, { thread }).setHeight(height);
 
-export const showModalDialog = (
+  public static showModalDialog = (
     root: UI.Dialog.Root,
     thread: string,
     title: string,
     height = DEFAULT_HEIGHT
-) => {
-    root.getUi().showModalDialog(getHtmlOutput(thread, height), title);
-};
+  ) => {
+    root.getUi().showModalDialog(this.getHtmlOutput(thread, height), title);
+  };
 
-export const showModelessDialog = (
+  public static showModelessDialog = (
     root: UI.Dialog.Root,
     thread: string,
     title: string,
     height = DEFAULT_HEIGHT
-) => {
-    root.getUi().showModelessDialog(getHtmlOutput(thread, height), title);
-};
+  ) => {
+    root.getUi().showModelessDialog(this.getHtmlOutput(thread, height), title);
+  };
 
-export const bindTo = (thread: string) =>
-    new (class ProgressBinding {
-        getThread = () => thread;
-        reset = reset.bind(null, thread);
-        getProgress = getProgress.bind(null, thread);
-        setStatus = setStatus.bind(null, thread);
-        getStatus = getStatus.bind(null, thread);
-        setValue = setValue.bind(null, thread);
-        getValue = getValue.bind(null, thread);
-        incrementValue = incrementValue.bind(null, thread);
-        decrementValue = decrementValue.bind(null, thread);
-        setMax = setMax.bind(null, thread);
-        getMax = getMax.bind(null, thread);
-        incrementMax = incrementMax.bind(null, thread);
-        decrementMax = decrementMax.bind(null, thread);
-        setComplete = setComplete.bind(null, thread);
-        getComplete = getComplete.bind(null, thread);
-        getHtml = getHtml.bind(null, thread);
-        getHtmlOutput = getHtmlOutput.bind(null, thread);
-        showModalDialog = (
-            root: UI.Dialog.Root,
-            title: string,
-            height = DEFAULT_HEIGHT
-        ) => showModalDialog(root, thread, title, height);
-        showModelessDialog = (
-            root: UI.Dialog.Root,
-            title: string,
-            height = DEFAULT_HEIGHT
-        ) => showModelessDialog(root, thread, title, height);
+  public static bindTo = (thread: string) =>
+    new (class implements Progress.Binding {
+      getThread = () => thread;
+      reset = Progress.reset.bind(Progress, thread);
+      getProgress = Progress.getProgress.bind(Progress, thread);
+      setStatus = Progress.setStatus.bind(Progress, thread);
+      getStatus = Progress.getStatus.bind(Progress, thread);
+      setValue = Progress.setValue.bind(Progress, thread);
+      getValue = Progress.getValue.bind(Progress, thread);
+      incrementValue = Progress.incrementValue.bind(Progress, thread);
+      decrementValue = Progress.decrementValue.bind(Progress, thread);
+      setMax = Progress.setMax.bind(Progress, thread);
+      getMax = Progress.getMax.bind(Progress, thread);
+      incrementMax = Progress.incrementMax.bind(Progress, thread);
+      decrementMax = Progress.decrementMax.bind(Progress, thread);
+      setComplete = Progress.setComplete.bind(Progress, thread);
+      getComplete = Progress.getComplete.bind(Progress, thread);
+      getHtml = Progress.getHtml.bind(Progress, thread);
+      setHtml = Progress.setHtml.bind(Progress, thread);
+      getHtmlOutput = Progress.getHtmlOutput.bind(Progress, thread);
+      showModalDialog = (
+        root: UI.Dialog.Root,
+        title: string,
+        height = DEFAULT_HEIGHT
+      ) => Progress.showModalDialog(root, thread, title, height);
+      showModelessDialog = (
+        root: UI.Dialog.Root,
+        title: string,
+        height = DEFAULT_HEIGHT
+      ) => Progress.showModelessDialog(root, thread, title, height);
     })();
+}
+
+namespace Progress {
+  export type Completion =
+    | string
+    | true
+    | { html: string }
+    | { callback: string; step: number };
+  export type Binding = {
+    [k in keyof Omit<
+      typeof Progress,
+      'prototype' | 'DEFAULT_HEIGHT' | 'bindTo'
+    >]: Function; // eslint-disable-line @typescript-eslint/ban-types
+  };
+}
+
+export { Progress as default };

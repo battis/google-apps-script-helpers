@@ -1,2 +1,4 @@
-export * as Picker from './Picker';
-export * as Progress from './Progress';
+import * as Picker from './Picker';
+import Progress from './Progress';
+
+export { Picker, Progress };

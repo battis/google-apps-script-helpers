@@ -63,6 +63,13 @@
     window.onProgressComplete = (complete) => {
       if (typeof complete == 'object' && 'html' in complete) {
         window.replaceContent(complete.html);
+      } else if (
+        typeof complete == 'object' &&
+        'callback' in complete &&
+        'step' in complete
+      ) {
+        google.script.run[complete.callback](window.thread, complete.step);
+        window.updateProgress();
       } else {
         google.script.host.close();
       }
