@@ -161,7 +161,7 @@ namespace Progress {
     | true
     | { html: string }
     | { callback: string; step: number; args?: any[] };
-  export type Binding = {
+  export type Binding = { getThread: () => string } & {
     [k in keyof Omit<
       typeof Progress,
       'prototype' | 'DEFAULT_HEIGHT' | 'bindTo' | 'Paged'

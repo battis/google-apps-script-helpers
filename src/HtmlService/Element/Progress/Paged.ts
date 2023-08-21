@@ -16,6 +16,7 @@ class Paged<Page = any> {
     private callback: string | { function: string; args: any[] },
     step = 0,
     private completion: Progress.Completion = true,
+    private ignoreErrors = true,
     private quotaMargin = 1,
     private pageMargin = 2
   ) {
@@ -39,7 +40,21 @@ class Paged<Page = any> {
     let counter = 1;
     for (const page of dataset) {
       const pageStart = new Date().getTime();
-      this.handler(page);
+      if (this.ignoreErrors) {
+        try {
+          this.handler(page);
+        } catch (e) {
+          Logger.log({
+            message: `Error processing page`,
+            page,
+            error: e,
+            thread: this.progress.getThread()
+          });
+        }
+      } else {
+        this.handler(page);
+      }
+
       if (averagePage) {
         averagePage =
           (averagePage * counter + (new Date().getTime() - pageStart)) /
