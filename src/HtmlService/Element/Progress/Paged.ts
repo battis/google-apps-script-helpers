@@ -4,7 +4,7 @@ import * as UI from '../../../UI';
 class Paged<Page = any> {
   /** @see {@link https://developers.google.com/apps-script/guides/services/quotas Quotas for Google Services} */
   private static MAX_SIMULTANEOUS_EXECUTIONS = 30; // scripts
-  private static MAX_EXECUTION_LENGTH = 30; // minutes, documented as 6, observed to be 30
+  private static MAX_EXECUTION_LENGTH = 30; // minutes, 6 for free accounts, 30 for paid
 
   private progress: Progress.Binding;
 

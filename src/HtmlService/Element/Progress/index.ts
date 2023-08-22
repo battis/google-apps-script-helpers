@@ -1,4 +1,4 @@
-import * as LighterCacheService from '../../../CacheService';
+import * as MCacheService from '../../../CacheService';
 import * as UI from '../../../UI';
 import * as Template from '../../Template';
 import page from './page.html';
@@ -19,16 +19,21 @@ class Progress {
   }
 
   private static get(token: string, thread: string) {
-    return LighterCacheService.getUserCache(this.prefix(thread, token));
+    return MCacheService.getUserCache(this.prefix(thread, token));
   }
 
   private static put(token: string, thread: string, value: any) {
-    return LighterCacheService.putUserCache(this.prefix(thread, token), value);
+    return MCacheService.putUserCache(
+      this.prefix(thread, token),
+      value,
+      undefined,
+      30 * 60
+    );
   }
 
   // FIXME I don't think "remove" means what you think it means
   private static remove(token: string, thread: string) {
-    return LighterCacheService.removeUserCache(this.prefix(thread, token));
+    return MCacheService.removeUserCache(this.prefix(thread, token));
   }
 
   private static putAndUpdate(token: string, thread: string, value: any) {
@@ -80,8 +85,16 @@ class Progress {
   public static getProgress(thread: string) {
     const html = this.getHtml(thread);
     const complete = this.getComplete(thread);
-    if (complete && typeof complete === 'object' && 'callback' in complete) {
-      this.setIncomplete(thread);
+    if (complete) {
+      if (typeof complete === 'object' && 'callback' in complete) {
+        this.setIncomplete(thread);
+      } else {
+        this.remove('html', thread);
+        this.remove('status', thread);
+        this.remove('value', thread);
+        this.remove('max', thread);
+        this.remove('complete', thread);
+      }
     }
     return {
       html,
