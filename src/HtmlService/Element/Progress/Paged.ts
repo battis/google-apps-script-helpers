@@ -1,18 +1,45 @@
-import Progress from '.';
 import * as UI from '../../../UI';
+import Progress from './Progress';
 
-class Paged<Page = any> {
+class Paged<Page = any> extends Progress {
   /** @see {@link https://developers.google.com/apps-script/guides/services/quotas Quotas for Google Services} */
   private static MAX_SIMULTANEOUS_EXECUTIONS = 30; // scripts
   private static MAX_EXECUTION_LENGTH = 30; // minutes, 6 for free accounts, 30 for paid
 
-  private progress: Progress.Binding;
+  private modal: Parameters<InstanceType<typeof Progress>['showModalDialog']>;
 
+  /** @deprecated use tuple format for modal argument */
   public constructor(
     thread: string,
-    private modal: Paged.ModalParameters,
-    private loader: Paged.DatasetLoader<Page>,
-    private handler: Paged.PageHandler<Page>,
+    modal: { root: UI.Dialog.Root; title: string; height?: number },
+    loader: Paged.Dataset.Loader<Page>,
+    handler: Paged.Dataset.Handler<Page>,
+    callback: string | { function: string; args: any[] },
+    step?: number,
+    completion?: Progress.Completion,
+    ignoreErrors?: boolean,
+    quotaMargin?: number,
+    pageMargin?: number
+  );
+  public constructor(
+    thread: string,
+    modal: Parameters<InstanceType<typeof Progress>['showModalDialog']>,
+    loader: Paged.Dataset.Loader<Page>,
+    handler: Paged.Dataset.Handler<Page>,
+    callback: string | { function: string; args: any[] },
+    step?: number,
+    completion?: Progress.Completion,
+    ignoreErrors?: boolean,
+    quotaMargin?: number,
+    pageMargin?: number
+  );
+  public constructor(
+    thread: string,
+    modal:
+      | { root: UI.Dialog.Root; title: string; height?: number }
+      | Parameters<InstanceType<typeof Progress>['showModalDialog']>,
+    private loader: Paged.Dataset.Loader<Page>,
+    private handler: Paged.Dataset.Handler<Page>,
     private callback: string | { function: string; args: any[] },
     step = 0,
     private completion: Progress.Completion = true,
@@ -20,7 +47,13 @@ class Paged<Page = any> {
     private quotaMargin = 1,
     private pageMargin = 2
   ) {
-    this.progress = Progress.bindTo(thread);
+    super(thread);
+    if (!Array.isArray(modal)) {
+      const { root, title, height } = modal;
+      this.modal = [root, title, height];
+    } else {
+      this.modal = modal;
+    }
     this.run(step);
   }
 
@@ -29,11 +62,7 @@ class Paged<Page = any> {
       new Date().getTime() +
       (Paged.MAX_EXECUTION_LENGTH - this.quotaMargin) * 60 * 1000;
     if (step == 0) {
-      this.progress.showModalDialog(
-        this.modal.root,
-        this.modal.title,
-        this.modal.height
-      );
+      this.showModalDialog(...this.modal);
     }
     const dataset = this.loader(step);
     let averagePage: number;
@@ -48,7 +77,7 @@ class Paged<Page = any> {
             message: `Error processing page`,
             page,
             error: e,
-            thread: this.progress.getThread()
+            thread: this.job
           });
         }
       } else {
@@ -66,34 +95,31 @@ class Paged<Page = any> {
         let args = [];
         let callback = this.callback;
         if (typeof this.callback === 'object') {
-          args = this.callback.args;
+          args = this.callback.args || [];
           callback = this.callback.function;
         }
-        this.progress.setComplete({
-          callback,
+        this.complete = {
+          callback: callback,
           args,
           step: step + counter
-        });
+        };
         return;
       }
       counter++;
     }
-    this.progress.setComplete(this.completion);
+    this.complete = this.completion;
   }
 }
 
 namespace Paged {
-  export type ModalParameters = {
-    root: UI.Dialog.Root;
-    title: string;
-    height?: number;
-  };
+  export type Completion =
+    | Progress.Completion
+    | { callback: string; step: number; args?: any[] };
+  export namespace Dataset {
+    export type Loader<Page> = (start: number, end?: number) => Dataset<Page>;
+    export type Handler<Page> = (page: Page) => void;
+  }
   export type Dataset<Page> = Iterable<Page>;
-  export type DatasetLoader<Page> = (
-    start: number,
-    end?: number
-  ) => Dataset<Page>;
-  export type PageHandler<Page> = (page: Page) => void;
 }
 
 export { Paged as default };
