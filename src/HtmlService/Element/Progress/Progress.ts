@@ -11,7 +11,9 @@ class Progress {
     return this._job;
   }
 
-  public constructor(private _job = Utilities.getUuid()) { }
+  public constructor(private _job = Utilities.getUuid()) {
+    Progress.instances[this.job] = this;
+  }
 
   private prefix(token: string, delimiter = '.') {
     return ['battis', 'Terse', 'HtmlService', 'Progress', this.job, token].join(
@@ -86,7 +88,7 @@ class Progress {
   }
 
   public static getProgress(job: string) {
-    const progress = new Progress(job);
+    const progress = this.getInstance(job);
     const html = progress.html;
     const complete = progress.complete;
     if (complete) {
@@ -135,10 +137,7 @@ class Progress {
 
   private static instances: { [job: string]: Progress } = {};
   private static getInstance(job: string) {
-    if (!this.instances[job]) {
-      this.instances[job] = new Progress(job);
-    }
-    return this.instances[job];
+    return this.instances[job] || new Progress(job);
   }
   /** @deprecated use Progress instance */
   public static getStatus(job: string) {
