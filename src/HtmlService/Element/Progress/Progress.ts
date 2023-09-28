@@ -1,7 +1,7 @@
 import * as gCacheService from '../../../CacheService';
 import * as UI from '../../../UI';
 import * as Template from '../../Template';
-import page from './page.html';
+import dialog from './dialog.html';
 import progress from './progress.html';
 
 class Progress {
@@ -25,13 +25,44 @@ class Progress {
     return gCacheService.getUserCache(this.prefix(token));
   }
 
-  private put(token: string, value: any) {
-    return gCacheService.putUserCache(
+  private put(token: string, value: any, update = true, additionalValues = {}) {
+    const result = gCacheService.putUserCache(
       this.prefix(token),
       value,
       undefined,
       30 * 60
     );
+    if (update) {
+      this.html = Template.createTemplate(this.hookTemplate(), {
+        value: this.value,
+        max: this.max,
+        status: this.status || '',
+        ...this.hookTemplateData()
+      }).getContent();
+    }
+    return result;
+  }
+
+  private _hookTemplate = () => progress;
+
+  protected get hookTemplate() {
+    return this._hookTemplate;
+  }
+
+  protected set hookTemplate(template: () => string) {
+    this._hookTemplate = template;
+  }
+
+  private _hookTemplateData = () => {
+    return {};
+  };
+
+  protected get hookTemplateData() {
+    return this._hookTemplateData;
+  }
+
+  protected set hookTemplateData(templateData: () => { [key: string]: any }) {
+    this._hookTemplateData = templateData;
   }
 
   // FIXME I don't think "remove" means what you think it means
@@ -39,41 +70,37 @@ class Progress {
     return gCacheService.removeUserCache(this.prefix(token));
   }
 
-  private putAndUpdate(token: string, value: any) {
-    this.put(token, value);
-    this.update();
+  public set status(status: string) {
+    this.put('status', status);
   }
 
-  public set status(status: string) {
-    this.putAndUpdate('status', status);
-  }
   public get status() {
     return this.get('status');
   }
 
   public set value(value: number) {
-    this.putAndUpdate('value', value);
+    this.put('value', value);
   }
   public get value() {
     return this.get('value');
   }
 
   public set max(max: number) {
-    this.putAndUpdate('max', max);
+    this.put('max', max);
   }
   public get max() {
     return this.get('max');
   }
 
   public set complete(completion: Progress.Completion) {
-    this.put('complete', completion);
+    this.put('complete', completion, false);
   }
   public get complete(): Progress.Completion {
     return this.get('complete');
   }
 
   public set html(html: string) {
-    this.put('html', html);
+    this.put('html', html, false);
   }
   public get html(): string {
     return (
@@ -88,7 +115,7 @@ class Progress {
   }
 
   public static getProgress(job: string) {
-    const progress = this.getInstance(job);
+    const progress = Progress.getInstance(job);
     const html = progress.html;
     const complete = progress.complete;
     if (complete) {
@@ -104,20 +131,8 @@ class Progress {
     };
   }
 
-  // TODO add timer display/estimate
-  private update() {
-    const value = this.value;
-    const max = this.max;
-    const status = this.status || '';
-    this.html = Template.createTemplate(progress, {
-      value,
-      max,
-      status
-    }).getContent();
-  }
-
   public getHtmlOutput = (height = Progress.DEFAULT_HEIGHT) =>
-    Template.createTemplate(page, { job: this.job }).setHeight(height);
+    Template.createTemplate(dialog, { job: this.job }).setHeight(height);
 
   public showModalDialog = (
     root: UI.Dialog.Root,
@@ -222,36 +237,36 @@ class Progress {
     this.getInstance(job).showModelessDialog(root, title, height);
   }
   /** @deprecated use Progress instance */
-  public static bindTo = (thread: string) =>
+  public static bindTo = (job: string) =>
     new (class implements Progress.Binding {
-      getThread = () => thread;
-      reset = Progress.reset.bind(Progress, thread);
-      getProgress = Progress.getProgress.bind(Progress, thread);
-      setStatus = Progress.setStatus.bind(Progress, thread);
-      getStatus = Progress.getStatus.bind(Progress, thread);
-      setValue = Progress.setValue.bind(Progress, thread);
-      getValue = Progress.getValue.bind(Progress, thread);
-      incrementValue = Progress.incrementValue.bind(Progress, thread);
-      decrementValue = Progress.decrementValue.bind(Progress, thread);
-      setMax = Progress.setMax.bind(Progress, thread);
-      getMax = Progress.getMax.bind(Progress, thread);
-      incrementMax = Progress.incrementMax.bind(Progress, thread);
-      decrementMax = Progress.decrementMax.bind(Progress, thread);
-      setComplete = Progress.setComplete.bind(Progress, thread);
-      getComplete = Progress.getComplete.bind(Progress, thread);
-      getHtml = Progress.getHtml.bind(Progress, thread);
-      setHtml = Progress.setHtml.bind(Progress, thread);
-      getHtmlOutput = Progress.getHtmlOutput.bind(Progress, thread);
+      getThread = () => job;
+      reset = Progress.reset.bind(Progress, job);
+      getProgress = Progress.getProgress.bind(Progress, job);
+      setStatus = Progress.setStatus.bind(Progress, job);
+      getStatus = Progress.getStatus.bind(Progress, job);
+      setValue = Progress.setValue.bind(Progress, job);
+      getValue = Progress.getValue.bind(Progress, job);
+      incrementValue = Progress.incrementValue.bind(Progress, job);
+      decrementValue = Progress.decrementValue.bind(Progress, job);
+      setMax = Progress.setMax.bind(Progress, job);
+      getMax = Progress.getMax.bind(Progress, job);
+      incrementMax = Progress.incrementMax.bind(Progress, job);
+      decrementMax = Progress.decrementMax.bind(Progress, job);
+      setComplete = Progress.setComplete.bind(Progress, job);
+      getComplete = Progress.getComplete.bind(Progress, job);
+      getHtml = Progress.getHtml.bind(Progress, job);
+      setHtml = Progress.setHtml.bind(Progress, job);
+      getHtmlOutput = Progress.getHtmlOutput.bind(Progress, job);
       showModalDialog = (
         root: UI.Dialog.Root,
         title: string,
         height = Progress.DEFAULT_HEIGHT
-      ) => Progress.showModalDialog(root, thread, title, height);
+      ) => Progress.showModalDialog(root, job, title, height);
       showModelessDialog = (
         root: UI.Dialog.Root,
         title: string,
         height = Progress.DEFAULT_HEIGHT
-      ) => Progress.showModelessDialog(root, thread, title, height);
+      ) => Progress.showModelessDialog(root, job, title, height);
     })();
 }
 

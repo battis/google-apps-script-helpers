@@ -1,7 +1,8 @@
-<div class="progress-wrapper">
+<div class="progress-wrapper" style="background: red;">
   <progress
     <?!= data.value ? `value="${data.value}"` : '' ?>
     <?!= data.max ? `max="${Math.max(data.max, data.value)}"` : '' ?>
   ></progress>
+  <?!= data.endTime ? `<span>${data.endTime}</span>`: '' ?>
   <div class="status"><?!= data.status ?></div>
 </div>

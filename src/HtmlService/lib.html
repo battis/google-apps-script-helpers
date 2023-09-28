@@ -39,7 +39,7 @@
       }
     };
 
-    window.thread = '<?!= data.thread ?>';
+    window.job = '<?!= data.job || data.thread ?>';
 
     window.progressPlaceholder = () => `
       <div class="progress-wrapper">
@@ -51,13 +51,16 @@
       google.script.run
         .withSuccessHandler((progress) => {
           if (progress.complete) {
+            const pre = document.createElement('pre');
+            pre.innerHTML = JSON.stringify(progress.complete, null, 2);
+            document.body.appendChild(pre);
             window.onProgressComplete(progress.complete);
           } else {
             window.replaceContent(progress.html);
             window.updateProgress();
           }
         })
-        .getProgress(window.thread);
+        .getProgress(window.job);
     };
 
     window.onProgressComplete = (complete) => {
@@ -70,7 +73,7 @@
       ) {
         const args = complete.args || [];
         google.script.run[complete.callback](
-          window.thread,
+          window.job,
           complete.step,
           ...args
         );
