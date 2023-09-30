@@ -18,7 +18,7 @@ Use at your own peril. And make pull requests with your own improvements.
 ```bash
 npm i @battis/gas-lighter
 npx clasp login # if not already logged in
-npx @battis/gas-lighter setup
+npx gl-setup
 ```
 
 ## Webpack Configuration

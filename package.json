@@ -17,7 +17,7 @@
     "node": ">=12.17"
   },
   "bin": {
-    "setup": "./bin/setup.mjs"
+    "gl-setup": "./bin/setup.mjs"
   },
   "scripts": {
     "dev": "run-s dev:*",
