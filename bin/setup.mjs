@@ -1,35 +1,47 @@
+#!/usr/bin/env node
+
 import fs from 'fs';
 import path from 'path';
 import cli from '@battis/qui-cli';
 
-import * as url from 'url';
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __filename = process.argv[1].replace(
+  /\/\.bin\/.*$/,
+  '/@battis/gas-lighter/bin/setup.mjs'
+);
+const __dirname = path.dirname(__filename);
 
 const templateDir = path.join('../project');
 const template = {
-  '.claspignore': path.join(templateDir, '.claspignore'),
-  '.gitignore': path.join(templateDir, '.gitignore.inc'),
+  '.claspignore': path.join(templateDir, 'claspignore'),
+  '.gitignore': path.join(templateDir, 'gitignore.inc'),
   'package.json': path.join(templateDir, 'package.inc.json'),
   'tsconfig.json': path.join(templateDir, 'tsconfig.json'),
   'webpack.config.js': path.join(templateDir, 'webpack.config.js')
 };
 
 function appendByLine(src, dest) {
-  const original = fs.readFileSync(dest).toString().split('\n');
-  const lines = fs.readFileSync(src).toString().split('\n');
-  const appended = [];
-  lines.forEach((line) => {
-    if (!original.includes(line)) {
-      fs.appendFileSync(dest, `${line}\n`);
-      appended.push(line);
-    }
-  });
-  cli.log.info(
-    `Added ${
-      appended.length ? appended.join(', ') : 'nothing'
-    } to ${path.basename(dest)}`
-  );
+  if (!fs.existsSync(dest)) {
+    fs.copyFileSync(src, dest);
+    cli.log.info(`Wrote ${path.basename(dest)}`);
+  } else {
+    const original = fs.readFileSync(dest).toString().split('\n');
+    const lines = fs.readFileSync(src).toString().split('\n');
+    const appended = [];
+    lines.forEach((line) => {
+      if (!original.includes(line)) {
+        fs.appendFileSync(dest, `${line}\n`);
+        appended.push(line);
+      }
+    });
+
+    cli.log.info(
+      `Added ${
+        appended.length
+          ? appended.map((v) => cli.colors.value(v)).join(', ')
+          : 'nothing'
+      } to ${path.basename(dest)}`
+    );
+  }
 }
 
 function appendJSON(src, dest) {
@@ -60,7 +72,9 @@ function appendJSON(src, dest) {
   cli.log.info(
     `Updated ${path.basename(dest)}${
       Object.keys(result.skipped).length
-        ? ` excluding ${JSON.stringify(result.skipped, null, 2)}`
+        ? ` excluding ${cli.colors.value(
+            JSON.stringify(result.skipped, null, 2)
+          )}`
         : ''
     }`
   );
@@ -80,14 +94,14 @@ function copyFile(src, dest) {
 cli.init({
   log: {
     logFilePath: path.join(
-      process.env.PWD,
+      process.cwd(),
       `${new Date().toISOString().replace(/[^a-z0-9-_]+/gi, '_')}-setup.log`
     )
   }
 });
 
 for (const file in template) {
-  const dest = path.join(process.env.PWD, file);
+  const dest = path.join(process.cwd(), file);
   const src = path.join(__dirname, template[file]);
   if (/.+\.inc$/i.test(src)) {
     appendByLine(src, dest);
@@ -96,4 +110,31 @@ for (const file in template) {
   } else {
     copyFile(src, dest);
   }
+}
+
+if (!fs.existsSync(path.join(process.cwd(), '.clasp.json'))) {
+  if (
+    await cli.prompts.confirm({
+      message: 'Are you cloning an existing Google Apps Script project?'
+    })
+  ) {
+    const id = await cli.prompts.input({
+      message: `Enter the project ID (e.g. ${cli.colors.value(
+        'https://script.google.com/home/projects/'
+      )}${cli.colors.url(
+        'euhfmDECZ9nUV7kuTojj6t9qqh9Qt2gWdFGQ2HEQmPGtFLaheDdCw8idj'
+      )}${cli.colors.value('/edit')})`
+    });
+    cli.shell.exec(`npx clasp clone ${id}`);
+  } else {
+    const name = await cli.prompts.input({ message: 'Enter the project name' });
+    cli.shell.exec(`npx clasp create --type=standalone "${name}"`);
+  }
+} else {
+  const id = JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), '.clasp.json')).toString()
+  ).scriptId;
+  cli.log.info(
+    `Project already bound to script ${cli.colors.value(id)} by clasp`
+  );
 }

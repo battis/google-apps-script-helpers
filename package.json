@@ -16,6 +16,9 @@
   "engines": {
     "node": ">=12.17"
   },
+  "bin": {
+    "setup": "./bin/setup.mjs"
+  },
   "scripts": {
     "dev": "run-s dev:*",
     "dev:docs-worktree": "git worktree add docs docs",
@@ -35,6 +38,7 @@
     "release:docs:publish": "node ./bin/docs/publish.mjs"
   },
   "dependencies": {
+    "@battis/qui-cli": "^0.3.6",
     "@google/clasp": "^2.4.2",
     "@tsconfig/recommended": "^1.0.3",
     "@types/google-apps-script": "^1.0.72",
@@ -51,7 +55,6 @@
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
-    "@battis/qui-cli": "^0.3.6",
     "copyfiles": "^2.4.1",
     "np": "^8.0.4",
     "open": "^9.1.0",
