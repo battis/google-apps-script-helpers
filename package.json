@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@battis/qui-cli": "^0.3.6",
+    "@battis/typescript-tricks": "^0.4.2",
     "@google/clasp": "^2.4.2",
     "@tsconfig/recommended": "^1.0.3",
     "@types/google-apps-script": "^1.0.72",

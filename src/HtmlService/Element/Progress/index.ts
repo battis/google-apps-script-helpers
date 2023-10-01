@@ -1,10 +1,11 @@
+import MBase from './Base';
 import MPaged from './Paged';
-import MProgress from './Progress';
+import Factory from './Factory';
 
-class Progress extends MProgress { }
-
-namespace Progress {
-  export import Paged = MPaged; // eslint-disable-line @typescript-eslint/no-unused-vars
-}
+const Progress = {
+  ...MBase,
+  Paged: MPaged,
+  getProgress: Factory.getProgress.bind(Factory)
+};
 
 export { Progress as default };
