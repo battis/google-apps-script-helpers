@@ -14,6 +14,7 @@ const templateDir = path.join('../project');
 const template = {
   '.claspignore': path.join(templateDir, 'claspignore'),
   '.gitignore': path.join(templateDir, 'gitignore.inc'),
+  '.npmrc': path.join(templateDir, 'npmrc.inc'),
   'package.json': path.join(templateDir, 'package.inc.json'),
   'tsconfig.json': path.join(templateDir, 'tsconfig.json'),
   'webpack.config.js': path.join(templateDir, 'webpack.config.js')
