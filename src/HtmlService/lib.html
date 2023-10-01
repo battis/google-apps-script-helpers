@@ -51,6 +51,7 @@
       google.script.run
         .withSuccessHandler((progress) => {
           if (progress.complete) {
+            window.replaceContent(progress.html);
             window.onProgressComplete(progress.complete);
           } else {
             window.replaceContent(progress.html);
@@ -62,6 +63,10 @@
 
     window.onProgressComplete = (complete) => {
       if (typeof complete == 'object') {
+        if ('html' in complete) {
+          window.replaceContent(complete.html);
+        }
+
         if ('callback' in complete && 'step' in complete) {
           const args = complete.args || [];
           google.script.run[complete.callback](
@@ -70,14 +75,14 @@
             ...args
           );
           window.updateProgress();
-        } else if ('html' in complete) {
-          window.replaceContent(complete.html);
         }
       } else {
         try {
           google.script.host.close();
         } catch {
-          replaceContent(`<p>It is now safe to close this window.</p>`);
+          document.querySelector(
+            '.message'
+          ).innerHTML = `<p>It is now safe to close this window.</p><button onclick="window.top.close()" class="action">Close</button>`;
         }
       }
     };

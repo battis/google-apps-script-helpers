@@ -1,17 +1,11 @@
 <html>
   <head>
-    <link
-      rel="stylesheet"
-      href="https://ssl.gstatic.com/docs/script/css/add-ons1.css"
-    />
     <?!= include('style', data) ?>
   </head>
-  <body>
-    <div class="container">
-      <h1><?!= data.title ?></h1>
-      <div id="content"></div>
-      <?!= data.message ? `<div class="message">${data.message}</div>` : '' ?>
-    </div>
+  <body class="window">
+    <h1><?!= data.title ?></h1>
+    <div id="content"></div>
+    <div class="message"><?!= data.message ?? '' ?></div>
     <?!= include('lib', data) ?>
     <script>
       replaceContent(progressPlaceholder());

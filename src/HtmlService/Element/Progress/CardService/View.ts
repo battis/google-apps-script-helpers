@@ -12,7 +12,7 @@ export default class View extends PagedView {
 
   public getHtmlOutput({
     title,
-    message = 'Please do not close this window until the progress bar completes.',
+    message = '<p>Do not close this window until the progress bar is complete.</p>',
     height = View.DEFAULT_HEIGHT,
     data = {}
   }: {
