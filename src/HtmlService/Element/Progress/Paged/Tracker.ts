@@ -1,4 +1,3 @@
-import * as UI from '../../../../UI';
 import BaseTracker from '../Base/Tracker';
 import View from './View';
 import Common from './Common';
@@ -17,9 +16,6 @@ type RunParameters<Page> = {
 
 type ConstructorParameters<Page> = RunParameters<Page> & {
   job: string;
-  modal?:
-    | RunParameters<Page>['modal']
-    | { root: UI.Dialog.Root; title: string; height?: number };
 };
 
 class Tracker<Page = any> extends BaseTracker {
@@ -40,12 +36,6 @@ class Tracker<Page = any> extends BaseTracker {
       pageMargin: 2,
       ...params
     };
-    if (params.modal) {
-      if (!Array.isArray(params.modal)) {
-        const { root, title, height } = params.modal;
-        params.modal = [root, title, height];
-      }
-    }
 
     this.run(params);
   }
@@ -102,11 +92,9 @@ class Tracker<Page = any> extends BaseTracker {
           callback = params.callback.function;
         }
         this.complete = {
-          complete: {
-            callback: callback,
-            args,
-            step: params.step + counter
-          }
+          callback: callback,
+          args,
+          step: params.step + counter
         };
         return;
       }

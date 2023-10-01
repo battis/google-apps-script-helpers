@@ -8,6 +8,7 @@ const Common = {
   KEY_STATUS: 'status',
   KEY_VALUE: 'value',
   KEY_MAX: 'max',
+  KEY_HTML: 'html',
   KEY_COMPLETE: 'complete'
 };
 

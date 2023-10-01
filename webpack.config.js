@@ -2,43 +2,34 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const GasPlugin = require('gas-webpack-plugin');
 
-module.exports = ({
-  root,
-  build = 'build',
-  bundle = 'main',
-  entry = './src/index.ts',
-  production = true,
-  plugins = []
-}) => {
-  const config = {
-    mode: 'production',
-    entry: {
-      [bundle]: entry
-    },
-    output: {
-      path: path.join(root, build),
-      filename: '[name]-bundle.js'
-    },
-    resolve: {
-      extensions: ['.ts', '.js']
-    },
-    module: {
-      rules: [
-        {
-          test: /\.ts$/,
-          loader: 'ts-loader'
-        },
-        {
-          test: /\.html$/,
-          type: 'asset/source'
+module.exports = {
+  entry: path.resolve(__dirname, 'src/index.ts'),
+  mode: 'development', //'production',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js',
+    library: 'g'
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: {
+          configFile: 'tsconfig.webpack.json'
         }
-      ]
-    },
-    plugins: [new CleanWebpackPlugin(), new GasPlugin(), ...plugins]
-  };
-  if (!production) {
-    config.mode = 'development';
-    config.devtool = 'inline-source-map';
-  }
-  return config;
+      },
+      {
+        test: /\.html$/,
+        type: 'asset/source'
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new GasPlugin({ autoGlobalExportsFiles: ['**/*.global.ts'] })
+  ]
 };

@@ -1,9 +1,11 @@
 import Common from './Common';
 import Base from './Base/Common';
+import CardService from './CardService/Common';
 import Job from './Job';
 import Paged from './Paged/Common';
 import PagedView from './Paged/View';
 import BaseView from './Base/View';
+import CardView from './CardService/View';
 
 export default class Factory {
   private static instances: Record<string, BaseView> = {};
@@ -15,6 +17,9 @@ export default class Factory {
       switch (Job.get(job, Common.KEY_KIND)) {
         case Paged.KIND:
           instance = new PagedView(job);
+          break;
+        case CardService.KIND:
+          instance = new CardView(job);
           break;
         case Base.KIND:
         default:
@@ -30,6 +35,9 @@ export default class Factory {
       const progress = this.getInstance(job);
       const html = progress.html;
       const complete = progress.complete;
+      if (complete) {
+        progress.resetComplete();
+      }
       return {
         html,
         complete

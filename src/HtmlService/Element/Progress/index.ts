@@ -1,11 +1,12 @@
 import MBase from './Base';
 import MPaged from './Paged';
-import Factory from './Factory';
+import MCardService from './CardService';
+import './index.global';
 
 const Progress = {
   ...MBase,
   Paged: MPaged,
-  getProgress: Factory.getProgress.bind(Factory)
+  CardService: MCardService
 };
 
 export { Progress as default };

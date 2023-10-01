@@ -51,9 +51,6 @@
       google.script.run
         .withSuccessHandler((progress) => {
           if (progress.complete) {
-            const pre = document.createElement('pre');
-            pre.innerHTML = JSON.stringify(progress.complete, null, 2);
-            document.body.appendChild(pre);
             window.onProgressComplete(progress.complete);
           } else {
             window.replaceContent(progress.html);
@@ -64,22 +61,24 @@
     };
 
     window.onProgressComplete = (complete) => {
-      if (typeof complete == 'object' && 'html' in complete) {
-        window.replaceContent(complete.html);
-      } else if (
-        typeof complete == 'object' &&
-        'callback' in complete &&
-        'step' in complete
-      ) {
-        const args = complete.args || [];
-        google.script.run[complete.callback](
-          window.job,
-          complete.step,
-          ...args
-        );
-        window.updateProgress();
+      if (typeof complete == 'object') {
+        if ('callback' in complete && 'step' in complete) {
+          const args = complete.args || [];
+          google.script.run[complete.callback](
+            window.job,
+            complete.step,
+            ...args
+          );
+          window.updateProgress();
+        } else if ('html' in complete) {
+          window.replaceContent(complete.html);
+        }
       } else {
-        google.script.host.close();
+        try {
+          google.script.host.close();
+        } catch {
+          replaceContent(`<p>It is now safe to close this window.</p>`);
+        }
       }
     };
 

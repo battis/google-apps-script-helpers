@@ -3,6 +3,6 @@
     <?!= data.value ? `value="${data.value}"` : '' ?>
     <?!= data.max ? `max="${Math.max(data.max, data.value)}"` : '' ?>
   ></progress>
-  <?!= data.endTime ? `<div class="end-time">${data.endTime}</div>`: '' ?>
+  <?!= data.endTime ? `<span>${data.endTime}</span>`: '' ?>
   <div class="status"><?!= data.status ?></div>
 </div>

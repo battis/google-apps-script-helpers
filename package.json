@@ -3,8 +3,7 @@
   "version": "0.4.4",
   "author": "Seth Battis <seth@battis.net>",
   "license": "GPL-3.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
   "homepage": "https://github.com/battis/gas-lighter",
   "repository": {
     "type": "git",

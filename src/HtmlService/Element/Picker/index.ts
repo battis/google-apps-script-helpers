@@ -1,5 +1,5 @@
 import * as UI from '../../../UI';
-import * as Template from '../../Template';
+import Template from '../../Template';
 import page from './page.html';
 
 export type Option = { name: string; value: string };

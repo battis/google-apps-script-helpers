@@ -1,5 +1,5 @@
-import lib from './lib.html';
-import style from './style.html';
+import lib from '../lib.html';
+import style from '../style.html';
 
 export function createTemplate(html: string, data = {}) {
   const template = HtmlService.createTemplate(html);
