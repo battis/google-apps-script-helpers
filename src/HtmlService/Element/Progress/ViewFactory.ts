@@ -7,14 +7,13 @@ import PagedView from './Paged/View';
 import BaseView from './Base/View';
 import CardView from './CardService/View';
 
-export default class Factory {
+export default class ViewFactory {
   private static instances: Record<string, BaseView> = {};
 
-  public static getInstance(job: string) {
-    Logger.log(job);
+  public static getInstance(job: string, kind?: string) {
     let instance = this.instances[job];
     if (!instance) {
-      switch (Job.get(job, Common.KEY_KIND)) {
+      switch (kind || Job.get(job, Common.KEY_KIND)) {
         case Paged.KIND:
           instance = new PagedView(job);
           break;
@@ -32,7 +31,7 @@ export default class Factory {
 
   public static getProgress(job: string) {
     try {
-      const progress = this.getInstance(job);
+      const progress = ViewFactory.getInstance(job);
       const html = progress.html;
       const complete = progress.complete;
       if (complete) {

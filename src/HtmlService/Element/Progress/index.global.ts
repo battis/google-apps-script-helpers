@@ -1,5 +1,5 @@
-import Factory from './Factory';
+import ViewFactory from './ViewFactory';
 
 export function getProgress(job: string) {
-  return Factory.getProgress(job);
+  return ViewFactory.getProgress(job);
 }

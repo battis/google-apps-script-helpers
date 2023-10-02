@@ -68,7 +68,7 @@ export default class View extends Job {
   }: {
     root: UI.Dialog.Root;
     title: string;
-    height: number;
+    height?: number;
   }) => {
     root.getUi().showModalDialog(this.getHtmlOutput({ height }), title);
   };
@@ -80,7 +80,7 @@ export default class View extends Job {
   }: {
     root: UI.Dialog.Root;
     title: string;
-    height: number;
+    height?: number;
   }) => {
     root.getUi().showModelessDialog(this.getHtmlOutput({ height }), title);
   };

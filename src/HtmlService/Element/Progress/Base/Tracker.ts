@@ -1,6 +1,7 @@
 import Job from '../Job';
 import View from './View';
 import Common from './Common';
+import ViewFactory from '../ViewFactory';
 
 export default class Tracker extends Job {
   protected _view?: View;
@@ -9,20 +10,20 @@ export default class Tracker extends Job {
 
   public constructor(job?: string) {
     super(job);
-    this.put(Common.KEY_KIND, Common.KIND);
+    this.kind = Common.KIND;
   }
 
-  protected get viewConstructor() {
-    return this._viewConstructor;
+  protected get kind() {
+    return this.get(Common.KEY_KIND);
   }
 
-  protected set viewConstructor(constructor) {
-    this._viewConstructor = constructor;
+  protected set kind(kind) {
+    this.put(Common.KEY_KIND, kind);
   }
 
   protected get view() {
     if (!this._view) {
-      this._view = this.viewConstructor(this.job);
+      this._view = ViewFactory.getInstance(this.job, this.kind);
     }
     return this._view;
   }

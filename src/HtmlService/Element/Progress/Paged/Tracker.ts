@@ -25,8 +25,8 @@ class Tracker<Page = any> extends BaseTracker {
 
   public constructor(params: ConstructorParameters<Page>) {
     super(params.job);
-    this.put(Common.KEY_KIND, Common.KIND);
-    this.viewConstructor = (job: string) => new View(job);
+    this.kind = Common.KIND;
+    this.put(Common.KEY_END_TIME, '?');
 
     params = {
       step: 0,

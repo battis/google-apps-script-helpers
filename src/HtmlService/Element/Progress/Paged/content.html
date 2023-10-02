@@ -3,6 +3,10 @@
     <?!= data.value ? `value="${data.value}"` : '' ?>
     <?!= data.max ? `max="${Math.max(data.max, data.value)}"` : '' ?>
   ></progress>
-  <?!= data.endTime ? `<div class="end-time">${data.endTime}</div>`: '' ?>
+<div class="end-time"><?!= data.endTime ?></div>
   <div class="status"><?!= data.status ?></div>
 </div>
+<script>
+    console.log('paged');
+    console.log('<?!= JSON.stringify(data) ?>');
+</script>
