@@ -1,29 +1,31 @@
 import Job from '../Job';
 import View from './View';
-import Common from './Common';
-import ViewFactory from '../ViewFactory';
+import ITracker from '../Tracker';
+import ProgressFactory from '../ProgressFactory';
+import Key from '../Key';
+import Kind from './Kind';
 
-export default class Tracker extends Job {
+export default class Tracker extends Job implements ITracker {
   protected _view?: View;
   protected _viewConstructor: (job: string) => View = (job: string) =>
     new View(job);
 
   public constructor(job?: string) {
     super(job);
-    this.kind = Common.KIND;
+    //this.kind = Kind;
   }
 
-  protected get kind() {
-    return this.get(Common.KEY_KIND);
+  public get kind() {
+    return this.get(Key.Kind);
   }
 
   protected set kind(kind) {
-    this.put(Common.KEY_KIND, kind);
+    this.put(Key.Kind, kind);
   }
 
-  protected get view() {
+  public get view() {
     if (!this._view) {
-      this._view = ViewFactory.getInstance(this.job, this.kind);
+      this._view = ProgressFactory.getViewInstance(this.job) as View;
     }
     return this._view;
   }
@@ -40,39 +42,39 @@ export default class Tracker extends Job {
   }
 
   public set status(status: string) {
-    this.put(Common.KEY_STATUS, status);
+    this.put(Key.Status, status);
   }
 
   public get status() {
-    return this.get(Common.KEY_STATUS);
+    return this.get(Key.Status);
   }
 
   public set value(value: number) {
-    this.put(Common.KEY_VALUE, value);
+    this.put(Key.Value, value);
   }
   public get value() {
-    return this.get(Common.KEY_VALUE);
+    return this.get(Key.Value);
   }
 
   public set max(max: number) {
-    this.put(Common.KEY_MAX, max);
+    this.put(Key.Max, max);
   }
   public get max() {
-    return this.get(Common.KEY_MAX);
+    return this.get(Key.Max);
   }
 
-  public set complete(completion: Common.Completion) {
-    this.put(Common.KEY_COMPLETE, completion, false);
+  public set complete(completion) {
+    this.put(Key.Complete, completion, false);
   }
-  public get complete(): Common.Completion {
-    return this.get(Common.KEY_COMPLETE);
+  public get complete() {
+    return this.get(Key.Complete);
   }
 
   public reset() {
-    this.remove(Common.KEY_COMPLETE);
-    this.remove(Common.KEY_STATUS);
-    this.remove(Common.KEY_VALUE);
-    this.remove(Common.KEY_MAX);
+    this.remove(Key.Complete);
+    this.remove(Key.Status);
+    this.remove(Key.Value);
+    this.remove(Key.Max);
     this.view.reset();
   }
 }

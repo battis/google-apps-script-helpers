@@ -1,15 +1,15 @@
 import content from './content.html';
-import BaseView from '../Base/View';
-import Common from './Common';
+import Base from '../Base';
+import Key from './Key';
 
-export default class View extends BaseView {
+export default class View extends Base.View {
   public constructor(job: string) {
     super(job);
     this.template = content;
-    this.data = this.endTime;
-  }
-
-  public endTime() {
-    return { endTime: this.get(Common.KEY_END_TIME) };
+    this.data = () => {
+      return {
+        endTime: this.get(Key.EndTime)
+      };
+    };
   }
 }

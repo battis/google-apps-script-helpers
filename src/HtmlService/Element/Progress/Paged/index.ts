@@ -1,13 +1,12 @@
-import TTracker from './Tracker';
-import TView from './View';
-import Common from './Common';
+import MTracker from './Tracker';
+import MView from './View';
+import Kind from './Kind';
 
-const Paged = { ...TTracker, ...Common, Tracker: TTracker, View: TView };
+const Paged = { Kind, Tracker: MTracker, View: MView };
 
 namespace Paged {
-  export type Tracker = TTracker;
-  export type View = TView;
-  export type Completion = Common.Completion;
+  export type Tracker = MTracker;
+  export type View = MView;
 }
 
 export { Paged as default };

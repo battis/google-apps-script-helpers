@@ -1,5 +1,3 @@
-import ViewFactory from './ViewFactory';
+import ProgressFactory from './ProgressFactory';
 
-export function getProgress(job: string) {
-  return ViewFactory.getProgress(job);
-}
+export const getProgress = ProgressFactory.getProgress.bind(ProgressFactory);

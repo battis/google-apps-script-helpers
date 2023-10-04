@@ -1,20 +1,25 @@
 import Template from '../../../Template';
 import dialog from './dialog.html';
 import content from './content.html';
-import Common from './Common';
 import Job from '../Job';
 import * as UI from '../../../../UI';
-import Tracker from './Tracker';
+import ITracker from '../Tracker';
+import IView from '../View';
+import Key from '../Key';
 
 export type Parameters = { job: string };
 
-export default class View extends Job {
+export default class View extends Job implements IView {
   public static readonly DEFAULT_HEIGHT = 100;
 
   private _template = content;
   private _data = () => {
     return {};
   };
+
+  public get kind() {
+    return this.get(Key.Kind);
+  }
 
   public constructor(job: string) {
     super(job);
@@ -28,7 +33,7 @@ export default class View extends Job {
     this._template = template;
   }
 
-  protected get data() {
+  public get data() {
     return this._data;
   }
 
@@ -37,27 +42,28 @@ export default class View extends Job {
   }
 
   public set html(html: string) {
-    this.put(Common.KEY_HTML, html);
+    this.put(Key.Html, html);
   }
 
   public get html(): string {
     return (
-      this.get(Common.KEY_HTML) ||
+      this.get(Key.Html) ||
       Template.createTemplate(this.template, {}).getContent()
     );
   }
 
   public get complete() {
-    return this.get(Common.KEY_COMPLETE);
+    return this.get(Key.Complete);
   }
 
   public resetComplete() {
-    this.put(Common.KEY_COMPLETE, null);
+    this.put(Key.Complete, null);
   }
 
-  public getHtmlOutput({ height = View.DEFAULT_HEIGHT }) {
+  public getContent({ height = View.DEFAULT_HEIGHT, data = {} }) {
     return Template.createTemplate(dialog, {
-      job: this.job
+      job: this.job,
+      ...data
     }).setHeight(height);
   }
 
@@ -70,7 +76,7 @@ export default class View extends Job {
     title: string;
     height?: number;
   }) => {
-    root.getUi().showModalDialog(this.getHtmlOutput({ height }), title);
+    root.getUi().showModalDialog(this.getContent({ height }), title);
   };
 
   public showModelessDialog = ({
@@ -82,10 +88,10 @@ export default class View extends Job {
     title: string;
     height?: number;
   }) => {
-    root.getUi().showModelessDialog(this.getHtmlOutput({ height }), title);
+    root.getUi().showModelessDialog(this.getContent({ height }), title);
   };
 
-  public update(tracker: Tracker) {
+  public update(tracker: ITracker) {
     this.html = Template.createTemplate(this.template, {
       value: tracker.value,
       max: tracker.max,
@@ -95,6 +101,6 @@ export default class View extends Job {
   }
 
   public reset() {
-    this.remove(Common.KEY_HTML);
+    this.remove(Key.Html);
   }
 }

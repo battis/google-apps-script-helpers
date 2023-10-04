@@ -1,32 +1,19 @@
-import BaseTracker from '../Base/Tracker';
+import Base from '../Base';
 import View from './View';
-import Common from './Common';
+import Kind from './Kind';
+import Key from './Key';
+import Completion from './Completion';
+import ITracker from '../Tracker';
 
-type RunParameters<Page> = {
-  modal?: Parameters<InstanceType<typeof View>['showModalDialog']>;
-  loader: Tracker.Dataset.Loader<Page>;
-  handler: Tracker.Dataset.Handler<Page>;
-  callback: string | { function: string; args: any[] };
-  step?: number;
-  completion?: Common.Completion;
-  ignoreErrors?: boolean;
-  quotaMargin?: number; // in minutes
-  pageMargin?: number; // in average time per step
-};
-
-type ConstructorParameters<Page> = RunParameters<Page> & {
-  job: string;
-};
-
-class Tracker<Page = any> extends BaseTracker {
+class Tracker<Page = any> extends Base.Tracker {
   /** @see {@link https://developers.google.com/apps-script/guides/services/quotas Quotas for Google Services} */
   //private static readonly MAX_SIMULTANEOUS_EXECUTIONS = 30; // scripts
   private static readonly MAX_EXECUTION_LENGTH = 30; // minutes, 6 for free accounts, 30 for paid
 
-  public constructor(params: ConstructorParameters<Page>) {
+  public constructor(params: Tracker.Parameters.constructor<Page>) {
     super(params.job);
-    this.kind = Common.KIND;
-    this.put(Common.KEY_END_TIME, '?');
+    //this.kind = Kind;
+    this.put(Key.EndTime, '?');
 
     params = {
       step: 0,
@@ -34,10 +21,13 @@ class Tracker<Page = any> extends BaseTracker {
       ignoreErrors: true,
       quotaMargin: 1,
       pageMargin: 2,
+      run: true,
       ...params
     };
 
-    this.run(params);
+    if (params.run) {
+      this.run(params);
+    }
   }
 
   protected endTime(averagePage: number) {
@@ -47,10 +37,10 @@ class Tracker<Page = any> extends BaseTracker {
     const m = Math.trunc(s / 60);
     s = s % 60;
     const pad = (n) => (n < 10 ? `0${n}` : n);
-    this.put(Common.KEY_END_TIME, `${h}:${pad(m)}:${pad(s)}`);
+    this.put(Key.EndTime, `${h}:${pad(m)}:${pad(s)}`);
   }
 
-  private run(params: RunParameters<Page>) {
+  private run(params: Tracker.Parameters.run<Page>) {
     const end =
       new Date().getTime() +
       (Tracker.MAX_EXECUTION_LENGTH - params.quotaMargin) * 60 * 1000;
@@ -58,13 +48,13 @@ class Tracker<Page = any> extends BaseTracker {
     if (params.step == 0 && params.modal) {
       this.view.showModalDialog(...params.modal);
     }
-    const dataset = params.loader(params.step);
+    const dataset = params.loader({ start: params.step, tracker: this });
     let counter = 1;
     for (const page of dataset) {
       const pageStart = new Date().getTime();
       if (params.ignoreErrors) {
         try {
-          params.handler(page);
+          params.handler({ page, tracker: this });
         } catch (e) {
           Logger.log({
             message: `Error processing page`,
@@ -74,7 +64,7 @@ class Tracker<Page = any> extends BaseTracker {
           });
         }
       } else {
-        params.handler(page);
+        params.handler({ page, tracker: this });
       }
 
       if (averagePage) {
@@ -89,7 +79,7 @@ class Tracker<Page = any> extends BaseTracker {
         let callback = params.callback;
         if (typeof params.callback === 'object') {
           args = params.callback.args || [];
-          callback = params.callback.function;
+          callback = params.callback.functionName;
         }
         this.complete = {
           callback: callback,
@@ -106,11 +96,24 @@ class Tracker<Page = any> extends BaseTracker {
 }
 
 namespace Tracker {
-  export namespace Dataset {
-    export type Loader<Page> = (start: number, end?: number) => Dataset<Page>;
-    export type Handler<Page> = (page: Page) => void;
+  export namespace Parameters {
+    export type run<Page> = {
+      modal?: Parameters<InstanceType<typeof View>['showModalDialog']>;
+      loader: ITracker.Dataset.Loader<Page>;
+      handler: ITracker.Dataset.Handler<Page>;
+      callback: ITracker.Dataset.Callback;
+      step?: number;
+      completion?: Completion;
+      ignoreErrors?: boolean;
+      quotaMargin?: number; // in minutes
+      pageMargin?: number; // in average time per step
+      run?: boolean;
+    };
+
+    export type constructor<Page> = run<Page> & {
+      job: string;
+    };
   }
-  export type Dataset<Page> = Iterable<Page>;
 }
 
 export { Tracker as default };

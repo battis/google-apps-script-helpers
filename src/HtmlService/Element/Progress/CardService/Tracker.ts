@@ -1,9 +1,21 @@
-import PagedTracker from '../Paged/Tracker';
-import Common from './Common';
+import Paged from '../Paged';
+import type PagedTracker from '../Paged/Tracker';
+import Kind from './Kind';
 
-export default class Tracker extends PagedTracker {
+class Tracker extends Paged.Tracker {
   public constructor(params) {
-    super(params);
-    this.kind = Common.KIND;
+    super({ ...params, run: params.CardService.run });
+    this.kind = Kind;
   }
 }
+
+namespace Tracker {
+  export namespace Parameters {
+    export type constructor<Page = any> =
+      PagedTracker.Parameters.constructor<Page> & {
+        CardService: { run: boolean };
+      };
+  }
+}
+
+export { Tracker as default };
