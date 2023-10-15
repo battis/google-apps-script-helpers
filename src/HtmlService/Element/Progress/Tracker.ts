@@ -184,7 +184,7 @@ class Tracker<Page = any> extends Job {
       this.updateEndTime(averagePage);
       page++;
     }
-    this.complete = 'foo bar baz'; //onComplete;
+    this.complete = onComplete;
   }
 
   public reset(resetView = true) {

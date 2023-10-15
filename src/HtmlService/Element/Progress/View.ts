@@ -49,11 +49,15 @@ class View extends Job {
 
   public show = {
     Popup: (params: View.Params.Popup) => {
-      return templates.popup({
-        ...this.tracker.data,
-        ...this.data,
-        ...params.data
-      });
+      return templates
+        .popup({
+          ...this.tracker.data,
+          ...this.data,
+          ...params.data,
+          title: params.title,
+          message: params.message
+        })
+        .setTitle(params.title);
     },
     Modal: (params: View.Params.Overlay) => {
       params.root.getUi().showModalDialog(
@@ -102,11 +106,13 @@ namespace View {
     export type Popup = {
       title?: string;
       message?: string;
-      height?: number;
       data?: Template.Data;
     };
 
-    export type Overlay = Popup & { root: UI.Dialog.Root };
+    export type Overlay = Popup & {
+      root: UI.Dialog.Root;
+      height?: number;
+    };
   }
 }
 

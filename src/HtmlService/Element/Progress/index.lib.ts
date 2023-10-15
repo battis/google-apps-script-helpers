@@ -11,11 +11,12 @@ export const job = '<?!= data.job || data.thread ?>';
 export function update() {
   google.script.run
     .withSuccessHandler((progress) => {
-      if (progress.complete) {
+      if (progress.html) {
         g.HtmlService.replaceContent(progress.html);
+      }
+      if (progress.complete) {
         onComplete(progress.complete);
       } else {
-        g.HtmlService.replaceContent(progress.html);
         update();
       }
     })
@@ -27,7 +28,6 @@ export function onComplete(complete) {
     if ('html' in complete) {
       g.HtmlService.replaceContent(complete.html);
     }
-
     if ('callback' in complete && 'step' in complete) {
       const args = complete.args || [];
       google.script.run[complete.callback](job, complete.step, ...args);
