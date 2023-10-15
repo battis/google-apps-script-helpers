@@ -1,4 +1,5 @@
-import ProgressFactory from './ProgressFactory';
-import './index.global';
+import Tracker from './Tracker';
+import View from './View';
+import { getProgress } from './index.global';
 
-export { ProgressFactory as default };
+export default { Tracker, View, getProgress };

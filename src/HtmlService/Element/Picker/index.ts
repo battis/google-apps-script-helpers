@@ -1,6 +1,7 @@
 import * as UI from '../../../UI';
 import Template from '../../Template';
-import dialog from './dialog.html';
+import templates from './templates';
+import progress from '../../../../js/HtmlService/Element/Progress.js.html';
 
 export type Option = { name: string; value: string };
 export type OptionsCallback = () => Option[];
@@ -33,9 +34,10 @@ export function getHtmlOutput(config: Configuration) {
     confirmation: '',
     ...config
   };
-  return Template.createTemplate(dialog, {
+  return Template.create(templates.dialog, {
     thread: config.thread || Utilities.getUuid(),
-    picker: args
+    picker: args,
+    progress
   });
 }
 

@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <?!= include('style', data) ?>
+  </head>
+  <body>
+    <div id="content"></div>
+    <div class="message"><?!= data.message ?? '' ?></div>
+    <?!= include('lib', data) ?>
+    <?!= data.progress ?>
+    <script>
+      g.HtmlService.replaceContent(g.HtmlService.Element.Progress.placeholder);
+      g.HtmlService.Element.Progress.update();
+    </script>
+  </body>
+</html>

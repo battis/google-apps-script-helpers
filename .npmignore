@@ -3,5 +3,5 @@
 /docs/
 /examples/
 /logo.png
-/scripts/
-/dist/
+/tsconfig.webpack.json
+/webpack.config

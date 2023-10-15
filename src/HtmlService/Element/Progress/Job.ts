@@ -1,22 +1,40 @@
-import * as gCacheService from '../../../CacheService';
+import * as CacheService from '../../../CacheService';
 
-export default class Job {
+abstract class Job {
+  protected KEY = {
+    COMPLETE: 'complete'
+  };
+
+  private _complete?: Job.Completion;
+
   public constructor(private _job = Utilities.getUuid()) {}
 
-  public get job(): string {
+  public get job() {
     return this._job;
   }
 
+  public get complete() {
+    if (!this._complete) {
+      this._complete = this.get(this.KEY.COMPLETE);
+    }
+    return this._complete;
+  }
+
+  public set complete(complete) {
+    this._complete = complete;
+    this.put(this.KEY.COMPLETE, this._complete);
+  }
+
   protected get(token: string) {
-    return gCacheService.getUserCache(this.prefix(token));
+    return Job.get(this.job, token);
   }
 
   public static get(job: string, token: string) {
-    return gCacheService.getUserCache(this.prefix(job, token));
+    return CacheService.getUserCache(this.prefix(job, token));
   }
 
   protected put(token: string, value: any) {
-    return gCacheService.putUserCache(
+    return CacheService.putUserCache(
       this.prefix(token),
       value,
       undefined,
@@ -25,19 +43,37 @@ export default class Job {
   }
 
   // FIXME I don't think "remove" means what Google think it means
-  public remove(token: string) {
-    return gCacheService.removeUserCache(this.prefix(token));
+  protected remove(token: string) {
+    return CacheService.removeUserCache(this.prefix(token));
   }
 
+  protected abstract data: Record<string, any>;
+
   private static prefix(job: string, token: string, delimiter = '.') {
-    return [
-      'bHSEP' /*battis', 'HtmlService', 'Element', 'Progress'*/,
-      job,
-      token
-    ].join(delimiter);
+    return ['g', 'HtmlService', 'Element', 'Progress', job, token].join(
+      delimiter
+    );
   }
 
   private prefix(token: string) {
     return Job.prefix(this.job, token);
   }
+
+  protected reset() {
+    for (const key in this.KEY) {
+      this.remove(key);
+    }
+  }
 }
+
+namespace Job {
+  export type KeyableFunction = (token: string, ...args: any[]) => any;
+
+  export type Completion =
+    | string
+    | true
+    | { html: string }
+    | { callback: string; args: any[]; page: number };
+}
+
+export { Job as default };

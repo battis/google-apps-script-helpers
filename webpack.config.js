@@ -1,14 +1,25 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const GasPlugin = require('gas-webpack-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.ts'),
-  mode: 'development', //'production',
+  entry: {
+    HtmlService: path.resolve(__dirname, 'src/HtmlService/index.lib.ts'),
+    'HtmlService/Element/Picker': path.resolve(
+      __dirname,
+      'src/HtmlService/Element/Picker/index.lib.ts'
+    ),
+    'HtmlService/Element/Progress': path.resolve(
+      __dirname,
+      'src/HtmlService/Element/Progress/index.lib.ts'
+    )
+  },
+  mode: 'production',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    library: 'g'
+    path: path.resolve(__dirname, 'js'),
+    filename: '[name].js',
+    library: 'lib',
+    clean: true
   },
   resolve: {
     extensions: ['.ts', '.js']
@@ -23,13 +34,43 @@ module.exports = {
         }
       },
       {
-        test: /\.html$/,
-        type: 'asset/source'
+        test: /\.html$/i,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.s?[ac]ss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 2 }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: ['postcss-preset-env']
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: { implementation: require('sass') }
+          }
+        ]
       }
     ]
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new GasPlugin({ autoGlobalExportsFiles: ['**/*.global.ts'] })
-  ]
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          mangle: { properties: false }
+        }
+      }),
+      new CssMinimizerWebpackPlugin()
+    ],
+    splitChunks: false
+  }
 };

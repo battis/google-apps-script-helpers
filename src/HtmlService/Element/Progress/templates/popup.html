@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <?!= include('style', data) ?>
+  </head>
+  <body class="window">
+    <div class="container">
+      <h1><?!= data.title ?? `Progress on Job ${data.job}` ?></h1>
+      <div id="content"></div>
+      <div class="message"><?!= data.message ?? '' ?></div>
+    </div>
+    <?!= include('lib', data) ?>
+    <?!= data.progress ?>
+    <script>
+      g.HtmlService.replaceContent(g.HtmlService.Element.Progress.placeholder);
+      google.script.run.<?!= data.callback ?>('<?!= data.job ?>');
+      g.HtmlService.Element.Progress.update();
+    </script>
+  </body>
+</html>

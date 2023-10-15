@@ -1,6 +1,7 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const GasPlugin = require('gas-webpack-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = ({
   root,
@@ -17,7 +18,8 @@ module.exports = ({
     },
     output: {
       path: path.join(root, build),
-      filename: '[name]-bundle.js'
+      filename: '[name]-bundle.js',
+      clean: true
     },
     resolve: {
       extensions: ['.ts', '.js']
@@ -30,18 +32,50 @@ module.exports = ({
           options: { allowTsInNodeModules: true }
         },
         {
-          test: /\.html$/,
-          type: 'asset/source'
+          test: /\.html$/i,
+          loader: 'html-loader'
+        },
+        {
+          test: /\.s?[ac]ss$/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 2 }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  plugins: ['postcss-preset-env']
+                }
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: { implementation: require('sass') }
+            }
+          ]
         }
       ]
     },
     plugins: [
-      new CleanWebpackPlugin(),
       new GasPlugin({
         autoGlobalExportsFiles: ['**/*.global.ts']
       }),
       ...plugins
-    ]
+    ],
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            mangle: { properties: false }
+          }
+        }),
+        new CssMinimizerWebpackPlugin()
+      ]
+    }
   };
   if (!production) {
     config.mode = 'development';

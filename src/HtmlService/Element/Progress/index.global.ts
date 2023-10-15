@@ -1,3 +1,10 @@
-import ProgressFactory from './ProgressFactory';
+import View from './View';
 
-export const getProgress = ProgressFactory.getProgress.bind(ProgressFactory);
+export function getProgress(job: string) {
+  try {
+    return new View({ job }).progress;
+  } catch (error) {
+    return { error };
+    Logger.log(error);
+  }
+}

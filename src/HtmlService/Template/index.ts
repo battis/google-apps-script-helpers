@@ -1,3 +1,4 @@
-import * as Template from './index.global';
+import Template from './Template';
+import './index.global';
 
 export default Template;

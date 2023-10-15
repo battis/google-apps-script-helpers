@@ -1,6 +1,5 @@
-import gHtmlService from '../../HtmlService';
-import content from './content.html';
-import page from './page.html';
+import HtmlService from '../../HtmlService';
+import templates from './templates';
 
 export type Root = { getUi: () => GoogleAppsScript.Base.Ui };
 export type Button = {
@@ -50,7 +49,7 @@ function standardizeButton(button: Button | string) {
 
 function show(showFunctionName: string, { root, title, ...dialog }: Options) {
   root.getUi()[showFunctionName](
-    gHtmlService.Template.createTemplate(page, {
+    HtmlService.Template.create(templates.dialog, {
       content: getHtml(dialog)
     }),
     title
@@ -77,7 +76,7 @@ export function getHtmlOutput({
   } else if (!functionName && script) {
     functionName = CLOSE;
   }
-  return gHtmlService.Template.createTemplate(content, {
+  return HtmlService.Template.create(templates.content, {
     message,
     buttons: buttons.map(standardizeButton),
     script,
