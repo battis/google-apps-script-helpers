@@ -134,9 +134,14 @@ class Tracker<Page = any> extends Job {
   public run() {
     const {
       paging: { page: p = 0, loader, handler, callback },
-      onComplete,
-      options: { ignoreErrors = true, quotaMarginInMinutes = 1, pageMargin = 2 }
+      onComplete = true,
+      options = {}
     } = this.runParameters;
+    const {
+      ignoreErrors = true,
+      quotaMarginInMinutes = 1,
+      pageMargin = 2
+    } = options;
     let page = p;
     const end =
       new Date().getTime() +

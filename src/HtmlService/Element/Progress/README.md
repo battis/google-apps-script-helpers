@@ -158,7 +158,7 @@ As noted above for CardService apps, quotas on script runtimes can be inconvenie
 const data = [...new Array(1000).keys()].map((i) => i + 1);
 
 // #1: create a progress tracker and show it as a modal dialog
-global.trackedProgress =  => {
+global.trackedProgress = () => {
   // generate a job ID
   const tracker = new g.HtmlService.Element.Progress.Tracker();
 
@@ -170,10 +170,10 @@ global.trackedProgress =  => {
   });
 
   // start the paged tracker run
-  trackerCallback(tracker.job)
+  global.trackerCallback(tracker.job);
 };
 
-global.trackerCallback = (job: string, page?: number) = > {
+global.trackerCallback = (job: string, page?: number) => {
   // instantiate the paged tracker
   const tracker = new g.HtmlService.Element.Progress.Tracker({
     job,
@@ -191,5 +191,5 @@ global.trackerCallback = (job: string, page?: number) = > {
       callback: 'trackerCallback'
     }
   }).run();
-}
+};
 ```
