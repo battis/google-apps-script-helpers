@@ -109,6 +109,7 @@ class Tracker<Page = any> extends Job {
 
   public get data() {
     return {
+      [this.KEY.JOB]: this.job,
       [this.KEY.STATUS]: this.status,
       [this.KEY.VALUE]: this.value,
       [this.KEY.MAX]: this.max,

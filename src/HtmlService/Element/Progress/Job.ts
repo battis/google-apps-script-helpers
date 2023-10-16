@@ -2,6 +2,7 @@ import * as CacheService from '../../../CacheService';
 
 abstract class Job {
   protected KEY = {
+    JOB: 'job',
     COMPLETE: 'complete'
   };
 

@@ -65,7 +65,8 @@ class View extends Job {
           .overlay({
             ...this.tracker.data,
             ...this.data,
-            ...params.data
+            ...params.data,
+            message: params.message
           })
           .setHeight(params.height),
         params.title
@@ -77,7 +78,8 @@ class View extends Job {
           .overlay({
             ...this.tracker.data,
             ...this.data,
-            ...params.data
+            ...params.data,
+            message: params.message
           })
           .setHeight(params.height),
         params.title

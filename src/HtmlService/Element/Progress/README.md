@@ -7,7 +7,7 @@ A basic implementation requires four things:
 1. An action that opens the progess bar popup window, which includes the name of the callback function (#2)
 2. A callback function that actually performs the action that will be tracked by the progress bar
 3. A web request handler to serve up the progress bar when a web request is made of the app
-4. Exposing the `getProgresss()` API function that responds to the progress bar's asynchronous requests for, well, progress.
+4. Exposing the `include()` and `getProgresss()` API function that responds to the progress bar's asynchronous requests for, well, progress.
 
 ```ts
 import g from '@battis/gas-lighter';
@@ -19,7 +19,7 @@ global.onHomepage = () => {
       g.CardService.Card.newCardSection({
         widgets: [
           CardService.newTextButton()
-            .setText('Start a Job')
+            .setText('Start a job')
             .setOpenLink(
               CardService.newOpenLink()
                 .setUrl(
@@ -40,7 +40,7 @@ global.onHomepage = () => {
 };
 
 // mock data source
-const data = new Array(1000).map((,i) => { data[i] = i + 1; });
+const data = [...new Array(1000).keys()].map((i) => i + 1);
 
 // #2: callback function that runs the actual tracked process
 global.trackedProgress = (job: string) => {
@@ -61,6 +61,7 @@ global.doGet = ({ parameter: data }: GoogleAppsScript.Events.DoGet) => {
 };
 
 // #4: expose the provided progress bar status handler
+global.include = g.HtmlService.Template.include;
 global.getProgress = g.HtmlService.Element.Progress.getProgress;
 ```
 
@@ -89,7 +90,7 @@ global.trackedProgress = (job: string, page?: number) => {
         tracker.value++;
         tracker.status = `Step #${data}`;
       },
-      callback
+      callback: 'trackedProgress'
     }
   }).run(); // run the Tracker's process wrapper after definition
 };
@@ -102,3 +103,88 @@ At present, the Progess element does not detect account types, and assumes a 30-
 ### Parallel Processing
 
 Using this same model, it is theoretically possible to break apart a dataset and process it in parallel using a map-reduce approach. While that is not yet implemented, a known limitation is the number of [simultaneous script executions](https://developers.google.com/apps-script/guides/services/quotas) (30 per user).
+
+## Use in a Google Workspace Add-on
+
+### Simple implementation
+
+A basic implementation requires two things:
+
+1. An action that opens creates a progress tracker and updates it
+2. Exposing the `include()` and `getProgresss()` API function that responds to the progress bar's asynchronous requests for, well, progress.
+
+```ts
+import g from '@battis/gas-lighter';
+
+global.onOpen = () => {
+  SpreadsheetApp.getUi()
+    .createAddonMenu()
+    .addItem('Start a job', 'trackedProgress')
+    .addToUi();
+};
+
+// mocked data
+const data = [...new Array(1000).keys()].map((i) => i + 1);
+
+// #1: create a progress tracker and show it as a modal dialog
+global.trackedProgress = () => {
+  const tracker = new g.HtmlService.Element.Progress.Tracker();
+  tracker.view.show.Modal({
+    title: 'The Count',
+    root: SpreadsheetApp,
+    height: 100
+  });
+  tracker.max = data.length;
+
+  // perform the the task, updating the tracker
+  for (const d of data) {
+    tracker.status = `Step #${d}`;
+    tracker.value++;
+  }
+  tracker.complete = true;
+};
+
+// #2: expose the API functions
+global.include = g.HtmlService.Template.include;
+global.getProgress = g.HtmlService.Element.Progress.getProgress;
+```
+
+### Handling long-running scripts
+
+As noted above for CardService apps, quotas on script runtimes can be inconvenient, but breaking a task into pages that can be performed individually allows for the progress tracker to asynchronously resume the job when the script times out.
+
+```ts
+// mocked data
+const data = [...new Array(1000).keys()].map((i) => i + 1);
+
+// #1: create a progress tracker and show it as a modal dialog
+global.trackedProgress = (job = Utilities.getUuid(), page?: number) => {
+  // instantiantiate the paged tracker
+  const tracker = new g.HtmlService.Element.Progress.Tracker({
+    job,
+    paging: {
+      page,
+      loader: ({ page, tracker }) => {
+        tracker.max = data.length;
+        tracker.value = page;
+        return data.slice(page);
+      },
+      handler: ({ data, tracker }) => {
+        tracker.value++;
+        tracker.status = `Step #${data}`;
+      },
+      callback: 'trackedProgress'
+    }
+  });
+
+  // show the modal dialog containing the progress view
+  tracker.view.show.Modal({
+    title: 'The Count',
+    root: SpreadsheetApp,
+    height: 100
+  });
+
+  // start the paged process
+  tracker.run();
+};
+```
