@@ -1,6 +1,6 @@
 /// <reference path="../google.d.ts" />
 
-export function replaceContent(html) {
+export function replaceContent(html: string) {
   // https://stackoverflow.com/a/47614491/294171 -- execute inserted <script> elements
   const content = document.getElementById('content');
   content.innerHTML = html;

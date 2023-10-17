@@ -1,6 +1,6 @@
-import * as Element from './Element';
+import * as Component from './Component';
 import Template from './Template';
 
-const HtmlService = { Element, Template };
+const HtmlService = { Component, Template };
 
 export { HtmlService as default };

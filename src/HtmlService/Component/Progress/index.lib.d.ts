@@ -3,7 +3,7 @@
 declare const g: {
   HtmlService: {
     replaceContent: (content: string) => void;
-    Element: {
+    Component: {
       Progress: {
         placeholder: string;
         job: string;

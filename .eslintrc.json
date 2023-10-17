@@ -5,7 +5,7 @@
   },
   "overrides": [
     {
-      "files": "*.html",
+      "files": ["*.html", "*.lib.ts"],
       "env": {
         "browser": true,
         "node": false

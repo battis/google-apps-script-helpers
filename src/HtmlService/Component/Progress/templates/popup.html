@@ -23,9 +23,9 @@
     <?!= include('lib', data) ?>
     <?!= data.progress ?>
     <script>
-      g.HtmlService.replaceContent(g.HtmlService.Element.Progress.placeholder);
+      g.HtmlService.replaceContent(g.HtmlService.Component.Progress.placeholder);
       google.script.run.<?!= data.callback ?>('<?!= data.job ?>');
-      g.HtmlService.Element.Progress.update();
+      g.HtmlService.Component.Progress.update();
     </script>
   </body>
 </html>

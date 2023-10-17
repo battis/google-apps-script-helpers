@@ -26,7 +26,7 @@ function displayConfirmation() {
   );
   document.getElementById('confirmation').addEventListener('submit', (e) => {
     e.preventDefault();
-    g.HtmlService.Element.Progress.show();
+    g.HtmlService.Component.Progress.show();
     google.script.run[picker.callback](option.value, thread);
   });
   document.getElementById('cancel').addEventListener('click', () => {
@@ -48,7 +48,7 @@ function handleSubmit(e) {
   if (picker.confirmation.length) {
     displayConfirmation();
   } else {
-    g.HtmlService.Element.Progress.show();
+    g.HtmlService.Component.Progress.show();
     google.script.run[picker.callback](option.value, thread);
   }
   return false;
@@ -72,5 +72,5 @@ function displayPicker(options) {
   }
 }
 
-g.HtmlService.replaceContent(g.HtmlService.Element.Progress.placeholder);
+g.HtmlService.replaceContent(g.HtmlService.Component.Progress.placeholder);
 google.script.run.withSuccessHandler(displayPicker)[picker.list]();

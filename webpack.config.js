@@ -5,13 +5,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   entry: {
     HtmlService: path.resolve(__dirname, 'src/HtmlService/index.lib.ts'),
-    'HtmlService/Element/Picker': path.resolve(
+    'HtmlService/Component/Picker': path.resolve(
       __dirname,
-      'src/HtmlService/Element/Picker/index.lib.ts'
+      'src/HtmlService/Component/Picker/index.lib.ts'
     ),
-    'HtmlService/Element/Progress': path.resolve(
+    'HtmlService/Component/Progress': path.resolve(
       __dirname,
-      'src/HtmlService/Element/Progress/index.lib.ts'
+      'src/HtmlService/Component/Progress/index.lib.ts'
     )
   },
   mode: 'production',
