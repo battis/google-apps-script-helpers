@@ -3,7 +3,7 @@ import base from './base.html';
 import overlay from './overlay.html';
 import paged from './paged.html';
 import popup from './popup.html';
-import progress from '../../../../../js/HtmlService/Element/Progress.js.html';
+import progress from '../../../../../js/HtmlService/Component/Progress.js.html';
 
 export default class templates {
   public static base(data: Template.Data) {
