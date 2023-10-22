@@ -1,4 +1,5 @@
 import * as Picker from './Picker';
 import Progress from './Progress';
+import Base from './Base';
 
-export { Picker, Progress };
+export default { Base, Picker, Progress };

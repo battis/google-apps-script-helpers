@@ -17,6 +17,13 @@ class Tracker<Page = any> extends Job {
 
   private _status?: string;
 
+  /**
+   * @deprecated
+   */
+  protected getLib(): string {
+    return '';
+  }
+
   public get status() {
     if (!this._status) {
       this._status = this.get(this.KEY.STATUS);

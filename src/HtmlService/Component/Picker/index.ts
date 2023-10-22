@@ -1,65 +1,71 @@
-import * as UI from '../../../UI';
 import Template from '../../Template';
+import Base from '../Base';
 import templates from './templates';
-import progress from '../../../../js/HtmlService/Component/Progress.js.html';
+import picker from '../../../../js/HtmlService/Component/Picker.js.html';
 
-export type Option = { name: string; value: string };
-export type OptionsCallback = () => Option[];
-export type PickerCallback = (value: string, ...args: any[]) => void;
-export type Configuration = {
-  message?: string;
-  list: string;
-  actionName?: string;
-  callback: string;
-  confirmation?: string;
-  confirm?: string;
-  thread?: string;
-};
-type Arguments = Omit<Configuration, 'list' | 'callback'> & {
-  list: string;
-  callback: string;
-};
+class Picker extends Base {
+  public static DEFAULT_HEIGHT = 100;
 
-export interface Pickable {
-  toOption(): Option;
+  protected getLib(data: Template.Data): string {
+    return Template.create(picker, data).getContent();
+  }
+
+  public getHtmlOutput(config: Picker.Configuration) {
+    const args: Picker.Arguments = {
+      message: 'Select one option',
+      actionName: 'Select',
+      confirm: config.actionName || 'Confirm',
+      confirmation: '',
+      ...config
+    };
+    return Template.create(templates.dialog, {
+      job: config.job || Utilities.getUuid(),
+      picker: args
+    });
+  }
+
+  public getHtml = (config: Picker.Configuration) =>
+    this.getHtmlOutput(config).getContent();
+
+  public popup(data: Picker.Params.Popup) {
+    return super.popup(data);
+  }
+
+  public modal(config: Picker.Params.Overlay): void {
+    return super.modal(config);
+  }
+
+  public modeless(config: Base.Params.Overlay): void {
+    super.modeless(config);
+  }
 }
 
-export const DEFAULT_HEIGHT = 100;
-
-export function getHtmlOutput(config: Configuration) {
-  const args: Arguments = {
-    message: 'Select one option',
-    actionName: 'Select',
-    confirm: config.actionName || 'Confirm',
-    confirmation: '',
-    ...config
+namespace Picker {
+  export type Option = { name: string; value: string };
+  export type OptionsCallback = () => Option[];
+  export type PickerCallback = (value: string, ...args: any[]) => void;
+  export type Configuration = {
+    message?: string;
+    list: string;
+    actionName?: string;
+    callback: string;
+    confirmation?: string;
+    confirm?: string;
+    job?: string;
   };
-  return Template.create(templates.dialog, {
-    thread: config.thread || Utilities.getUuid(),
-    picker: args,
-    progress
-  });
+  export type Arguments = Omit<Configuration, 'list' | 'callback'> & {
+    list: string;
+    callback: string;
+  };
+
+  export interface Pickable {
+    toOption(): Option;
+  }
+
+  export namespace Params {
+    export type Overlay = Base.Params.Overlay & Configuration;
+    export type Popup = Base.Params.Popup & Configuration;
+  }
 }
 
-export const getHtml = (config: Configuration) =>
-  getHtmlOutput(config).getContent();
-
-export function showModalDialog(
-  root: UI.Dialog.Root,
-  config: Configuration,
-  title: string,
-  height = DEFAULT_HEIGHT
-) {
-  root.getUi().showModalDialog(getHtmlOutput(config).setHeight(height), title);
-}
-
-export function showModelessDialog(
-  root: UI.Dialog.Root,
-  config: Configuration,
-  title: string,
-  height = DEFAULT_HEIGHT
-) {
-  root
-    .getUi()
-    .showModelessDialog(getHtmlOutput(config).setHeight(height), title);
-}
+export { Picker as default };

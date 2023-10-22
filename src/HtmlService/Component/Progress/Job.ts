@@ -1,6 +1,7 @@
 import * as CacheService from '../../../CacheService';
+import Base from '../Base';
 
-abstract class Job {
+abstract class Job extends Base {
   protected KEY = {
     JOB: 'job',
     COMPLETE: 'complete'
@@ -8,7 +9,9 @@ abstract class Job {
 
   private _complete?: Job.Completion;
 
-  public constructor(private _job = Utilities.getUuid()) {}
+  public constructor(private _job = Utilities.getUuid()) {
+    super();
+  }
 
   public get job() {
     return this._job;

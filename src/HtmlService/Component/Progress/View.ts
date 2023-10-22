@@ -1,8 +1,9 @@
-import * as UI from '../../../UI';
 import Tracker from './Tracker';
 import Job from './Job';
 import templates from './templates';
 import Template from '../../Template';
+import progress from '../../../../js/HtmlService/Component/Progress.js.html';
+import Base from '../Base';
 
 class View extends Job {
   public static readonly DEFAULT_HEIGHT = 100;
@@ -47,45 +48,21 @@ class View extends Job {
     this._tracker = tracker;
   }
 
-  public show = {
-    Popup: (params: View.Params.Popup) => {
-      return templates
-        .popup({
-          ...this.tracker.data,
-          ...this.data,
-          ...params.data,
-          title: params.title,
-          message: params.message
-        })
-        .setTitle(params.title);
-    },
-    Modal: (params: View.Params.Overlay) => {
-      params.root.getUi().showModalDialog(
-        templates
-          .overlay({
-            ...this.tracker.data,
-            ...this.data,
-            ...params.data,
-            message: params.message
-          })
-          .setHeight(params.height),
-        params.title
-      );
-    },
-    Modeless: (params: View.Params.Overlay) => {
-      params.root.getUi().showModelessDialog(
-        templates
-          .overlay({
-            ...this.tracker.data,
-            ...this.data,
-            ...params.data,
-            message: params.message
-          })
-          .setHeight(params.height),
-        params.title
-      );
-    }
-  };
+  protected getLib(data: Template.Data) {
+    return Template.create(progress, data).getContent();
+  }
+
+  public popup(data: View.Params.Popup) {
+    return super.popup(data);
+  }
+
+  public modal(data: View.Params.Overlay) {
+    return super.modal(data);
+  }
+
+  public modeless(data: View.Params.Overlay) {
+    return super.modeless(data);
+  }
 
   public reset(resetTracker = true) {
     super.reset();
@@ -99,22 +76,20 @@ class View extends Job {
 }
 
 namespace View {
+  type Configuration = {
+    title?: string;
+    message?: string;
+  };
+
   export namespace Params {
     export type Constructor = {
       job: string;
       tracker?: Tracker;
     };
 
-    export type Popup = {
-      title?: string;
-      message?: string;
-      data?: Template.Data;
-    };
+    export type Popup = Base.Params.Popup & Configuration;
 
-    export type Overlay = Popup & {
-      root: UI.Dialog.Root;
-      height?: number;
-    };
+    export type Overlay = Base.Params.Overlay & Configuration;
   }
 }
 

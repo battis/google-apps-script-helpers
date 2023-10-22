@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <?!= include('style', data) ?>
+  </head>
+  <body>
+    <div id="content"><?= data.content ?? '' ?></div>
+    <?!= include('lib', data) ?>
+    <?!= data.component ?>
+    <script>
+      <?!= data.script ?? '' ?>
+    </script>
+  </body>
+</html>
