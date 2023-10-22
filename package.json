@@ -22,7 +22,7 @@
     "dev": "run-s dev:*",
     "dev:docs-worktree": "git worktree add docs docs",
     "docs": "run-s docs:**",
-    "docs:clean": "shx rm -rf docs/*",
+    "docs:clean": "node ./bin/docs/clean.mjs",
     "docs:build": "typedoc --tsconfig ./tsconfig.typedoc.json --plugin typedoc-plugin-missing-exports",
     "docs:build:open": "node ./bin/docs/launch.mjs",
     "build": "run-s build:*",
