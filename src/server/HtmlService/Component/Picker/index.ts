@@ -1,7 +1,7 @@
 import Template from '../../Template';
 import Base from '../Base';
 import templates from './templates';
-import picker from '../../../../js/HtmlService/Component/Picker.js.html';
+import picker from '../../../../../js/HtmlService/Component/Picker.js.html';
 
 class Picker extends Base {
   public static DEFAULT_HEIGHT = 100;

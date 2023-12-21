@@ -1,7 +1,5 @@
-/// <reference path="../index.lib.d.ts">
-
-import defaultMessage from './templates/defaultMessage.html';
-import './style.scss';
+import defaultMessage from '../../../../server/HtmlService/Component/Progress/templates/defaultMessage.html';
+import '../../../../server/HtmlService/Component/Progress/style.scss';
 
 export default class Progress {
   public static job = '<?!= data.job || data.thread ?>';

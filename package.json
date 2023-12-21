@@ -3,7 +3,7 @@
   "version": "0.4.4",
   "author": "Seth Battis <seth@battis.net>",
   "license": "GPL-3.0",
-  "main": "./src/index.ts",
+  "main": "./src/server/index.ts",
   "homepage": "https://github.com/battis/gas-lighter",
   "repository": {
     "type": "git",
@@ -32,16 +32,20 @@
     "release:build": "npm run build",
     "release:publish": "np --yolo --no-release-draft",
     "release:docs:build": "run-s docs:*",
-    "release:docs:publish": "node ./bin/docs/publish.mjs"
+    "release:docs:publish": "node ./bin/docs/publish.mjs",
+    "test": "run-s test:*",
+    "test:build": "webpack --config webpack.test.js",
+    "test:deploy": "clasp push --force",
+    "test:run": ""
   },
   "dependencies": {
-    "@battis/qui-cli": "^0.3.6",
+    "@battis/qui-cli": "^0.3.7",
     "@battis/typescript-tricks": "^0.4.2",
     "@effortlessmotion/html-webpack-inline-source-plugin": "^1.0.3",
     "@google/clasp": "^2.4.2",
     "@tsconfig/recommended": "^1.0.3",
-    "@types/google-apps-script": "^1.0.76",
-    "@types/node": "^18.18.6",
+    "@types/google-apps-script": "^1.0.78",
+    "@types/node": "^18.18.12",
     "app-root-path": "^3.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.8.1",
@@ -50,12 +54,12 @@
     "html-loader": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "postcss-loader": "^7.3.3",
-    "postcss-preset-env": "^9.2.0",
-    "sass": "^1.69.4",
+    "postcss-preset-env": "^9.3.0",
+    "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "^5.3.9",
-    "ts-loader": "^9.5.0",
+    "ts-loader": "^9.5.1",
     "typescript": "^4.9.5",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
@@ -63,9 +67,10 @@
   "devDependencies": {
     "@battis/eslint-config": "latest",
     "@battis/prettier-config": "latest",
+    "@types/qunit": "2.11.1",
     "np": "^8.0.4",
     "open": "^9.1.0",
-    "typedoc": "^0.25.2",
+    "typedoc": "^0.25.3",
     "typedoc-plugin-missing-exports": "^2.1.0"
   },
   "prettier": "@battis/prettier-config"

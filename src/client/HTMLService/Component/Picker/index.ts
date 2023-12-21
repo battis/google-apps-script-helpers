@@ -1,6 +1,4 @@
-/// <reference path="../index.lib.d.ts">
-
-import templates from './templates';
+import templates from '../../../../server/HtmlService/Component/Picker/templates';
 
 export default class Picker {
   private static job = '<?!= data.job ?>';

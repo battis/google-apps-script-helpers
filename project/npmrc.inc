@@ -3,4 +3,6 @@ public-hoist-pattern[]=*eslint*
 public-hoist-pattern[]=*webpack*
 public-hoist-pattern[]=*loader*
 public-hoist-pattern=@google/clasp
-public-hoist-pattern=@types/*
+public-hoist-pattern=@types/google-apps-script
+public-hoist-pattern=@types/node
+

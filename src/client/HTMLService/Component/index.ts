@@ -1,7 +1,5 @@
-/// <reference path="../google.d.ts">
-
-import templates from './templates';
-import './style.scss';
+import loading from '../../../server/HtmlService/Component/templates/loading.html';
+import '../../../server/HtmlService/Component/style.scss';
 
 export default class Component {
   public static replaceContent(html: string) {
@@ -20,6 +18,6 @@ export default class Component {
   }
 
   public static loading() {
-    this.replaceContent(templates.loading());
+    this.replaceContent(loading);
   }
 }

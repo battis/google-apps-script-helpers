@@ -1,5 +1,6 @@
 /// <reference path="./types.d.ts" />
 
+import * as API from './API';
 import * as CacheService from './CacheService';
 import * as CardService from './CardService';
 import * as DriveApp from './DriveApp';
@@ -9,6 +10,7 @@ import * as SpreadsheetApp from './SpreadsheetApp';
 import * as UI from './UI';
 
 export const g = {
+  API,
   CacheService,
   CardService,
   DriveApp,

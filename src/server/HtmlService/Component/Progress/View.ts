@@ -2,7 +2,7 @@ import Tracker from './Tracker';
 import Job from './Job';
 import templates from './templates';
 import Template from '../../Template';
-import progress from '../../../../js/HtmlService/Component/Progress.js.html';
+import progress from '../../../../../js/HtmlService/Component/Progress.js.html';
 import Base from '../Base';
 
 class View extends Job {
