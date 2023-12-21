@@ -7,21 +7,17 @@ export class Batch {
 
   public add(request: Request) {
     if (!this.response) {
-      if (this.requests.length < 1000) {
-        request.url = request.url.replace(/^https:\/\/www.googleapis.com/, '');
-        const api = request.url.match(/^(\/\w+\/v\d+)/)[1];
-        if (!this.api) {
-          this.api = api;
-        }
-        if (api === this.api) {
-          this.requests.push(request);
-        } else {
-          throw new Error(
-            `API mismatch: batch request for ${this.api} cannot accept ${api}`
-          );
-        }
+      request.url = request.url.replace(/^https:\/\/www.googleapis.com/, '');
+      const api = request.url.match(/^(\/\w+\/v\d+)/)[1];
+      if (!this.api) {
+        this.api = api;
+      }
+      if (api === this.api) {
+        this.requests.push(request);
       } else {
-        throw new Error('Maximum of 1000 requests can be batched together');
+        throw new Error(
+          `API mismatch: batch request for ${this.api} cannot accept ${api}`
+        );
       }
     } else {
       throw new Error(`Batch request has already been sent`);
@@ -36,19 +32,10 @@ export class Batch {
     if (this.requests.length === 0) {
       throw new Error('No requests added');
     }
-    Logger.log(
-      this.requests.reduce(
-        (payload, request) =>
-          (payload[Utilities.getUuid()] = Utilities.newBlob(
-            `${Batch.flattenHeaders(request.headers) + EOL + EOL}${
-              request.method || 'GET'
-            } ${request.url}${
-              request.payload ? EOL + EOL + request.payload : ''
-            }`
-          )),
-        {}
-      )
-    );
+    const payload = this.buildPayload();
+    for (const id in payload) {
+      Logger.log(payload[id].getDataAsString());
+    }
     this.response = UrlFetchApp.fetch(
       `https://www.googleapis.com/batch${this.api}`,
       {
@@ -58,7 +45,7 @@ export class Batch {
           'Accept-Encoding': 'gzip',
           'User-Agent': 'Google Apps Script (gzip)'
         },
-        payload: this.buildPayload()
+        payload
       }
     );
     return Batch.splitParts(this.response);
@@ -76,11 +63,9 @@ export class Batch {
 
   private static blobRequest(request: Request): GoogleAppsScript.Base.Blob {
     return Utilities.newBlob(
-      /*      `${Batch.flattenHeaders(request.headers) + EOL + EOL}*/ `${
-        request.method || 'GET'
-      } ${request.url}${
-        request.payload ? EOL + EOL + JSON.stringify(request.payload) : ''
-      }`
+      `${(request.method || 'get').toUpperCase()} ${request.url + EOL}${
+        request.headers ? Batch.flattenHeaders(request.headers) + EOL + EOL : ''
+      }${request.payload ? EOL + EOL + JSON.stringify(request.payload) : ''}`
     );
   }
 
@@ -188,7 +173,8 @@ class Response {
 }
 
 export type Request = GoogleAppsScript.URL_Fetch.URLFetchRequest & {
-  payload?: Json;
+  contentType?: never;
+  payload?: JSONValue;
 };
 
 // https://stackoverflow.com/a/64117261
@@ -204,4 +190,3 @@ interface JSONObject {
   [k: string]: JSONValue;
 }
 interface JSONArray extends Array<JSONValue> {}
-type Json = JSONValue | JSONObject | JSONArray;
