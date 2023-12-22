@@ -1,82 +1,76 @@
 import templates from './templates';
 
-export default class Picker {
-  private static job = '<?!= data.job ?>';
+const job = '<?!= data.job ?>';
 
-  private static picker = {
-    message: '<?!= data.picker.message ?>',
-    list: '<?!= data.picker.list ?>',
-    actionName: '<?!= data.picker.actionName ?>',
-    callback: '<?!= data.picker.callback  ?>',
-    confirmation: '<?!= data.picker.confirmation ?>',
-    confirm: '<?!= data.picker.confirm ?>'
+const picker = {
+  message: '<?!= data.picker.message ?>',
+  list: '<?!= data.picker.list ?>',
+  actionName: '<?!= data.picker.actionName ?>',
+  callback: '<?!= data.picker.callback  ?>',
+  confirmation: '<?!= data.picker.confirmation ?>',
+  confirm: '<?!= data.picker.confirm ?>'
+};
+
+let option: Record<string, any> = {};
+
+function displayConfirmation() {
+  g.HtmlService.Template.replaceContent(
+    templates.confirmation({
+      actionName: picker.actionName,
+      option: option.name,
+      confirmation: picker.confirmation,
+      confirm: picker.confirm
+    })
+  );
+  document.getElementById('confirmation').addEventListener('submit', (e) => {
+    e.preventDefault();
+    g.HtmlService.Template.loading();
+    google.script.run[picker.callback](option.value, job);
+  });
+  document.getElementById('cancel').addEventListener('click', () => {
+    google.script.host.close();
+  });
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const opt = document.getElementById('options') as HTMLSelectElement;
+  option = {
+    value: opt.value,
+    name: (
+      document.querySelector(
+        `#options option[value="${opt.value}"]`
+      ) as HTMLOptionElement
+    ).innerText
   };
+  if (picker.confirmation.length) {
+    displayConfirmation();
+  } else {
+    g.HtmlService.Template.loading();
+    google.script.run[picker.callback](option.value, job);
+  }
+  return false;
+}
 
-  private static option: Record<string, any> = {};
-
-  private static displayConfirmation() {
+function displayPicker(options) {
+  if (picker.callback.length) {
     g.HtmlService.Template.replaceContent(
-      templates.confirmation({
-        actionName: this.picker.actionName,
-        option: this.option.name,
-        confirmation: this.picker.confirmation,
-        confirm: this.picker.confirm
+      templates.form({
+        message: picker.message,
+        options,
+        actionName: picker.actionName
       })
     );
-    document.getElementById('confirmation').addEventListener('submit', (e) => {
-      e.preventDefault();
-      g.HtmlService.Template.loading();
-      google.script.run[this.picker.callback](this.option.value, this.job);
-    });
-    document.getElementById('cancel').addEventListener('click', () => {
-      google.script.host.close();
-    });
+    document.getElementById('picker').addEventListener('submit', handleSubmit);
+  } else {
+    g.HtmlService.Template.replaceContent(templates.pickerCallbackUndefined);
+    document
+      .getElementById('#cancel')
+      .addEventListener('click', () => google.script.host.close());
   }
+}
 
-  private static handleSubmit(e) {
-    e.preventDefault();
-    const opt = document.getElementById('options') as HTMLSelectElement;
-    this.option = {
-      value: opt.value,
-      name: (
-        document.querySelector(
-          `#options option[value="${opt.value}"]`
-        ) as HTMLOptionElement
-      ).innerText
-    };
-    if (this.picker.confirmation.length) {
-      this.displayConfirmation();
-    } else {
-      g.HtmlService.Template.loading();
-      google.script.run[this.picker.callback](this.option.value, this.job);
-    }
-    return false;
-  }
-
-  private static displayPicker(options) {
-    if (this.picker.callback.length) {
-      g.HtmlService.Template.replaceContent(
-        templates.form({
-          message: this.picker.message,
-          options,
-          actionName: this.picker.actionName
-        })
-      );
-      document
-        .getElementById('picker')
-        .addEventListener('submit', this.handleSubmit);
-    } else {
-      g.HtmlService.Template.replaceContent(templates.pickerCallbackUndefined);
-      document
-        .getElementById('#cancel')
-        .addEventListener('click', () => google.script.host.close());
-    }
-  }
-
-  public static init() {
-    g.HtmlService.Template.loading();
-    google.script.run
-      .withSuccessHandler(this.displayPicker)
-      [this.picker.list]();
-  }
+export function init() {
+  g.HtmlService.Template.loading();
+  google.script.run.withSuccessHandler(displayPicker)[picker.list]();
 }

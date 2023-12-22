@@ -53,15 +53,24 @@ class View extends Job {
   }
 
   public popup(data: View.Params.Popup) {
-    return super.popup(data);
+    return super.popup({
+      ...data,
+      script: 'g.HtmlService.Component.Progress.Init.popup();'
+    });
   }
 
   public modal(data: View.Params.Overlay) {
-    return super.modal(data);
+    return super.modal({
+      ...data,
+      script: 'g.HtmlService.Component.Progress.Init.overlay();'
+    });
   }
 
   public modeless(data: View.Params.Overlay) {
-    return super.modeless(data);
+    return super.modeless({
+      ...data,
+      script: 'g.HtmlService.Component.Progress.Init.overlay();'
+    });
   }
 
   public reset(resetTracker = true) {

@@ -1,57 +1,55 @@
 import defaultMessage from './templates/defaultMessage.html';
 
-export default class Progress {
-  public static job = '<?!= data.job || data.thread ?>';
+export const job = '<?!= data.job || data.thread ?>';
 
-  public static update() {
-    google.script.run
-      .withSuccessHandler((progress) => {
-        if (progress.html) {
-          g.HtmlService.Template.replaceContent(progress.html);
-        }
-        if (progress.complete) {
-          this.onComplete(progress.complete);
-        } else {
-          this.update();
-        }
-      })
-      .getProgress(this.job);
-  }
+export function update() {
+  google.script.run
+    .withSuccessHandler((progress) => {
+      if (progress.html) {
+        g.HtmlService.Template.replaceContent(progress.html);
+      }
+      if (progress.complete) {
+        onComplete(progress.complete);
+      } else {
+        update();
+      }
+    })
+    .getProgress(job);
+}
 
-  public static onComplete(complete) {
-    if (typeof complete == 'object') {
-      if ('html' in complete) {
-        g.HtmlService.Template.replaceContent(complete.html);
-      }
-      if ('callback' in complete && 'step' in complete) {
-        const args = complete.args || [];
-        google.script.run[complete.callback](this.job, complete.step, ...args);
-        this.update();
-      }
-    } else {
-      try {
-        google.script.host.close();
-      } catch {
-        document.querySelector('.message').innerHTML = defaultMessage;
-      }
+export function onComplete(complete) {
+  if (typeof complete == 'object') {
+    if ('html' in complete) {
+      g.HtmlService.Template.replaceContent(complete.html);
+    }
+    if ('callback' in complete && 'page' in complete) {
+      const args = complete.args || [];
+      google.script.run[complete.callback](job, complete.page, ...args);
+      update();
+    }
+  } else {
+    try {
+      google.script.host.close();
+    } catch {
+      g.HtmlService.Template.replaceContent(defaultMessage);
     }
   }
+}
 
-  public static show() {
+export function show() {
+  g.HtmlService.Template.loading();
+  update();
+}
+
+export namespace Init {
+  export function overlay() {
     g.HtmlService.Template.loading();
-    this.update();
+    update();
   }
 
-  public static Init = {
-    overlay: () => {
-      g.HtmlService.Template.loading();
-      this.update();
-    },
-
-    popup: () => {
-      g.HtmlService.Template.loading();
-      google.script.run['<?!= data.callback ?>'](this.job);
-      this.update();
-    }
-  };
+  export function popup() {
+    g.HtmlService.Template.loading();
+    google.script.run['<?!= data.callback ?>'](job);
+    update();
+  }
 }

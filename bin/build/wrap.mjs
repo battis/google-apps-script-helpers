@@ -40,9 +40,9 @@ async function wrapScripts(file) {
         if (isError(err)) return;
         fs.writeFile(
           `${file}.html`,
-          `<script>((g)=>{${buffer.toString()}${globalize(
+          `((g)=>{${buffer.toString()}${globalize(
             file
-          )}})(window.g=window.g||{})</script>`,
+          )}})(window.g=window.g||{});`,
           (err) => {
             if (isError(err)) return;
             fs.rm(file, (err) => {

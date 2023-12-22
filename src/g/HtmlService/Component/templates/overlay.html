@@ -4,10 +4,8 @@
   </head>
   <body>
     <div id="content"><?= data.content ?? '' ?></div>
-    <?!= include('lib', data) ?>
-    <?!= data.component ?>
     <script>
-      <?!= data.script ?? '' ?>
+      <?!= include('lib', data) ?><?!= data.component ?><?!= data.script ?? '' ?>
     </script>
   </body>
 </html>
