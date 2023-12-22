@@ -1,4 +1,4 @@
-/// <reference path="./types.d.ts" />
+/// <reference path="../types.d.ts" />
 
 import API from './API';
 import * as CacheService from './CacheService';

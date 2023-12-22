@@ -1,6 +1,6 @@
 import Template from '../../Template';
 import Base from '../Base';
-import templates from './templates';
+import dialog from './templates/dialog.html';
 import lib from '../../../../../js/HtmlService/Component/Picker.js.html';
 
 class Picker extends Base {
@@ -18,7 +18,7 @@ class Picker extends Base {
       confirmation: '',
       ...config
     };
-    return Template.create(templates.dialog, {
+    return Template.create(dialog, {
       job: config.job || Utilities.getUuid(),
       picker: args
     });
