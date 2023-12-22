@@ -1,7 +1,7 @@
 // TODO this should be generated dynamically?
 declare const g: {
   HtmlService: {
-    Component: {
+    Template: {
       replaceContent: (html: string) => void;
       loading: () => void;
     };

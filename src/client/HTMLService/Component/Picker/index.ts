@@ -15,7 +15,7 @@ export default class Picker {
   private static option: Record<string, any> = {};
 
   private static displayConfirmation() {
-    g.HtmlService.Component.replaceContent(
+    g.HtmlService.Template.replaceContent(
       templates.confirmation({
         actionName: this.picker.actionName,
         option: this.option.name,
@@ -25,7 +25,7 @@ export default class Picker {
     );
     document.getElementById('confirmation').addEventListener('submit', (e) => {
       e.preventDefault();
-      g.HtmlService.Component.loading();
+      g.HtmlService.Template.loading();
       google.script.run[this.picker.callback](this.option.value, this.job);
     });
     document.getElementById('cancel').addEventListener('click', () => {
@@ -47,7 +47,7 @@ export default class Picker {
     if (this.picker.confirmation.length) {
       this.displayConfirmation();
     } else {
-      g.HtmlService.Component.loading();
+      g.HtmlService.Template.loading();
       google.script.run[this.picker.callback](this.option.value, this.job);
     }
     return false;
@@ -55,7 +55,7 @@ export default class Picker {
 
   private static displayPicker(options) {
     if (this.picker.callback.length) {
-      g.HtmlService.Component.replaceContent(
+      g.HtmlService.Template.replaceContent(
         templates.form({
           message: this.picker.message,
           options,
@@ -66,7 +66,7 @@ export default class Picker {
         .getElementById('picker')
         .addEventListener('submit', this.handleSubmit);
     } else {
-      g.HtmlService.Component.replaceContent(templates.pickerCallbackUndefined);
+      g.HtmlService.Template.replaceContent(templates.pickerCallbackUndefined);
       document
         .getElementById('#cancel')
         .addEventListener('click', () => google.script.host.close());
@@ -74,7 +74,7 @@ export default class Picker {
   }
 
   public static init() {
-    g.HtmlService.Component.loading();
+    g.HtmlService.Template.loading();
     google.script.run
       .withSuccessHandler(this.displayPicker)
       [this.picker.list]();

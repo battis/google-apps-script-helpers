@@ -1,4 +1,4 @@
-import lib from '../../../../js/HtmlService/Component.js.html';
+import lib from '../../../../js/HtmlService/Template.js.html';
 import head from './head.html';
 import style from './style.scss';
 

@@ -7,7 +7,7 @@ export default class Progress {
     google.script.run
       .withSuccessHandler((progress) => {
         if (progress.html) {
-          g.HtmlService.Component.replaceContent(progress.html);
+          g.HtmlService.Template.replaceContent(progress.html);
         }
         if (progress.complete) {
           this.onComplete(progress.complete);
@@ -21,7 +21,7 @@ export default class Progress {
   public static onComplete(complete) {
     if (typeof complete == 'object') {
       if ('html' in complete) {
-        g.HtmlService.Component.replaceContent(complete.html);
+        g.HtmlService.Template.replaceContent(complete.html);
       }
       if ('callback' in complete && 'step' in complete) {
         const args = complete.args || [];
@@ -38,18 +38,18 @@ export default class Progress {
   }
 
   public static show() {
-    g.HtmlService.Component.loading();
+    g.HtmlService.Template.loading();
     this.update();
   }
 
   public static Init = {
     overlay: () => {
-      g.HtmlService.Component.loading();
+      g.HtmlService.Template.loading();
       this.update();
     },
 
     popup: () => {
-      g.HtmlService.Component.loading();
+      g.HtmlService.Template.loading();
       google.script.run['<?!= data.callback ?>'](this.job);
       this.update();
     }

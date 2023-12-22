@@ -4,9 +4,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
-    'HtmlService/Component': path.resolve(
+    'HtmlService/Template': path.resolve(
       __dirname,
-      'src/client/HtmlService/Component/index.ts'
+      'src/client/HtmlService/Template/index.ts'
     ),
     'HtmlService/Component/Picker': path.resolve(
       __dirname,
