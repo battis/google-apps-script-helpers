@@ -1,1 +1,3 @@
-export * as Batch from './Batch';
+import Batch from './Batch';
+
+export default { Batch };

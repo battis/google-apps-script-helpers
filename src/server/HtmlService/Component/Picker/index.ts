@@ -1,13 +1,13 @@
 import Template from '../../Template';
 import Base from '../Base';
 import templates from './templates';
-import picker from '../../../../../js/HtmlService/Component/Picker.js.html';
+import lib from '../../../../../js/HtmlService/Component/Picker.js.html';
 
 class Picker extends Base {
   public static DEFAULT_HEIGHT = 100;
 
   protected getLib(data: Template.Data): string {
-    return Template.create(picker, data).getContent();
+    return Template.create(lib, data).getContent();
   }
 
   public getHtmlOutput(config: Picker.Configuration) {

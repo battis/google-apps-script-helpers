@@ -1,5 +1,4 @@
-import defaultMessage from '../../../../server/HtmlService/Component/Progress/templates/defaultMessage.html';
-import '../../../../server/HtmlService/Component/Progress/style.scss';
+import defaultMessage from './templates/defaultMessage.html';
 
 export default class Progress {
   public static job = '<?!= data.job || data.thread ?>';

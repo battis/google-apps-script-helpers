@@ -1,10 +1,10 @@
-import dialog from './dialog.html';
 import option from './option.html';
 import form from './form.html';
+import pickerCallbackUndefined from './pickerCallbackUndefined.html';
 import confirmation from './confirmation.html';
 
 export default class templates {
-  public static dialog = dialog;
+  public static pickerCallbackUndefined = pickerCallbackUndefined;
 
   private static template(html: string, data: Record<string, string>) {
     for (const tag in data) {

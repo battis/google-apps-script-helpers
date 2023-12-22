@@ -1,12 +1,14 @@
-const EOL = '\n';
+import { type Request } from './Request';
+import Response from './Response';
+import EOL from './EOL';
 
-export class Batch {
+export default class Batch {
   private api?: string;
   private requests: Request[] = [];
-  private response?: GoogleAppsScript.URL_Fetch.HTTPResponse;
+  private responses?: Response;
 
   public add(request: Request) {
-    if (!this.response) {
+    if (!this.responses) {
       request.url = request.url.replace(/^https:\/\/www.googleapis.com/, '');
       const api = request.url.match(/^(\/\w+\/v\d+)/)[1];
       if (!this.api) {
@@ -32,23 +34,18 @@ export class Batch {
     if (this.requests.length === 0) {
       throw new Error('No requests added');
     }
-    const payload = this.buildPayload();
-    for (const id in payload) {
-      Logger.log(payload[id].getDataAsString());
-    }
-    this.response = UrlFetchApp.fetch(
-      `https://www.googleapis.com/batch${this.api}`,
-      {
+    this.responses = new Response(
+      UrlFetchApp.fetch(`https://www.googleapis.com/batch${this.api}`, {
         method: 'post',
         headers: {
           Authorization: `Bearer ${ScriptApp.getOAuthToken()}`,
           'Accept-Encoding': 'gzip',
           'User-Agent': 'Google Apps Script (gzip)'
         },
-        payload
-      }
+        payload: this.buildPayload()
+      })
     );
-    return Batch.splitParts(this.response);
+    return this;
   }
 
   private static flattenHeaders(
@@ -64,8 +61,8 @@ export class Batch {
   private static blobRequest(request: Request): GoogleAppsScript.Base.Blob {
     return Utilities.newBlob(
       `${(request.method || 'get').toUpperCase()} ${request.url + EOL}${
-        request.headers ? Batch.flattenHeaders(request.headers) + EOL + EOL : ''
-      }${request.payload ? EOL + EOL + JSON.stringify(request.payload) : ''}`
+        request.headers ? Batch.flattenHeaders(request.headers) + EOL : ''
+      }${request.payload ? EOL + JSON.stringify(request.payload) : ''}`
     );
   }
 
@@ -77,116 +74,15 @@ export class Batch {
     return payload;
   }
 
-  private static getBoundary(
-    response: GoogleAppsScript.URL_Fetch.HTTPResponse
-  ): string {
-    return response
-      .getHeaders()
-      ['Content-Type'].split(/;\s*/)
-      .reduce((boundary: string, part: string) => {
-        const pair = part.split('=');
-        if (pair.length && pair[0] == 'boundary') {
-          return pair[1];
-        }
-        return boundary;
-      }, undefined);
+  public getApi() {
+    return this.api;
   }
 
-  private static splitParts(
-    response: GoogleAppsScript.URL_Fetch.HTTPResponse
-  ): any[] {
-    const boundary = Batch.getBoundary(response);
+  public getRequests() {
+    return this.requests;
+  }
 
-    if (boundary) {
-      const lines = response.getContentText().split('\r\n');
-      let current: Response;
-      const parts = [];
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (line == `--${boundary}--`) {
-          if (current) {
-            parts.push(current.parse());
-          }
-          return parts;
-        }
-        if (line == `--${boundary}`) {
-          if (current) {
-            parts.push(current.parse());
-          }
-          current = new Response();
-        } else if (current) {
-          current.addLine(line);
-        } else {
-          Logger.log(`unexpected line at ${i}: ${JSON.stringify(line)}`);
-        }
-      }
-    }
-
-    return [];
+  public getResponses() {
+    return this.responses.getResponses();
   }
 }
-
-class Response {
-  private httpStatus: string;
-  private headers: Record<string, string> = {};
-  private body: string[] = [];
-
-  private collectingHeaders = true;
-
-  private addHeader(line: string) {
-    const pair = line.split(': ');
-    if (pair.length == 2) {
-      this.headers[pair[0]] = pair[1];
-      return true;
-    }
-    return false;
-  }
-
-  private addBody(line: string) {
-    this.body.push(line);
-  }
-
-  public addLine(line: string) {
-    if (this.collectingHeaders) {
-      this.collectingHeaders = this.addHeader(line);
-    } else {
-      this.addBody(line);
-      if (
-        this.headers['Content-Type'] === 'application/http' &&
-        this.body[0] == 'HTTP/1.1 200 OK'
-      ) {
-        this.httpStatus = this.body[0];
-        this.headers = {};
-        this.body = [];
-        this.collectingHeaders = true;
-      }
-    }
-  }
-
-  public parse() {
-    if (this.headers['Content-Type'].startsWith('application/json')) {
-      return JSON.parse(this.body.join());
-    } else {
-      return this.body.join('\n');
-    }
-  }
-}
-
-export type Request = GoogleAppsScript.URL_Fetch.URLFetchRequest & {
-  contentType?: never;
-  payload?: JSONValue;
-};
-
-// https://stackoverflow.com/a/64117261
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JSONValue[]
-  | { [key: string]: JSONValue };
-
-interface JSONObject {
-  [k: string]: JSONValue;
-}
-interface JSONArray extends Array<JSONValue> {}

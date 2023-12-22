@@ -1,6 +1,6 @@
 /// <reference path="./types.d.ts" />
 
-import * as API from './API';
+import API from './API';
 import * as CacheService from './CacheService';
 import * as CardService from './CardService';
 import * as DriveApp from './DriveApp';

@@ -1,4 +1,4 @@
-import templates from '../../../../server/HtmlService/Component/Picker/templates';
+import templates from './templates';
 
 export default class Picker {
   private static job = '<?!= data.job ?>';

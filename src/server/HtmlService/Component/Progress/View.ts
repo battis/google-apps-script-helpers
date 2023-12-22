@@ -2,7 +2,7 @@ import Tracker from './Tracker';
 import Job from './Job';
 import templates from './templates';
 import Template from '../../Template';
-import progress from '../../../../../js/HtmlService/Component/Progress.js.html';
+import lib from '../../../../../js/HtmlService/Component/Progress.js.html';
 import Base from '../Base';
 
 class View extends Job {
@@ -49,7 +49,7 @@ class View extends Job {
   }
 
   protected getLib(data: Template.Data) {
-    return Template.create(progress, data).getContent();
+    return Template.create(lib, data).getContent();
   }
 
   public popup(data: View.Params.Popup) {

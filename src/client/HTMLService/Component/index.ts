@@ -1,5 +1,4 @@
-import loading from '../../../server/HtmlService/Component/templates/loading.html';
-import '../../../server/HtmlService/Component/style.scss';
+import loading from './templates/loading.html';
 
 export default class Component {
   public static replaceContent(html: string) {
