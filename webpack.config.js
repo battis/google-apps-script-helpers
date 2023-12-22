@@ -6,15 +6,15 @@ module.exports = {
   entry: {
     'HtmlService/Template': path.resolve(
       __dirname,
-      'src/client/HtmlService/Template/index.ts'
+      'src/HtmlService/Template/index.ts'
     ),
     'HtmlService/Component/Picker': path.resolve(
       __dirname,
-      'src/client/HtmlService/Component/Picker/index.ts'
+      'src/HtmlService/Component/Picker/index.ts'
     ),
     'HtmlService/Component/Progress': path.resolve(
       __dirname,
-      'src/client/HtmlService/Component/Progress/index.ts'
+      'src/HtmlService/Component/Progress/index.ts'
     )
   },
   mode: 'production',

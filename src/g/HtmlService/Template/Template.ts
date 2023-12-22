@@ -1,5 +1,5 @@
 import lib from '../../../../js/HtmlService/Template.js.html';
-import head from './head.html';
+import head from './templates/head.html';
 import style from './style.scss';
 
 class Template {
