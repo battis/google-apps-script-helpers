@@ -48,7 +48,10 @@ class View extends Job {
   }
 
   protected getLib(data: Template.Data) {
-    return Template.create(lib, data).getContent();
+    return Template.create(lib, {
+      job: this.job,
+      ...data
+    }).getContent();
   }
 
   public popup(data: View.Params.Popup) {
