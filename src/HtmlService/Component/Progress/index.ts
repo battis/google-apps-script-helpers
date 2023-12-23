@@ -1,6 +1,6 @@
 import defaultMessage from './templates/defaultMessage.html';
 
-export const job = '<?!= data.job || data.thread ?>';
+export const job = '<?!= data.job ?>';
 
 export function update() {
   google.script.run

@@ -21,6 +21,7 @@ const data = [...Array(500).keys()].map((value) => value + 1);
  * Define homepage card
  */
 global.onHomepage = () => {
+  const url = g.PropertiesService.getScriptProperty('URL');
   return g.CardService.Card.create({
     name: 'Sandbox',
     sections: [
@@ -38,9 +39,10 @@ global.onHomepage = () => {
             .setOpenLink(
               CardService.newOpenLink()
                 .setUrl(
-                  `${g.PropertiesService.getScriptProperty('URL')}?job=${
-                    new g.HtmlService.Component.Progress.Tracker().job
-                  }&callback=theCount` // <-- callback query parameter names function that starts/monitors job
+                  g.HtmlService.Component.Progress.callbackUrl({
+                    url,
+                    callback: 'theCount'
+                  })
                 )
                 .setOpenAs(CardService.OpenAs.OVERLAY)
                 .setOnClose(CardService.OnClose.RELOAD_ADD_ON)
@@ -54,9 +56,10 @@ global.onHomepage = () => {
             .setOpenLink(
               CardService.newOpenLink()
                 .setUrl(
-                  `${g.PropertiesService.getScriptProperty('URL')}?job=${
-                    new g.HtmlService.Component.Progress.Tracker().job
-                  }&callback=theCountPaged` // <-- callback query parameter names function that starts/monitors job
+                  g.HtmlService.Component.Progress.callbackUrl({
+                    url,
+                    callback: 'theCountPaged'
+                  })
                 )
                 .setOpenAs(CardService.OpenAs.OVERLAY)
                 .setOnClose(CardService.OnClose.RELOAD_ADD_ON)
@@ -71,7 +74,7 @@ global.onHomepage = () => {
  * Simplest implementation, assumes process will complete before script is
  * timed out
  */
-global.theCount = (job: string, page: number = 0) => {
+global.theCount = (job: string) => {
   const tracker = new g.HtmlService.Component.Progress.Tracker({ job });
   tracker.reset();
   tracker.max = data.length;
@@ -95,7 +98,7 @@ global.theCount = (job: string, page: number = 0) => {
  * timeout is approached, this signals the View to restart the process from
  * the current page of the job, creating a new execution with a fresh timeout.
  */
-global.theCountPaged = (job: string, page?: number) => {
+global.theCountPaged = (job: string, page: number = 0) => {
   return new g.HtmlService.Component.Progress.Tracker({
     job,
     paging: {

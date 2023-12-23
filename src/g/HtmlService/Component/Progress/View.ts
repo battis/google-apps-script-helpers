@@ -31,14 +31,13 @@ class View extends Job {
   }
 
   public get progress() {
-    Logger.log(JSON.stringify(this.KEY));
     const progress = {
       job: this.job,
       [this.KEY.HTML]: this.html,
       [this.KEY.COMPLETE]: this.complete
     };
     if (this.complete) {
-      this.reset();
+      this.complete = null;
     }
     return progress;
   }

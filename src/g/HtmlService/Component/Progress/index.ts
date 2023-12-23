@@ -1,5 +1,5 @@
 import Tracker from './Tracker';
 import View from './View';
-import { getProgress } from './index.global';
+import { getProgress, callbackUrl } from './index.global';
 
-export default { Tracker, View, getProgress };
+export default { Tracker, View, getProgress, callbackUrl };

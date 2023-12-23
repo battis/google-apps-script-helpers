@@ -8,3 +8,15 @@ export function getProgress(job: string) {
     Logger.log(error);
   }
 }
+
+export function callbackUrl({
+  url,
+  job,
+  callback
+}: {
+  url: string;
+  job?: string;
+  callback: string;
+}) {
+  return `${url}?job=${job || Utilities.getUuid()}&callback=${callback}`;
+}
