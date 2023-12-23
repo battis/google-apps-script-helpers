@@ -39,16 +39,13 @@ async function wrapScripts(file) {
       fs.readFile(file, (err, buffer) => {
         if (isError(err)) return;
         fs.writeFile(
-          `${file}.html`,
+          file,
           `((g)=>{${buffer.toString()}${globalize(
             file
           )}})(window.g=window.g||{});`,
           (err) => {
             if (isError(err)) return;
-            fs.rm(file, (err) => {
-              if (isError(err)) return;
-              console.log(`  .${file}.html`.replace(templatePath, ''));
-            });
+            console.log(`  ${file}`.replace(templatePath, ''));
           }
         );
       });

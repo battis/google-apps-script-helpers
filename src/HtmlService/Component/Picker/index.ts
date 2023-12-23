@@ -6,7 +6,7 @@ const picker = {
   message: '<?!= data.picker.message ?>',
   list: '<?!= data.picker.list ?>',
   actionName: '<?!= data.picker.actionName ?>',
-  callback: '<?!= data.picker.callback  ?>',
+  callback: '<?!= data.picker.callback ?>',
   confirmation: '<?!= data.picker.confirmation ?>',
   confirm: '<?!= data.picker.confirm ?>'
 };
