@@ -4,6 +4,7 @@ import templates from './templates';
 import Template from '../../Template';
 import lib from '../../../../../js/HtmlService/Component/Progress.js';
 import Base from '../Base';
+import style from './style.scss';
 
 class View extends Job {
   public static readonly DEFAULT_HEIGHT = 100;
@@ -55,24 +56,30 @@ class View extends Job {
   }
 
   public popup(data: View.Params.Popup) {
-    return super.popup({
-      ...data,
-      script: 'g.HtmlService.Component.Progress.Init.popup();'
-    });
+    return super.popup(
+      this.appendStyle(style, {
+        ...data,
+        script: 'g.HtmlService.Component.Progress.Init.popup();'
+      })
+    );
   }
 
   public modal(data: View.Params.Overlay) {
-    return super.modal({
-      ...data,
-      script: 'g.HtmlService.Component.Progress.Init.overlay();'
-    });
+    return super.modal(
+      this.appendStyle(style, {
+        ...data,
+        script: 'g.HtmlService.Component.Progress.Init.overlay();'
+      }) as View.Params.Overlay
+    );
   }
 
   public modeless(data: View.Params.Overlay) {
-    return super.modeless({
-      ...data,
-      script: 'g.HtmlService.Component.Progress.Init.overlay();'
-    });
+    return super.modeless(
+      this.appendStyle(style, {
+        ...data,
+        script: 'g.HtmlService.Component.Progress.Init.overlay();'
+      }) as View.Params.Overlay
+    );
   }
 
   public reset(resetTracker = true) {

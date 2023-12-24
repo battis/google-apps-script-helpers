@@ -40,13 +40,9 @@ module.exports = ({
           loader: 'html-loader'
         },
         {
-          test: /\.s?[ac]ss$/,
+          test: /\.scss$/,
+          type: 'asset/source',
           use: [
-            'style-loader',
-            {
-              loader: 'css-loader',
-              options: { importLoaders: 2 }
-            },
             {
               loader: 'postcss-loader',
               options: {
