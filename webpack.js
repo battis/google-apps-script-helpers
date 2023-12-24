@@ -22,7 +22,7 @@ module.exports = ({
       clean: true
     },
     resolve: {
-      extensions: ['.ts', '.js']
+      extensions: ['.ts']
     },
     module: {
       rules: [
@@ -30,6 +30,10 @@ module.exports = ({
           test: /\.ts$/,
           loader: 'ts-loader',
           options: { allowTsInNodeModules: true }
+        },
+        {
+          test: /\/js\/.+\.js$/,
+          type: 'asset/source'
         },
         {
           test: /\.html$/i,
