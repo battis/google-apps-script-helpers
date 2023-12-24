@@ -40,9 +40,9 @@ async function wrapScripts(file) {
         if (isError(err)) return;
         fs.writeFile(
           file,
-          `((g)=>{${buffer.toString()}${globalize(
+          `var g;((g)=>{${buffer.toString()}${globalize(
             file
-          )}})(window.g=window.g||{});`,
+          )}})(g=typeof(g)==='undefined'?{}:g);`,
           (err) => {
             if (isError(err)) return;
             console.log(`  ${file}`.replace(templatePath, ''));
