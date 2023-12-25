@@ -1,5 +1,5 @@
 import EOL from './EOL';
-import type JSONValue from './JSONValue';
+import type { JSONValue } from '@battis/typescript-tricks';
 
 export default class Response {
   private responses: APIResponse[];

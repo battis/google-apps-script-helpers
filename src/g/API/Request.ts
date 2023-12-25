@@ -1,4 +1,4 @@
-import type JSONValue from './JSONValue';
+import type { JSONValue } from '@battis/typescript-tricks';
 
 export type Request = GoogleAppsScript.URL_Fetch.URLFetchRequest & {
   contentType?: never;
