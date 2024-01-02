@@ -3,7 +3,7 @@ const GasPlugin = require('gas-webpack-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
-const minimizerOptions = require('./bin/minimizer-options');
+const minimizerOptions = require('./html-minifier-terser-options');
 
 module.exports = ({
   root,

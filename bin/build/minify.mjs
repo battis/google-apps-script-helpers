@@ -5,9 +5,11 @@ import cli from '@battis/qui-cli';
 import { minify } from 'html-minifier-terser';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const minimizerOptions = require('../minimizer-options');
-
 const root = appRootPath.toString();
+const htmlMinifierTerserOptions = require(path.join(
+  root,
+  'html-minifier-terser-options.js'
+));
 
 async function minifyDir(dir) {
   for (const file of fs.readdirSync(dir)) {
@@ -18,7 +20,10 @@ async function minifyDir(dir) {
     } else if (path.extname(filePath) === '.html') {
       fs.writeFileSync(
         filePath,
-        await minify(fs.readFileSync(filePath).toString(), minimizerOptions)
+        await minify(
+          fs.readFileSync(filePath).toString(),
+          htmlMinifierTerserOptions
+        )
       );
       cli.log.info(`Minified ${cli.colors.url(filePath.replace(root, ''))}`);
     }
