@@ -1,46 +1,37 @@
-import Template from '../../Template';
-import Base from '../Base';
-import dialog from './templates/dialog.html';
-import lib from '../../../../../js/HtmlService/Component/Picker.js';
+import Component from '../Component';
+import * as Template from '../../Template';
+import Page from '../Page';
+import picker from './picker.html';
 
-class Picker extends Base {
-  public static DEFAULT_HEIGHT = 100;
-
-  protected getLib(data: Template.Data): string {
-    return Template.create(lib, data).getContent();
+export class Picker extends Component {
+  public getNamespace(): string {
+    return 'g.HtmlService.Component.Picker';
   }
 
-  public getHtmlOutput(config: Picker.Configuration) {
-    const args: Picker.Arguments = {
-      message: 'Select one option',
-      actionName: 'Select',
-      confirm: config.actionName || 'Confirm',
-      confirmation: '',
-      ...config
-    };
-    return Template.create(dialog, {
-      job: config.job || Utilities.getUuid(),
-      picker: args
-    });
+  public constructor(private config: Picker.Configuration) {
+    super();
   }
 
-  public getHtml = (config: Picker.Configuration) =>
-    this.getHtmlOutput(config).getContent();
+  protected _html?: string;
 
-  public popup(data: Picker.Params.Popup) {
-    return super.popup(data);
+  public getHtml(mode: Page.Mode = 'overlay') {
+    if (!this._html) {
+      this._html = Template.create(picker).getContent();
+    }
+    return this._html;
   }
 
-  public modal(config: Picker.Params.Overlay): void {
-    return super.modal(config);
-  }
+  protected _page: Page;
 
-  public modeless(config: Base.Params.Overlay): void {
-    super.modeless(config);
+  public getPage(mode: Page.Mode = 'overlay') {
+    if (!this._page) {
+      this._page = new Page({ html: this.getHtml(mode) }).register(this);
+    }
+    return this._page;
   }
 }
 
-namespace Picker {
+export namespace Picker {
   export type Option = { name: string; value: string };
   export type OptionsCallback = () => Option[];
   export type PickerCallback = (value: string, ...args: any[]) => void;
@@ -60,11 +51,6 @@ namespace Picker {
 
   export interface Pickable {
     toOption(): Option;
-  }
-
-  export namespace Params {
-    export type Overlay = Base.Params.Overlay & Configuration;
-    export type Popup = Base.Params.Popup & Configuration;
   }
 }
 

@@ -1,6 +1,6 @@
 import { type Request } from './Request';
 import Response from './Response';
-import EOL from './EOL';
+import EOL from '../shared/EOL';
 
 export default class Batch {
   private api?: string;

@@ -1,0 +1,17 @@
+.g.pr {
+  progress {
+    width: 100%;
+  }
+
+  .status-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .status {
+    }
+
+    .remaining {
+      font-size: smaller;
+    }
+  }
+}

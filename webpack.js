@@ -2,6 +2,8 @@ const path = require('path');
 const GasPlugin = require('gas-webpack-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
+const minimizerOptions = require('./bin/minimizer-options');
 
 module.exports = ({
   root,
@@ -22,22 +24,17 @@ module.exports = ({
       clean: true
     },
     resolve: {
-      extensions: ['.ts']
+      extensions: ['.ts', '.js']
     },
     module: {
       rules: [
         {
           test: /\.ts$/,
-          loader: 'ts-loader',
-          options: { allowTsInNodeModules: true }
+          loader: 'ts-loader'
         },
         {
-          test: /\/js\/.+\.js$/,
+          test: /\.html$/,
           type: 'asset/source'
-        },
-        {
-          test: /\.html$/i,
-          loader: 'html-loader'
         },
         {
           test: /\.scss$/,
@@ -61,7 +58,7 @@ module.exports = ({
     },
     plugins: [
       new GasPlugin({
-        autoGlobalExportsFiles: ['**/*.global.ts']
+        autoGlobalExportsFiles: ['**/*.global.ts', '**/*.global.js']
       }),
       ...plugins
     ],
@@ -73,7 +70,8 @@ module.exports = ({
             mangle: { properties: false }
           }
         }),
-        new CssMinimizerWebpackPlugin()
+        new CssMinimizerWebpackPlugin(),
+        new HtmlMinimizerPlugin({ minimizerOptions })
       ]
     }
   };

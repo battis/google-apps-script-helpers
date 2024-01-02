@@ -1,5 +1,5 @@
-import * as Picker from './Picker';
+import Component from './Component';
+import Page from './Page';
 import Progress from './Progress';
-import Base from './Base';
 
-export default { Base, Picker, Progress };
+export { Component, Page, Progress };

@@ -75,9 +75,8 @@ global.onHomepage = () => {
  * timed out
  */
 global.theCount = (job: string) => {
-  const tracker = new g.HtmlService.Component.Progress.Tracker({ job });
-  tracker.reset();
-  tracker.max = data.length;
+  const progress = new g.HtmlService.Component.Progress({ job });
+  progress.max = data.length;
   for (const d of data) {
     /*
      * Each step of the process updates the status and value of the progress
@@ -87,10 +86,10 @@ global.theCount = (job: string) => {
      * one page could update the value an arbitrary amount (or an arbitrary
      * number of times).
      */
-    tracker.status = `${d} bats in my belfry!`;
-    tracker.value++;
+    progress.status = `${d} bats in my belfry!`;
+    progress.value++;
   }
-  tracker.complete = true;
+  progress.complete = true;
 };
 
 /*
@@ -98,25 +97,23 @@ global.theCount = (job: string) => {
  * timeout is approached, this signals the View to restart the process from
  * the current page of the job, creating a new execution with a fresh timeout.
  */
-global.theCountPaged = (job: string, page: number = 0) => {
-  return new g.HtmlService.Component.Progress.Tracker({
+global.theCountPaged = (job: string) => {
+  return new g.HtmlService.Component.Progress({
     job,
     paging: {
-      page,
-
       /*
        * Choose the pages of data starting at this page number
        */
-      loader: ({ page, tracker }) => {
-        tracker.max = data.length;
-        tracker.value = page;
+      loader: ({ page, progress }) => {
+        progress.max = data.length;
+        progress.value = page;
         return data.slice(page);
       },
 
       /*
        * Handle each page of data
        */
-      handler: ({ data, tracker }) => {
+      handler: ({ data, progress }) => {
         /*
          * Each step of the process updates the status and value of the
          * progress bar (obviously could do more!)
@@ -125,8 +122,8 @@ global.theCountPaged = (job: string, page: number = 0) => {
          * value: one page could update the value an arbitrary amount (or an
          * arbitrary number of times).
          */
-        tracker.value++;
-        tracker.status = `${data} bats in my belfry!`;
+        progress.value++;
+        progress.status = `${data} bats in my belfry!`;
       },
 
       /*
@@ -145,11 +142,12 @@ global.theCountPaged = (job: string, page: number = 0) => {
  * Web handler for app to display the progress bar
  */
 global.doGet = ({ parameter }: GoogleAppsScript.Events.DoGet) => {
-  return new g.HtmlService.Component.Progress.View({
+  return new g.HtmlService.Component.Progress({
     job: parameter.job
-  }).popup({
-    title: 'I like to count!',
-    message: 'I see vun! two! three! bats in my belfry!',
-    ...parameter
-  });
+  })
+    .getPage({ mode: 'popup', callback: parameter.callback })
+    .popup({
+      data: { title: 'I like to count!' },
+      ...parameter
+    });
 };

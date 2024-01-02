@@ -1,4 +1,3 @@
-import Component from './Component';
-import Template from './Template';
-
-export default { Component, Template };
+export * as Template from './Template';
+export * as Component from './Component';
+import './index.global';

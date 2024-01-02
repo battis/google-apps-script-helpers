@@ -2,6 +2,6 @@
   "extends": "./tsconfig.json",
   "typedocOptions": {
     "entryPoints": ["./src/**/*.ts"],
-    "out": "docs/docs"
+    "out": "./docs/docs"
   }
 }

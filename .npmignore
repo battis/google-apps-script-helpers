@@ -5,6 +5,7 @@
 /examples/
 /logo.png
 /pnpm-lock.yaml
-/tsconfig.webpack.json
-/webpack.config
+/src/
+/tsconfig.*.json
+/webpack.*.js
 /tests/

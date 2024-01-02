@@ -33,10 +33,11 @@ global.onOpen = () => {
  * timed out
  */
 global.theCount = () => {
-  const tracker = new g.HtmlService.Component.Progress.Tracker();
-  tracker.view.modal({ root: SpreadsheetApp, title: 'The Count' });
-  tracker.reset();
-  tracker.max = data.length;
+  const progress = new g.HtmlService.Component.Progress();
+  progress
+    .getPage()
+    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
+  progress.max = data.length;
   for (const d of data) {
     /*
      * Each step of the process updates the status and value of the progress
@@ -46,10 +47,10 @@ global.theCount = () => {
      * one page could update the value an arbitrary amount (or an arbitrary
      * number of times).
      */
-    tracker.status = `${d} bats in my belfry!`;
-    tracker.value++;
+    progress.status = `${d} bats in my belfry!`;
+    progress.value++;
   }
-  tracker.complete = true;
+  progress.complete = true;
 };
 
 /*
@@ -57,25 +58,23 @@ global.theCount = () => {
  * timeout is approached, this signals the View to restart the process from
  * the current page of the job, creating a new execution with a fresh timeout.
  */
-global.theCountPaged = (job?: string, page: number = 0) => {
-  const tracker = new g.HtmlService.Component.Progress.Tracker({
+global.theCountPaged = (job?: string) => {
+  const progress = new g.HtmlService.Component.Progress({
     job,
     paging: {
-      page,
-
       /*
        * Choose the pages of data starting at this page number
        */
-      loader: ({ page, tracker }) => {
-        tracker.max = data.length;
-        tracker.value = page;
+      loader: ({ page, progress }) => {
+        progress.max = data.length;
+        progress.value = page;
         return data.slice(page);
       },
 
       /*
        * Handle each page of data
        */
-      handler: ({ data, tracker }) => {
+      handler: ({ data, progress }) => {
         /*
          * Each step of the process updates the status and value of the
          * progress bar (obviously could do more!)
@@ -84,8 +83,8 @@ global.theCountPaged = (job?: string, page: number = 0) => {
          * value: one page could update the value an arbitrary amount (or an
          * arbitrary number of times).
          */
-        tracker.value++;
-        tracker.status = `${data} bats in my belfry!`;
+        progress.value++;
+        progress.status = `${data} bats in my belfry!`;
       },
 
       /*
@@ -98,6 +97,8 @@ global.theCountPaged = (job?: string, page: number = 0) => {
       pageMargin: 50 // restart process when than an estimated 50 pages of processing time to the 30-minute timeout
     }
   });
-  tracker.view.modal({ root: SpreadsheetApp, title: 'The Count' });
-  tracker.run();
+  progress
+    .getPage()
+    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
+  progress.run();
 };

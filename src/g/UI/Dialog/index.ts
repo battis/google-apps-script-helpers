@@ -1,4 +1,4 @@
-import HtmlService from '../../HtmlService';
+import * as HtmlService from '../../HtmlService';
 import templates from './templates';
 
 export type Root = { getUi: () => GoogleAppsScript.Base.Ui };

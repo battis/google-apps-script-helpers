@@ -4,8 +4,7 @@
     "lib": ["esnext", "dom"],
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "strictNullChecks": false,
-    "outDir": "dist"
+    "strictNullChecks": false
   },
-  "include": ["src/**/*"]
+  "include": ["./src/**/*"]
 }

@@ -1,4 +1,4 @@
-import EOL from './EOL';
+import EOL from '../shared/EOL';
 import type { JSONValue } from '@battis/typescript-tricks';
 
 export default class Response {
