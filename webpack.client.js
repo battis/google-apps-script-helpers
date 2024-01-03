@@ -6,7 +6,7 @@ const minimizerOptions = require('./html-minifier-terser-options');
 
 module.exports = {
   entry: {
-    client: path.resolve(__dirname, 'src/client/index.ts')
+    client: path.resolve(__dirname, 'src/HtmlService/client/index.ts')
   },
   mode: 'production',
   output: {

@@ -1,0 +1,12 @@
+<div
+  class="g progress"
+  data-job="<?= data.job ?>"
+  data-callback="<?= data.callback || '' ?>"
+  data-args="<?= JSON.stringify(data.args) || '' ?>"
+>
+  <progress></progress>
+  <div class="status-wrapper">
+    <p class="status"></p>
+    <p class="remaining"></p>
+  </div>
+</div>

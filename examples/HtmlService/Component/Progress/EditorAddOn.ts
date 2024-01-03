@@ -1,4 +1,4 @@
-import g from '@battis/gas-lighter';
+import g, { include, getProgress } from '@battis/gas-lighter';
 
 /*
  * This runs as a test deployment.
@@ -9,8 +9,8 @@ import g from '@battis/gas-lighter';
 /*
  * Expose helper functions to app
  */
-global.include = g.HtmlService.Template.include;
-global.getProgress = g.HtmlService.Component.Progress.getProgress;
+global.include = include;
+global.getProgress = getProgress;
 
 /*
  * Dummy data
@@ -50,7 +50,7 @@ global.theCount = () => {
     progress.status = `${d} bats in my belfry!`;
     progress.value++;
   }
-  progress.complete = true;
+  progress.complete = g.HtmlService.Page.Message.close();
 };
 
 /*
@@ -61,6 +61,7 @@ global.theCount = () => {
 global.theCountPaged = (job?: string) => {
   const progress = new g.HtmlService.Component.Progress({
     job,
+    onComplete: g.HtmlService.Page.Message.close(),
     paging: {
       /*
        * Choose the pages of data starting at this page number

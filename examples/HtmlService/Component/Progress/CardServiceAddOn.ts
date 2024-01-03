@@ -1,4 +1,4 @@
-import g from '@battis/gas-lighter';
+import g, { include, getProgress } from '@battis/gas-lighter';
 
 /*
  * This runs as a test deployment.
@@ -7,10 +7,10 @@ import g from '@battis/gas-lighter';
  */
 
 /*
- * Expose helper functions to app
+ * Hoist globals from g
  */
-global.include = g.HtmlService.Template.include;
-global.getProgress = g.HtmlService.Component.Progress.getProgress;
+global.include = include;
+global.getProgress = getProgress;
 
 /*
  * Dummy data
@@ -89,7 +89,7 @@ global.theCount = (job: string) => {
     progress.status = `${d} bats in my belfry!`;
     progress.value++;
   }
-  progress.complete = true;
+  progress.complete = g.HtmlService.Page.Message.close();
 };
 
 /*
@@ -100,6 +100,7 @@ global.theCount = (job: string) => {
 global.theCountPaged = (job: string) => {
   return new g.HtmlService.Component.Progress({
     job,
+    onComplete: g.HtmlService.Page.Message.close(),
     paging: {
       /*
        * Choose the pages of data starting at this page number
@@ -142,12 +143,20 @@ global.theCountPaged = (job: string) => {
  * Web handler for app to display the progress bar
  */
 global.doGet = ({ parameter }: GoogleAppsScript.Events.DoGet) => {
-  return new g.HtmlService.Component.Progress({
-    job: parameter.job
-  })
-    .getPage({ mode: 'popup', callback: parameter.callback })
-    .popup({
-      data: { title: 'I like to count!' },
-      ...parameter
-    });
+  const { job, callback } = parameter;
+  return (
+    new g.HtmlService.Component.Progress({
+      job
+    })
+      /*
+       * CardService apps are single-threaded, so there _must_ be a callback
+       * function to run the process that is being tracked by the progress bar
+       * (the CardService app thread is blocked by opening the window)
+       */
+      .getPage({ callback })
+      .popup({
+        data: { title: 'I like to count!' },
+        ...parameter
+      })
+  );
 };

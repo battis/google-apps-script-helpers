@@ -1,0 +1,17 @@
+.g.picker {
+  progress: {
+    width: 100%;
+  }
+}
+
+.g.picker:has(option) {
+  progress: {
+    display: none;
+  }
+}
+
+.g.picker:not(:has(option)) {
+  form: {
+    display: none;
+  }
+}

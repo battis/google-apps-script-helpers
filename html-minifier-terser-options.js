@@ -2,7 +2,6 @@ module.exports = {
   collapseBooleanAttributes: true,
   caseSensitive: true,
   collapseWhitespace: true,
-  // conservativeCollapse: true,
   collapseInlineTagWhitespace: true,
   minifyCSS: true,
   minifyJS: true,
