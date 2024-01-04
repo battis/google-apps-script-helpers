@@ -2,7 +2,7 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "npm run docs\n"
+      "script" : "pnpm run docs\n"
     }
   },
   "openLogOnRun" : "start"
