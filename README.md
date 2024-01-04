@@ -17,7 +17,7 @@ npx --package=@battis/gas-lighter -- setup
 
 Less verbose CardService apps.
 
-<img src="./images/cardservice.png" style="zoom: 50%"/>
+<img src="./images/cardservice.png" onload="this.width*=0.5;this.onload=null;"/>
 
 ```ts
 import g from '@battis/gas-lighter';
@@ -38,7 +38,7 @@ global.onHomepage = () => {
 
 Nicer UI (with longer-running scripts).
 
-<img src="./images/progress.png" style="zoom: 50%"/>
+<img src="./images/progress.png" onload="this.width*=0.5;this.onload=null;"/>
 
 ```ts
 import g, {import, getProgress} from '@battis/gas-lighter';
