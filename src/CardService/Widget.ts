@@ -1,4 +1,5 @@
 import * as Action from './Action';
+import * as OpenLink from './OpenLink';
 
 export type DecoratedText = {
   topLabel: string;
@@ -7,9 +8,7 @@ export type DecoratedText = {
   wrap: boolean;
 };
 
-export type TextButton = Action.Action & {
-  text: string;
-};
+export type TextButton = { text: string } & (Action.Action | OpenLink.OpenLink);
 
 export function newTextParagraph(
   text: string
@@ -38,10 +37,14 @@ export function newDecoratedText({
 
 export function newTextButton({
   text,
-  functionName,
-  parameters = null
-}: Partial<TextButton>): GoogleAppsScript.Card_Service.TextButton {
-  return CardService.newTextButton()
-    .setText(text)
-    .setOnClickAction(Action.create({ functionName, parameters }));
+  ...args
+}: TextButton): GoogleAppsScript.Card_Service.TextButton {
+  let button = CardService.newTextButton().setText(text);
+  if ('functionName' in args) {
+    button = button.setOnClickAction(Action.create(args));
+  }
+  if ('url' in args) {
+    button = button.setOpenLink(OpenLink.create(args));
+  }
+  return button;
 }
