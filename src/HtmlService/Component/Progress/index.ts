@@ -146,7 +146,7 @@ export class Progress<T = any> extends Component {
     return this._html;
   }
 
-  public getPage(config: Progress.Configuration.HTML): Page {
+  public getPage(config: Progress.Configuration.HTML = {}): Page {
     return super.getPage(config);
   }
 

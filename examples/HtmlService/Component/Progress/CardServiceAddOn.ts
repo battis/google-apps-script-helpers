@@ -3,7 +3,13 @@ import g, { include, getProgress } from '@battis/gas-lighter';
 /*
  * This runs as a test deployment.
  *
- * PREPARATION: store the URL of the Web App test deployment as a Script Property named URL
+ * PREPARATION: store the URL of the Web App test deployment as a Script
+ * Property named URL
+ *
+ * We _should_ just be able to use ScriptApp.getService().getUrl(), but this
+ * has been broken for a couple of years.
+ * @see https://tanaikech.github.io/2022/06/11/report-recent-value-of-scriptapp.getservice.geturl-in-google-apps-script/
+ * @see https://issuetracker.google.com/issues/235862472
  */
 
 /*

@@ -23,27 +23,31 @@ export class Page {
     this.data = data;
   }
 
-  private build({ data = {}, vars = {} }: Page.Configuration.Build) {
+  private build(
+    mode: Page.Mode,
+    { data = {}, vars = {} }: Page.Configuration.Build
+  ) {
     const _data = { ...this.data, ...data };
     return Template.create(page, _data, {
       ...vars,
       html: Template.create(this.html, _data).getContent(),
       css: this.css,
-      js: this.js
+      js: this.js,
+      mode
     }).setTitle(_data.title || ''); // FIXME default title?
   }
 
   public popup(config: Page.Configuration.Popup) {
-    return this.build(config);
+    return this.build('popup', config);
   }
 
   public modal({ root, height, ...config }: Page.Configuration.Overlay) {
-    const overlay = this.build(config);
+    const overlay = this.build('overlay', config);
     root.getUi().showModalDialog(overlay.setHeight(height), config.data.title);
   }
 
   public modeless({ root, height, ...config }: Page.Configuration.Overlay) {
-    const overlay = this.build(config);
+    const overlay = this.build('overlay', config);
     root
       .getUi()
       .showModelessDialog(overlay.setHeight(height), config.data.title);
