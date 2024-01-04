@@ -14,9 +14,9 @@ export enum Type {
 }
 
 /**
- * [Use of this function requires enabling the Drive API service](https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services)
+ * Use of this function requires {@link https://developers.google.com/apps-script/guides/services/advanced#enable_advanced_services| enabling the Drive API service}
  *
- * [optionalArgs documentation](https://developers.google.com/drive/api/v2/reference/permissions/insert)
+ * {@link https://developers.google.com/drive/api/v2/reference/permissions/insert| optionalArgs documentation}
  */
 export function add(
   fileId: string,
