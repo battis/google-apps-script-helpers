@@ -44,7 +44,6 @@ export class Progress<T = any> extends Component {
   }
 
   public run() {
-    this.page = 0;
     const {
       paging: { loader, handler, callback },
       onComplete,
@@ -55,10 +54,18 @@ export class Progress<T = any> extends Component {
         ignoreErrors
       }
     } = this.config;
+
+    if (this.page === undefined) {
+      this.page = 0;
+    }
     // can safely ignore possibility of async loader, because UrlFetchApp is synchronous. ...right?
     const dataset = loader({ page: this.page, progress: this });
+
     let pageStart: number;
+    let pageEnd: number;
+    let pageDuration: number;
     let pageAverage: number;
+
     for (const data of dataset) {
       pageStart = Date.now();
       try {
@@ -76,16 +83,18 @@ export class Progress<T = any> extends Component {
         }
       }
       this.page++;
-      const pageDuration = Date.now() - pageStart;
-      pageAverage =
-        ((this.page - 1) * pageAverage !== undefined
-          ? pageAverage
-          : pageDuration + pageDuration) / this.page;
+      pageEnd = Date.now();
+      pageDuration = pageEnd - pageStart;
+      pageAverage = Math.ceil(
+        ((this.page - 1) *
+          (pageAverage !== undefined ? pageAverage : pageDuration) +
+          pageDuration) /
+          this.page
+      );
 
       if (
-        Date.now() + pageMargin * pageAverage > this.threadEnd ||
-        Date.now() + quotaMarginInMinutes * MIN_TO_SEC * SEC_TO_MS >
-          this.threadEnd
+        pageEnd + pageMargin * pageAverage > this.threadEnd ||
+        pageEnd + quotaMarginInMinutes * MIN_TO_SEC * SEC_TO_MS > this.threadEnd
       ) {
         this.callback = callback;
         return;
@@ -104,11 +113,13 @@ export class Progress<T = any> extends Component {
 
     let callback = this.callback;
     if (callback) {
+      this.callback = undefined;
       Object.assign(message, Callback.standardize({ callback }));
     }
 
     const complete = this.complete;
     if (complete) {
+      this.complete = undefined;
       Object.assign(message, { complete: true });
       try {
         Object.assign(message, complete);

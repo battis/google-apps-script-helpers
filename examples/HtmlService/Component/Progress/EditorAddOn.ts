@@ -7,7 +7,7 @@ import g, { include, getProgress } from '@battis/gas-lighter';
  */
 
 /*
- * Expose helper functions to app
+ * Hoist globals from g
  */
 global.include = include;
 global.getProgress = getProgress;
@@ -18,25 +18,51 @@ global.getProgress = getProgress;
 const data = [...Array(500).keys()].map((value) => value + 1);
 
 /*
- * Define add-on menu
+ * Define homepage card
  */
-global.onOpen = () => {
-  SpreadsheetApp.getUi()
-    .createAddonMenu()
-    .addItem('Unpaged', 'theCount')
-    .addItem('Paged', 'theCountPaged')
-    .addToUi();
+global.onHomepage = () => {
+  const url = g.PropertiesService.getScriptProperty('URL');
+  const buttonConfig = {
+    openAs: CardService.OpenAs.OVERLAY,
+    onClose: CardService.OnClose.RELOAD_ADD_ON
+  };
+  return g.CardService.Card.create({
+    name: 'Sandbox',
+    sections: [
+      g.CardService.Card.newCardSection({
+        header: 'Sandbox',
+        widgets: [
+          'I like to count!',
+
+          /*
+           * A button that launches a job tracked by a progress bar in a popup
+           * window
+           */
+          g.CardService.Widget.newTextButton({
+            text: 'Unpaged',
+            url: `${url}?callback=theCount`,
+            ...buttonConfig
+          }),
+          /*
+           * A button that launches a paged job (i.e. one that )
+           */
+          g.CardService.Widget.newTextButton({
+            text: 'Paged',
+            url: `${url}?callback=theCountPaged`,
+            ...buttonConfig
+          })
+        ]
+      })
+    ]
+  });
 };
 
 /*
  * Simplest implementation, assumes process will complete before script is
  * timed out
  */
-global.theCount = () => {
-  const progress = new g.HtmlService.Component.Progress();
-  progress
-    .getPage()
-    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
+global.theCount = (job: string) => {
+  const progress = new g.HtmlService.Component.Progress({ job });
   progress.max = data.length;
   for (const d of data) {
     /*
@@ -58,8 +84,8 @@ global.theCount = () => {
  * timeout is approached, this signals the View to restart the process from
  * the current page of the job, creating a new execution with a fresh timeout.
  */
-global.theCountPaged = (job?: string) => {
-  const progress = new g.HtmlService.Component.Progress({
+global.theCountPaged = (job: string) => {
+  return new g.HtmlService.Component.Progress({
     job,
     onComplete: g.HtmlService.Page.Message.close(),
     paging: {
@@ -92,14 +118,23 @@ global.theCountPaged = (job?: string) => {
        * callback function to handle future pages after timeout
        */
       callback: 'theCountPaged'
-    },
-    options: {
-      quotaMarginInMinutes: 29, // restart process when closer than 29 minutes to the 30-minute timeout (i.e. every 1 minute)
-      pageMargin: 50 // restart process when than an estimated 50 pages of processing time to the 30-minute timeout
     }
-  });
-  progress
-    .getPage()
-    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
-  progress.run();
+  }).run();
+};
+
+/*
+ * Web handler for app to display the progress bar
+ */
+global.doGet = ({ parameter }: GoogleAppsScript.Events.DoGet) => {
+  const { callback } = parameter;
+  return (
+    new g.HtmlService.Component.Progress()
+      /*
+       * CardService apps are single-threaded, so there _must_ be a callback
+       * function to run the process that is being tracked by the progress bar
+       * (the CardService app thread is blocked by opening the window)
+       */
+      .getPage({ callback })
+      .popup({ data: { title: 'I like to count!' }, ...parameter })
+  );
 };
