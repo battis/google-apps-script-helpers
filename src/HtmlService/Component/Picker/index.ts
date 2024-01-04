@@ -1,9 +1,7 @@
-import Component from '../Component';
 import * as Callback from '../../../shared/Callback';
 import * as Template from '../../Template';
-import Page from '../../Page';
+import Component from '../Component';
 import picker from './picker.html';
-import css from './picker.scss';
 
 export class Picker extends Component {
   public constructor(private config: Picker.Configuration) {

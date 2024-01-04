@@ -1,9 +1,10 @@
+import cli from '@battis/qui-cli';
 import appRootPath from 'app-root-path';
 import fs from 'fs';
-import path from 'path';
-import cli from '@battis/qui-cli';
 import { minify } from 'html-minifier-terser';
 import { createRequire } from 'module';
+import path from 'path';
+
 const require = createRequire(import.meta.url);
 const root = appRootPath.toString();
 const htmlMinifierTerserOptions = require(path.join(

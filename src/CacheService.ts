@@ -1,4 +1,5 @@
 import * as Cache_module from './shared/EncodeDecode';
+
 export import Cache = Cache_module;
 
 type CacheGetter = () => GoogleAppsScript.Cache.Cache;

@@ -1,7 +1,7 @@
+import cli from '@battis/qui-cli';
 import appRootPath from 'app-root-path';
 import fs from 'fs';
 import path from 'path';
-import cli from '@battis/qui-cli';
 
 const root = appRootPath.toString();
 const args = cli.init({ args: { requirePositionals: 2 } });

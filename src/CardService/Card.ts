@@ -57,9 +57,9 @@ export function newCardSection({
   }
   widgets.forEach(
     (widget) =>
-    (section = section.addWidget(
-      typeof widget == 'string' ? Widget.newTextParagraph(widget) : widget
-    ))
+      (section = section.addWidget(
+        typeof widget == 'string' ? Widget.newTextParagraph(widget) : widget
+      ))
   );
   return section;
 }

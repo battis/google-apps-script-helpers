@@ -1,9 +1,9 @@
 import * as CacheService from '../../../CacheService';
-import Component from '../Component';
+import * as Callback from '../../../shared/Callback';
 import Page from '../../Page';
 import * as Template from '../../Template';
+import Component from '../Component';
 import html from './progress.html';
-import * as Callback from '../../../shared/Callback';
 
 const VALUE = 'value';
 const MAX = 'max';

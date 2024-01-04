@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-
+import cli from '@battis/qui-cli';
 import fs from 'fs';
 import path from 'path';
-import cli from '@battis/qui-cli';
 
 const __filename = process.argv[1].replace(
   /\/\.bin\/.*$/,

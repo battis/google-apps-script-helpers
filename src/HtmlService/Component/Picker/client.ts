@@ -1,6 +1,6 @@
-import { type Picker as P } from './index';
-import * as DOM from '../../client/DOM';
 import * as Page from '../../Page/client';
+import * as DOM from '../../client/DOM';
+import { type Picker as P } from './index';
 
 class Picker {
   private select: HTMLSelectElement;

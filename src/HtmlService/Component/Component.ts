@@ -4,9 +4,9 @@ import html from './component.html';
 export abstract class Component {
   private _page?: Page;
 
-  public abstract getHtml(config: Component.Configuration): string;
+  public abstract getHtml(config?: Component.Configuration): string;
 
-  public getPage(config: Component.Configuration): Page {
+  public getPage(config?: Component.Configuration): Page {
     if (!this._page) {
       this._page = new Page({ html, data: { body: this.getHtml(config) } });
     }

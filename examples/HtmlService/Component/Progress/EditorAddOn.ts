@@ -98,14 +98,19 @@ global.theCountPaged = (job?: string) => {
        * callback function to handle future pages after timeout
        */
       callback: 'theCountPaged'
-    },
-    options: {
-      quotaMarginInMinutes: 29, // restart process when closer than 29 minutes to the 30-minute timeout (i.e. every 1 minute)
-      pageMargin: 50 // restart process when than an estimated 50 pages of processing time to the 30-minute timeout
     }
   });
-  progress
-    .getPage()
-    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
+
+  /*
+   * We only want to launch _one_ modal dialog (rather than a new one every
+   * time the script has to be restarted when the timeout is reached)
+   */
+  if (!job) {
+    progress.getPage().modal({
+      root: SpreadsheetApp,
+      height: 100,
+      data: { title: 'The Count' }
+    });
+  }
   progress.run();
 };

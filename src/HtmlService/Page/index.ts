@@ -1,9 +1,9 @@
-import * as Template from '../Template';
 import * as UI from '../../UI';
+import EOL from '../../shared/EOL';
+import * as Template from '../Template';
+import MMessage from './Message';
 import page from './page.html';
 import scss from './page.scss';
-import EOL from '../../shared/EOL';
-import MMessage from './Message';
 
 export class Page {
   private html: string;

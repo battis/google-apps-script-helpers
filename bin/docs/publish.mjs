@@ -1,8 +1,8 @@
 #!/usr/bin/env node
+import cli from '@battis/qui-cli';
 import appRootPath from 'app-root-path';
 import fs from 'fs';
 import path from 'path';
-import cli from '@battis/qui-cli';
 
 const pkg = JSON.parse(
   fs.readFileSync(new URL('../../package.json', import.meta.url))

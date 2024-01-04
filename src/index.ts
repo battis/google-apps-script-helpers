@@ -1,5 +1,4 @@
 /// <reference path="./types.d.ts" />
-
 import API from './API';
 import * as CacheService from './CacheService';
 import * as CardService from './CardService';

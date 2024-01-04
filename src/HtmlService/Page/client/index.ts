@@ -1,5 +1,4 @@
 /// <reference path='../google.d.ts'>
-
 import * as DOM from '../../client/DOM';
 import closeHtml from './close.html';
 import loadingHtml from './loading.html';
