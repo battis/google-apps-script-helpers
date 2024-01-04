@@ -32,10 +32,10 @@ global.onHomepage = () => {
     openAs: CardService.OpenAs.OVERLAY,
     onClose: CardService.OnClose.RELOAD_ADD_ON
   };
-  return g.CardService.Card.create({
+  return g.CardService.Card.$({
     name: 'Sandbox',
     sections: [
-      g.CardService.Card.newCardSection({
+      g.CardService.CardSection.$({
         header: 'Sandbox',
         widgets: [
           'I like to count!',
@@ -44,7 +44,7 @@ global.onHomepage = () => {
            * A button that launches a job tracked by a progress bar in a popup
            * window
            */
-          g.CardService.Widget.newTextButton({
+          g.CardService.Widget.TextButton.$({
             text: 'Unpaged',
             url: `${url}?callback=theCount`,
             ...buttonConfig
@@ -52,7 +52,7 @@ global.onHomepage = () => {
           /*
            * A button that launches a paged job (i.e. one that )
            */
-          g.CardService.Widget.newTextButton({
+          g.CardService.Widget.TextButton.$({
             text: 'Paged',
             url: `${url}?callback=theCountPaged`,
             ...buttonConfig

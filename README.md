@@ -17,28 +17,28 @@ npx --package=@battis/gas-lighter -- setup
 
 Less verbose CardService apps.
 
-<img src="./docs/images/README/cardservice.png" style="zoom: 50%"/>
+<img src="./images/cardservice.png" style="zoom: 50%"/>
 
 ```ts
 import g from '@battis/gas-lighter';
 
-global.onHomePage = () => {
-  return g.CardService.create({
-    header: 'Welcome!'
-    widgets: {
+global.onHomepage = () => {
+  return g.CardService.Card.$({
+    header: 'Welcome!',
+    widgets: [
       'Lorem ipsum dolor.',
-      g.CardService.Widget.newTextButton({
+      g.CardService.Widget.TextButton.$({
         text: 'Example',
         url: 'https://example.com'
       })
-    }
-  })
-}
+    ]
+  });
+};
 ```
 
 Nicer UI (with longer-running scripts).
 
-<img src="./docs/images/README/progress.png" style="zoom: 50%"/>
+<img src="./images/progress.png" style="zoom: 50%"/>
 
 ```ts
 import g, {import, getProgress} from '@battis/gas-lighter';

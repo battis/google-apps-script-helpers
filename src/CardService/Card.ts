@@ -1,17 +1,11 @@
-import * as Widget from './Widget';
+import * as CardHeader from './CardHeader';
+import * as CardSection from './CardSection';
 
 export type Card = {
   name: string;
   header: string;
   sections: GoogleAppsScript.Card_Service.CardSection[];
   widgets?: (GoogleAppsScript.Card_Service.Widget | string)[];
-};
-
-export type CardSection = {
-  header: string;
-  widgets: (GoogleAppsScript.Card_Service.Widget | string)[];
-  collapsible: boolean;
-  numUncollapsibleWidgets: GoogleAppsScript.Integer;
 };
 
 export function create({
@@ -25,43 +19,19 @@ export function create({
     card = card.setName(name);
   }
   if (header !== null) {
-    card = card.setHeader(newCardHeader(header));
+    card = card.setHeader(CardHeader.$(header));
   }
   sections.forEach((section) => (card = card.addSection(section)));
   if (widgets !== null) {
-    card = card.addSection(newCardSection({ widgets }));
+    card = card.addSection(CardSection.$({ widgets }));
   }
   return card.build();
 }
 
-export function newCardHeader(
-  title: string
-): GoogleAppsScript.Card_Service.CardHeader {
-  return CardService.newCardHeader().setTitle(title);
-}
+/** @deprecated use g.CardService.CardHeader.$() */
+export const newCardHeader = CardHeader.create;
 
-export function newCardSection({
-  header = null,
-  widgets = [],
-  collapsible = null,
-  numUncollapsibleWidgets = 0
-}: Partial<CardSection>): GoogleAppsScript.Card_Service.CardSection {
-  let section = CardService.newCardSection();
-  if (header) {
-    section = section.setHeader(header);
-  }
-  if (collapsible !== null) {
-    section = section
-      .setCollapsible(collapsible)
-      .setNumUncollapsibleWidgets(numUncollapsibleWidgets);
-  }
-  widgets.forEach(
-    (widget) =>
-      (section = section.addWidget(
-        typeof widget == 'string' ? Widget.TextParagraph.create(widget) : widget
-      ))
-  );
-  return section;
-}
+/** @deprecated use g.CardService.CardSection.$() */
+export const newCardSection = CardSection.create;
 
 export const $ = create;
