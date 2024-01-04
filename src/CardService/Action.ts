@@ -26,3 +26,5 @@ export function create({
   }
   return action;
 }
+
+export const $ = create;

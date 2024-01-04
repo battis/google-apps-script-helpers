@@ -18,3 +18,5 @@ export function create({
   }
   return link;
 }
+
+export const $ = create;

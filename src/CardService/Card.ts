@@ -58,8 +58,10 @@ export function newCardSection({
   widgets.forEach(
     (widget) =>
       (section = section.addWidget(
-        typeof widget == 'string' ? Widget.newTextParagraph(widget) : widget
+        typeof widget == 'string' ? Widget.TextParagraph.create(widget) : widget
       ))
   );
   return section;
 }
+
+export const $ = create;
