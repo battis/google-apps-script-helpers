@@ -1,7 +1,7 @@
 import * as Template from '../Template';
 import * as UI from '../../UI';
 import page from './page.html';
-import css from './page.scss';
+import scss from './page.scss';
 import EOL from '../../shared/EOL';
 import MMessage from './Message';
 
@@ -9,22 +9,28 @@ export class Page {
   private html: string;
   private css?: string;
   private js?: string;
+  private data?: Template.Data;
 
   public constructor({
     html = '',
-    css: _css,
-    js
+    css,
+    js,
+    data = {}
   }: Page.Configuration.Constructor) {
     this.html = html;
-    this.css = css + EOL + _css;
+    this.css = scss + EOL + css;
     this.js = js;
+    this.data = data;
   }
 
   private build({ data = {}, vars = {} }: Page.Configuration.Build) {
-    return Template.create(page, data, {
+    const _data = { ...this.data, ...data };
+    return Template.create(page, _data, {
       ...vars,
-      ...this
-    }).setTitle(data.title);
+      html: Template.create(this.html, _data).getContent(),
+      css: this.css,
+      js: this.js
+    }).setTitle(_data.title || ''); // FIXME default title?
   }
 
   public popup(config: Page.Configuration.Popup) {
@@ -50,6 +56,7 @@ export namespace Page {
       html: string;
       css?: string;
       js?: string;
+      data?: Template.Data;
     };
 
     export type Build = {

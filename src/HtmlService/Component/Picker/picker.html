@@ -1,15 +1,14 @@
 <div
   class="g picker"
-  data-mode="<?= data.mode ?>"
   data-options="<?= data.options ?>"
   data-options-args="<?= JSON.stringify(data.optionsArgs) ?>"
   data-callback="<?= data.callback ?>"
   data-callback-args="<?= JSON.stringify(data.callbackArgs) ?>"
 >
   <progress></progress>
-  <form>
-    <label for="picker"><?= data.message || 'Please choose' ?></label>
+  <div class="picker-wrapper">
+    <label for="picker"><?= data.label || 'Please choose' ?></label>
     <select name="picker"></select>
     <button type="submit"><?= data.actionName || 'Select' ?></button>
-  </form>
+  </div>
 </div>

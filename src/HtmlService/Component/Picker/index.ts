@@ -5,8 +5,10 @@ import Page from '../../Page';
 import picker from './picker.html';
 import css from './picker.scss';
 
-export class Picker implements Component {
-  public constructor(private config: Picker.Configuration) {}
+export class Picker extends Component {
+  public constructor(private config: Picker.Configuration) {
+    super();
+  }
 
   private _html?: string;
 
@@ -26,15 +28,6 @@ export class Picker implements Component {
       }).getContent();
     }
     return this._html;
-  }
-
-  private _page?: Page;
-
-  public getPage(): Page {
-    if (!this._page) {
-      this._page = new Page({ html: this.getHtml() });
-    }
-    return this._page;
   }
 }
 

@@ -22,6 +22,10 @@ const data = [...Array(500).keys()].map((value) => value + 1);
  */
 global.onHomepage = () => {
   const url = g.PropertiesService.getScriptProperty('URL');
+  const buttonConfig = {
+    openAs: CardService.OpenAs.OVERLAY,
+    onClose: CardService.OnClose.RELOAD_ADD_ON
+  };
   return g.CardService.Card.create({
     name: 'Sandbox',
     sections: [
@@ -34,36 +38,19 @@ global.onHomepage = () => {
            * A button that launches a job tracked by a progress bar in a popup
            * window
            */
-          CardService.newTextButton()
-            .setText('Unpaged')
-            .setOpenLink(
-              CardService.newOpenLink()
-                .setUrl(
-                  g.HtmlService.Component.Progress.callbackUrl({
-                    url,
-                    callback: 'theCount'
-                  })
-                )
-                .setOpenAs(CardService.OpenAs.OVERLAY)
-                .setOnClose(CardService.OnClose.RELOAD_ADD_ON)
-            ),
-
+          g.CardService.Widget.newTextButton({
+            text: 'Unpaged',
+            url: `${url}?callback=theCount`,
+            ...buttonConfig
+          }),
           /*
            * A button that launches a paged job (i.e. one that )
            */
-          CardService.newTextButton()
-            .setText('Paged')
-            .setOpenLink(
-              CardService.newOpenLink()
-                .setUrl(
-                  g.HtmlService.Component.Progress.callbackUrl({
-                    url,
-                    callback: 'theCountPaged'
-                  })
-                )
-                .setOpenAs(CardService.OpenAs.OVERLAY)
-                .setOnClose(CardService.OnClose.RELOAD_ADD_ON)
-            )
+          g.CardService.Widget.newTextButton({
+            text: 'Paged',
+            url: `${url}?callback=theCountPaged`,
+            ...buttonConfig
+          })
         ]
       })
     ]
@@ -131,10 +118,6 @@ global.theCountPaged = (job: string) => {
        * callback function to handle future pages after timeout
        */
       callback: 'theCountPaged'
-    },
-    options: {
-      quotaMarginInMinutes: 29, // restart process when closer than 29 minutes to the 30-minute timeout (i.e. every 1 minute)
-      pageMargin: 50 // restart process when than an estimated 50 pages of processing time to the 30-minute timeout
     }
   }).run();
 };
@@ -143,20 +126,15 @@ global.theCountPaged = (job: string) => {
  * Web handler for app to display the progress bar
  */
 global.doGet = ({ parameter }: GoogleAppsScript.Events.DoGet) => {
-  const { job, callback } = parameter;
+  const { callback } = parameter;
   return (
-    new g.HtmlService.Component.Progress({
-      job
-    })
+    new g.HtmlService.Component.Progress()
       /*
        * CardService apps are single-threaded, so there _must_ be a callback
        * function to run the process that is being tracked by the progress bar
        * (the CardService app thread is blocked by opening the window)
        */
       .getPage({ callback })
-      .popup({
-        data: { title: 'I like to count!' },
-        ...parameter
-      })
+      .popup({ data: { title: 'I like to count!' }, ...parameter })
   );
 };

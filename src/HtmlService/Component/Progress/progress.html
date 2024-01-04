@@ -2,11 +2,13 @@
   class="g progress"
   data-job="<?= data.job ?>"
   data-callback="<?= data.callback || '' ?>"
-  data-args="<?= JSON.stringify(data.args) || '' ?>"
+  data-args="<?= JSON.stringify(data.args || []) ?>"
 >
+  <label class="label"><?= data.label || '' ?></label>
   <progress></progress>
   <div class="status-wrapper">
-    <p class="status"></p>
-    <p class="remaining"></p>
+    <div class="status"></div>
+    <div class="remaining"></div>
   </div>
+  <div class="help"><?= data.help || ''?></div>
 </div>

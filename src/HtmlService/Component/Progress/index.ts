@@ -15,12 +15,13 @@ const COMPLETE = 'complete';
 const MIN_TO_SEC = 60;
 const SEC_TO_MS = 1000;
 
-export class Progress<T = any> implements Component {
-  private threadStart = Date.now();
+export class Progress<T = any> extends Component {
+  private threadEnd: number;
 
   public constructor(
     private config: Progress.Configuration = { job: undefined }
   ) {
+    super();
     if (this.config.job === undefined) {
       this.config.job = Utilities.getUuid();
     }
@@ -34,18 +35,12 @@ export class Progress<T = any> implements Component {
       ignoreErrors: false,
       ...(this.config.options || {})
     };
-  }
-
-  public static callbackUrl({
-    url,
-    job,
-    callback
-  }: {
-    url: string;
-    job?: string;
-    callback: string;
-  }) {
-    return `${url}?job=${job || Utilities.getUuid()}&callback=${callback}`;
+    this.threadEnd =
+      Date.now() +
+      (this.config.options.quotaInMinutes -
+        this.config.options.quotaMarginInMinutes) *
+        MIN_TO_SEC *
+        SEC_TO_MS;
   }
 
   public run() {
@@ -63,6 +58,7 @@ export class Progress<T = any> implements Component {
     // can safely ignore possibility of async loader, because UrlFetchApp is synchronous. ...right?
     const dataset = loader({ page: this.page, progress: this });
     let pageStart: number;
+    let pageAverage: number;
     for (const data of dataset) {
       pageStart = Date.now();
       try {
@@ -80,12 +76,16 @@ export class Progress<T = any> implements Component {
         }
       }
       this.page++;
-      const quotaRemaining =
-        this.threadStart + quotaInMinutes * MIN_TO_SEC * SEC_TO_MS - Date.now();
+      const pageDuration = Date.now() - pageStart;
+      pageAverage =
+        ((this.page - 1) * pageAverage !== undefined
+          ? pageAverage
+          : pageDuration + pageDuration) / this.page;
+
       if (
-        quotaRemaining <
-          pageMargin * ((Date.now() - this.threadStart) / this.page) ||
-        quotaRemaining < quotaMarginInMinutes * SEC_TO_MS
+        Date.now() + pageMargin * pageAverage > this.threadEnd ||
+        Date.now() + quotaMarginInMinutes * MIN_TO_SEC * SEC_TO_MS >
+          this.threadEnd
       ) {
         this.callback = callback;
         return;
@@ -122,23 +122,21 @@ export class Progress<T = any> implements Component {
 
   protected _html?: string;
 
-  public getHtml({ callback }: Progress.Configuration.HTML = {}) {
+  public getHtml(config: Progress.Configuration.HTML = {}) {
     if (!this._html) {
       this._html = Template.create(html, {
+        ...config,
         job: this.config.job,
-        ...(callback ? Callback.standardize({ callback }) : {})
+        ...(config.callback
+          ? Callback.standardize({ callback: config.callback })
+          : {})
       }).getContent();
     }
     return this._html;
   }
 
-  protected _page?: Page;
-
-  public getPage(config: Progress.Configuration.HTML = {}) {
-    if (!this._page) {
-      this._page = new Page({ html: this.getHtml(config) });
-    }
-    return this._page;
+  public getPage(config: Progress.Configuration.HTML): Page {
+    return super.getPage(config);
   }
 
   private prefix(token: string) {
@@ -260,6 +258,8 @@ export namespace Progress {
   export namespace Configuration {
     export type HTML = Component.Configuration & {
       callback?: Callback.Function;
+      label?: string;
+      help?: string;
     };
     export type Paging<Page = any> = {
       loader: Dataset.Loader<Page>;

@@ -1,2 +1,16 @@
 @import './Picker/picker.scss';
 @import './Progress/progress.scss';
+
+.g.component {
+  .title:blank {
+    display: none;
+  }
+
+  .label:blank {
+    display: none;
+  }
+
+  .help:blank {
+    display: none;
+  }
+}
