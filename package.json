@@ -34,7 +34,7 @@
     "build:g:compile": "tsc -p tsconfig.g.json",
     "build:g:html": "copyfiles -u 1 './src/**/*.html' dist",
     "build:g:scss": "copyfiles -u 1 './src/**/*.scss' dist",
-    "build:minify": "node bin/build/minify.mjs dist",
+    "-- build:minify": "node bin/build/minify.mjs dist",
     "release": "run-s release:**",
     "release:build": "npm run build",
     "release:publish": "np --yolo --no-release-draft",

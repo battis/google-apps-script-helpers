@@ -1,14 +1,11 @@
-<div
-  class="g picker"
-  data-options="<?= data.options ?>"
-  data-options-args="<?= JSON.stringify(data.optionsArgs) ?>"
-  data-callback="<?= data.callback ?>"
-  data-callback-args="<?= JSON.stringify(data.callbackArgs) ?>"
->
-  <progress></progress>
-  <div class="picker-wrapper">
-    <label for="picker"><?= data.label || 'Please choose' ?></label>
-    <select name="picker"></select>
-    <button type="submit"><?= data.actionName || 'Select' ?></button>
-  </div>
-</div>
+<div class="g picker" data-options="<?= data.options ?>"
+<?!= data.optionsArgs ? `data-options-args='${JSON.stringify(data.optionsArgs)}'` : '' ?>
+<?!= data.callback ? `data-callback="${data.callback}"` : '' ?>
+<?!= data.callbackArgs ? `data-callback-args='${JSON.stringify(data.callbackArgs)}'` : '' ?>>
+<progress></progress>
+<?!= data.mode === 'complete' ? '<form class="picker-wrapper">' : '<div class="picker-wrapper">' ?>
+  <?!= data.label ? `<label class="label" for="picker">${data.label}</label>` : '' ?>
+  <select name="picker"></select>
+  <?!= data.mode === 'complete' ? `<button class="action" type="submit">${data.actionName || 'Select'}</button>` : '' ?>
+  <?!= data.help ? `<div class="help">${data.help}</div>` : '' ?>
+<?!= data.mode === 'complete' ? '</form>' : '</div>' ?>

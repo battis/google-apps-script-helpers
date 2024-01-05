@@ -47,12 +47,7 @@ export class Progress<T = any> extends Component {
     const {
       paging: { loader, handler, callback },
       onComplete,
-      options: {
-        quotaInMinutes,
-        quotaMarginInMinutes,
-        pageMargin,
-        ignoreErrors
-      }
+      options: { quotaMarginInMinutes, pageMargin, ignoreErrors }
     } = this.config;
 
     if (this.page === undefined) {
@@ -253,8 +248,6 @@ export namespace Progress {
       data: Page;
       progress: Progress;
     }) => void;
-
-    export type Callback = Callback.Function;
   }
 
   export type Completion = boolean | Page.Message;
@@ -275,7 +268,7 @@ export namespace Progress {
     export type Paging<Page = any> = {
       loader: Dataset.Loader<Page>;
       handler: Dataset.Handler<Page>;
-      callback: Dataset.Callback;
+      callback: Callback.Function;
     };
     export type Options = {
       quotaInMinutes?: number;

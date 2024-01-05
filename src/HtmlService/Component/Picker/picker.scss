@@ -2,16 +2,29 @@
   progress: {
     width: 100%;
   }
-}
 
-.g.picker:has(option) {
-  progress: {
+  .picker-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    select:has(+ button) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    select ~ button {
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  .picker-wrapper:not(:has(option)) {
     display: none;
   }
 }
 
-.g.picker:not(:has(option)) {
-  form: {
+.g.picker:has(option) {
+  progress {
     display: none;
   }
 }

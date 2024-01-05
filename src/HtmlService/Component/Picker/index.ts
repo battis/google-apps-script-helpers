@@ -10,19 +10,22 @@ export class Picker extends Component {
 
   private _html?: string;
 
-  public getHtml(): string {
+  public getHtml(config: Component.Configuration = {}): string {
     if (!this._html) {
       this._html = Template.create(picker, {
+        ...config,
         ...this.config,
         ...Callback.standardize({
           callback: this.config.options,
           functionKey: 'options',
           argsKey: 'optionsArgs'
         }),
-        ...Callback.standardize({
-          callback: this.config.callback,
-          argsKey: 'callbackArgs'
-        })
+        ...(this.config.callback
+          ? Callback.standardize({
+              callback: this.config.callback,
+              argsKey: 'callbackArgs'
+            })
+          : {})
       }).getContent();
     }
     return this._html;
@@ -31,17 +34,18 @@ export class Picker extends Component {
 
 export namespace Picker {
   export type Configuration = {
-    message?: string;
     options: Callback.Function;
     actionName?: string;
-    callback: Callback.Function;
+    callback?: Callback.Function;
+    label?: string;
+    help?: string;
   };
 
-  export type Options = {
+  export interface Pickable {
     name?: string;
     value: string | number;
     selected?: boolean;
-  }[];
+  }
 }
 
 export default Picker;

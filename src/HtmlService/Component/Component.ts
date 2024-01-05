@@ -8,14 +8,19 @@ export abstract class Component {
 
   public getPage(config?: Component.Configuration): Page {
     if (!this._page) {
-      this._page = new Page({ html, data: { body: this.getHtml(config) } });
+      this._page = new Page({
+        html,
+        data: { body: this.getHtml({ ...config, mode: 'complete' }) }
+      });
     }
     return this._page;
   }
 }
 
 export namespace Component {
-  export type Configuration = Record<string, any>;
+  export type Mode = 'complete' | 'partial';
+
+  export type Configuration = Record<string, any> & { mode?: Mode };
 }
 
 export default Component;
