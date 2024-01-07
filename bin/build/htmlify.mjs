@@ -1,20 +1,33 @@
 import cli from '@battis/qui-cli';
 import appRootPath from 'app-root-path';
 import fs from 'fs';
+import { glob } from 'glob';
 import path from 'path';
 
-const root = appRootPath.toString();
-const args = cli.init({ args: { requirePositionals: 2 } });
-for (let i = 0; i < args.positionals.length; i += 2) {
-  const target = args.positionals[i];
-  let tag = args.positionals[i + 1];
-  if (!tag) {
-    tag = 'div';
-  }
-  const content = fs.readFileSync(path.resolve(root, target));
-  fs.writeFileSync(
-    path.resolve(root, target.replace(/\.js$/, '.html')),
-    `<${tag}>${content}</${tag}>`
+function htmlify(filePath, tag) {
+  const content = fs.readFileSync(filePath);
+  const htmlPath = filePath.replace(/\.js$/, '.html');
+  fs.writeFileSync(htmlPath, `<${tag}>${content}</${tag}>`);
+  cli.shell.rm(filePath);
+  cli.log.info(
+    `Htmlified ${cli.colors.url(filePath)} → ${cli.colors.url(
+      path.basename(htmlPath)
+    )}`
   );
-  cli.shell.rm(path.resolve(root, target));
 }
+
+function tag(filePath) {
+  switch (path.extname(filePath)) {
+    case '.js':
+      return 'script';
+    case '.css':
+      return 'style';
+    default:
+      return 'div';
+  }
+}
+
+const args = cli.init({ args: { requirePositionals: 2 } });
+glob
+  .sync(args.positionals, { cwd: appRootPath.toString(), absolute: true })
+  .map((filePath) => htmlify(filePath, tag(filePath)));
