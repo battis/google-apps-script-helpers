@@ -2,14 +2,6 @@ import g, { include, getProgress } from '@battis/gas-lighter';
 
 /*
  * This runs as a test deployment.
- *
- * PREPARATION: store the URL of the Web App test deployment as a Script
- * Property named URL
- *
- * We _should_ just be able to use ScriptApp.getService().getUrl(), but this
- * has been broken for a couple of years.
- * @see https://tanaikech.github.io/2022/06/11/report-recent-value-of-scriptapp.getservice.geturl-in-google-apps-script/
- * @see https://issuetracker.google.com/issues/235862472
  */
 
 /*
@@ -40,9 +32,11 @@ global.onOpen = () => {
  */
 global.theCount = () => {
   const progress = new g.HtmlService.Component.Progress();
-  progress
-    .getPage()
-    .modal({ root: SpreadsheetApp, height: 100, data: { title: 'The Count' } });
+  g.HtmlService.Page.from(progress).modal({
+    root: SpreadsheetApp,
+    height: 100,
+    title: 'The Count'
+  });
   progress.max = data.length;
   for (const d of data) {
     /*
@@ -98,6 +92,10 @@ global.theCountPaged = (job?: string) => {
        * callback function to handle future pages after timeout
        */
       callback: 'theCountPaged'
+    },
+    options: {
+      quotaInMinutes: 1,
+      quotaMarginInMinutes: 0
     }
   });
 
@@ -106,10 +104,10 @@ global.theCountPaged = (job?: string) => {
    * time the script has to be restarted when the timeout is reached)
    */
   if (!job) {
-    progress.getPage().modal({
+    g.HtmlService.Page.from(progress).modal({
       root: SpreadsheetApp,
       height: 100,
-      data: { title: 'The Count' }
+      title: 'The Count'
     });
   }
   progress.run();
