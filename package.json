@@ -34,7 +34,7 @@
     "build:g:compile": "tsc -p tsconfig.g.json",
     "build:g:html": "copyfiles -u 1 './src/**/*.html' dist",
     "build:g:scss": "copyfiles -u 1 './src/**/*.scss' dist",
-    "-- build:minify": "node bin/build/minify.mjs dist",
+    "build:minify": "node bin/build/minify.mjs dist",
     "release": "run-s release:**",
     "release:build": "npm run build",
     "release:publish": "np --yolo --no-release-draft",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@battis/qui-cli": "^0.4.0",
-    "@battis/typescript-tricks": "^0.4.3",
+    "@battis/typescript-tricks": "^0.5.0",
     "@effortlessmotion/html-webpack-inline-source-plugin": "^1.0.3",
     "@google/clasp": "^2.4.2",
     "@tsconfig/recommended": "^1.0.3",

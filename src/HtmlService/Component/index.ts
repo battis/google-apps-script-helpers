@@ -1,5 +1,4 @@
-import Component from './Component';
-import Picker from './Picker';
+import Base from './Base';
 import Progress from './Progress';
 
-export { Component, Picker, Progress };
+export { Base, Progress };

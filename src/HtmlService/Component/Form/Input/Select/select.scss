@@ -1,0 +1,12 @@
+.g.select {
+  width: 100%;
+
+  progress: {
+    width: 100%;
+  }
+
+  progress:has(+ select:has(option)),
+  select:not(:has(option)) {
+    display: none;
+  }
+}

@@ -2,8 +2,9 @@ import * as CacheService from '../../../CacheService';
 import * as Callback from '../../../shared/Callback';
 import Page from '../../Page';
 import * as Template from '../../Template';
-import Component from '../Component';
+import Base from '../Base';
 import html from './progress.html';
+import css from './progress.scss';
 
 const VALUE = 'value';
 const MAX = 'max';
@@ -15,15 +16,17 @@ const COMPLETE = 'complete';
 const MIN_TO_SEC = 60;
 const SEC_TO_MS = 1000;
 
-export class Progress<T = any> extends Component {
+export class Progress extends Base {
   private threadEnd: number;
+  private starter?: Callback.Function;
 
-  public constructor(
-    private config: Progress.Configuration = { job: undefined }
-  ) {
+  public constructor(private config: Progress.Configuration = {}) {
     super();
     if (this.config.job === undefined) {
       this.config.job = Utilities.getUuid();
+    }
+    if (this.config.callback) {
+      this.starter = this.config.callback;
     }
     if (this.config.onComplete === undefined) {
       this.config.onComplete = true;
@@ -126,23 +129,23 @@ export class Progress<T = any> extends Component {
     return message;
   }
 
-  protected _html?: string;
+  protected _html?: GoogleAppsScript.HTML.HtmlOutput;
 
   public getHtml(config: Progress.Configuration.HTML = {}) {
     if (!this._html) {
       this._html = Template.create(html, {
         ...config,
         job: this.config.job,
-        ...(config.callback
-          ? Callback.standardize({ callback: config.callback })
+        ...(config.callback || this.starter
+          ? Callback.standardize({ callback: config.callback || this.starter })
           : {})
-      }).getContent();
+      });
     }
     return this._html;
   }
 
-  public getPage(config: Progress.Configuration.HTML = {}): Page {
-    return super.getPage(config);
+  public getCss() {
+    return css;
   }
 
   private prefix(token: string) {
@@ -253,17 +256,16 @@ export namespace Progress {
   export type Completion = boolean | Page.Message;
 
   export type Configuration<Page = any> = {
-    job: string;
+    job?: string;
+    callback?: Callback.Function;
     paging?: Configuration.Paging<Page>;
     onComplete?: Completion;
     options?: Configuration.Options;
   };
 
   export namespace Configuration {
-    export type HTML = Component.Configuration & {
+    export type HTML = Base.Configuration & {
       callback?: Callback.Function;
-      label?: string;
-      help?: string;
     };
     export type Paging<Page = any> = {
       loader: Dataset.Loader<Page>;

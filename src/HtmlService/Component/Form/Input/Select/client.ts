@@ -1,8 +1,8 @@
-import * as Page from '../../Page/client';
-import * as DOM from '../../client/DOM';
-import { type Picker as P } from './index';
+import * as Page from '../../../../Page/client';
+import * as DOM from '../../../../client/DOM';
+import { type Select as S } from './index';
 
-class Picker {
+class Select {
   private select: HTMLSelectElement;
   private form?: HTMLFormElement;
 
@@ -12,8 +12,8 @@ class Picker {
     this.load();
   }
 
-  async load() {
-    const options = await Page.Script.run<P.Pickable[]>(
+  private async load() {
+    const options = await Page.Script.run<S.Pickable[]>(
       this.container.dataset.options,
       ...JSON.parse(this.container.dataset.optionsArgs || '[]')
     );
@@ -28,7 +28,7 @@ class Picker {
     this.form?.addEventListener('submit', this.submitHandler.bind(this));
   }
 
-  async submitHandler(e: SubmitEvent) {
+  private async submitHandler(e: SubmitEvent) {
     e.preventDefault();
     this.form.querySelector('button').disabled = true;
     this.responseHandler(
@@ -40,7 +40,7 @@ class Picker {
     );
   }
 
-  responseHandler(response) {
+  private responseHandler(response) {
     if ('html' in response) {
       this.container.outerHTML = response.html;
     }
@@ -48,7 +48,7 @@ class Picker {
 }
 
 export function init() {
-  DOM.querySelectorAll(document.body, '.g.picker').forEach(
-    (p) => new Picker(p)
+  DOM.querySelectorAll(document.body, '.g.select').forEach(
+    (elt) => new Select(elt)
   );
 }

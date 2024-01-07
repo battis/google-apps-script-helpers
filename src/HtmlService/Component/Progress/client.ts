@@ -4,7 +4,9 @@ import * as DOM from '../../client/DOM';
 class Progress {
   private progressBar: HTMLProgressElement;
   private status: HTMLElement;
+  private timeElapsed: HTMLElement;
   private timeRemaining: HTMLElement;
+  private start = Date.now();
 
   public constructor(private container: HTMLElement) {
     this.progressBar = DOM.querySelector<HTMLProgressElement>(
@@ -12,6 +14,7 @@ class Progress {
       'progress'
     );
     this.status = DOM.querySelector(this.container, '.status');
+    this.timeElapsed = DOM.querySelector(this.container, '.elapsed');
     this.timeRemaining = DOM.querySelector(this.container, '.remaining');
 
     if (this.container.dataset.callback) {
@@ -24,7 +27,7 @@ class Progress {
     this.remaining(Date.now());
   }
 
-  async update() {
+  private async update() {
     const response: any = await Page.Script.run(
       'getProgress',
       this.container.dataset.job
@@ -50,28 +53,39 @@ class Progress {
     }
   }
 
-  remaining(start: number) {
-    if (this.progressBar && this.timeRemaining) {
-      const estimate = [];
-      let milliseconds = Math.floor(
-        (this.progressBar.max - this.progressBar.value) *
-          ((Date.now() - start) / this.progressBar.value)
-      );
-      function collect(unit: string, ms: number) {
-        const collected = Math.floor(milliseconds / ms);
-        if (collected >= 1) {
-          milliseconds -= collected * ms;
-          estimate.push(`${collected} ${collected > 1 ? `${unit}s` : unit}`);
-        }
-        return collected;
+  private duration(
+    milliseconds: number,
+    secMinCutoff = 5,
+    secHourCutoff = 1,
+    minHourCutoff = 12
+  ) {
+    const format = [];
+    function collect(unit: string, ms: number) {
+      const collected = Math.floor(milliseconds / ms);
+      if (collected >= 1) {
+        milliseconds -= collected * ms;
+        format.push(`${collected} ${collected > 1 ? `${unit}s` : unit}`);
       }
-      const h = collect('hour', 60 * 60 * 1000);
+      return collected;
+    }
+    const h = collect('hour', 60 * 60 * 1000);
+    if (h < minHourCutoff) {
       const m = collect('minute', 60 * 1000);
-      if (h === 0 && m < 5) {
+      if (h < secHourCutoff && m < secMinCutoff) {
         collect('second', 1000);
       }
-      this.timeRemaining.innerHTML = estimate.join(', ');
     }
+    return format.join(', ');
+  }
+
+  private remaining(start: number) {
+    this.timeElapsed.innerHTML = this.duration(Date.now() - this.start);
+    this.timeRemaining.innerHTML = this.duration(
+      Math.floor(
+        (this.progressBar.max - this.progressBar.value) *
+          ((Date.now() - start) / this.progressBar.value)
+      )
+    );
     setTimeout(this.remaining.bind(this, start), 50);
   }
 }

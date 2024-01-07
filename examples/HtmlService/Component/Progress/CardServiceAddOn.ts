@@ -11,6 +11,7 @@ import g, { include, getProgress } from '@battis/gas-lighter';
  * @see https://tanaikech.github.io/2022/06/11/report-recent-value-of-scriptapp.getservice.geturl-in-google-apps-script/
  * @see https://issuetracker.google.com/issues/235862472
  */
+const url = g.PropertiesService.getScriptProperty('URL');
 
 /*
  * Hoist globals from g
@@ -27,8 +28,10 @@ const data = [...Array(500).keys()].map((value) => value + 1);
  * Define homepage card
  */
 global.onHomepage = () => {
-  const url = g.PropertiesService.getScriptProperty('URL');
   const buttonConfig = {
+    /*
+     * block input to the CardService app while the progress dialog is open
+     */
     openAs: CardService.OpenAs.OVERLAY,
     onClose: CardService.OnClose.RELOAD_ADD_ON
   };
@@ -124,6 +127,10 @@ global.theCountPaged = (job: string) => {
        * callback function to handle future pages after timeout
        */
       callback: 'theCountPaged'
+    },
+    options: {
+      quotaInMinutes: 1,
+      quotaMarginInMinutes: 0
     }
   }).run();
 };
@@ -131,16 +138,18 @@ global.theCountPaged = (job: string) => {
 /*
  * Web handler for app to display the progress bar
  */
-global.doGet = ({ parameter }: GoogleAppsScript.Events.DoGet) => {
-  const { callback } = parameter;
-  return (
-    new g.HtmlService.Component.Progress()
-      /*
-       * CardService apps are single-threaded, so there _must_ be a callback
-       * function to run the process that is being tracked by the progress bar
-       * (the CardService app thread is blocked by opening the window)
-       */
-      .getPage({ callback })
-      .popup({ data: { title: 'I like to count!' }, ...parameter })
-  );
+global.doGet = ({
+  parameter: { callback, ...rest }
+}: GoogleAppsScript.Events.DoGet) => {
+  return g.HtmlService.Page.from(
+    [
+      '<h1>I like to count!</h1>',
+      new g.HtmlService.Component.Progress({ callback })
+    ]
+    /*
+     * CardService apps are single-threaded, so there _must_ be a callback
+     * function to run the process that is being tracked by the progress bar
+     * (the CardService app thread is blocked by opening the window)
+     */
+  ).popup({ title: 'I like to count!', ...rest });
 };

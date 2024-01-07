@@ -1,18 +1,21 @@
-import * as Callback from '../../../shared/Callback';
-import * as Template from '../../Template';
-import Component from '../Component';
-import picker from './picker.html';
+import * as Callback from '../../../../../shared/Callback';
+import * as Template from '../../../../Template';
+import Input from '../../Input';
+import select from './select.html';
+import css from './select.scss';
 
-export class Picker extends Component {
-  public constructor(private config: Picker.Configuration) {
+export class Select extends Input {
+  public constructor(private config: Select.Configuration) {
     super();
   }
 
-  private _html?: string;
+  private _html?: GoogleAppsScript.HTML.HtmlOutput;
 
-  public getHtml(config: Component.Configuration = {}): string {
+  protected standAlone(id: string) {}
+
+  public getHtml(config: Input.Configuration = {}) {
     if (!this._html) {
-      this._html = Template.create(picker, {
+      this._html = Template.create(select, {
         ...config,
         ...this.config,
         ...Callback.standardize({
@@ -26,13 +29,17 @@ export class Picker extends Component {
               argsKey: 'callbackArgs'
             })
           : {})
-      }).getContent();
+      });
     }
     return this._html;
   }
+
+  public getCss() {
+    return css;
+  }
 }
 
-export namespace Picker {
+export namespace Select {
   export type Configuration = {
     options: Callback.Function;
     actionName?: string;
@@ -48,4 +55,4 @@ export namespace Picker {
   }
 }
 
-export default Picker;
+export default Select;

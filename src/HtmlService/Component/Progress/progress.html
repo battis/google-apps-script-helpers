@@ -1,14 +1,13 @@
 <div
   class="g progress"
   data-job="<?= data.job ?>"
-  <?!= data.callback ? `data-callback="${data.callback}"` : '' ?>
-  <?!= data.args ? `data-args="${JSON.stringify(data.args)}"` : '' ?>
+  data-callback="<?= data.callback ?>"
+  data-args="<?= JSON.stringify(data.args) ?>"
 >
-  <?!= data.label ? `<label class="label">${data.label}</label>` : '' ?>
   <progress></progress>
   <div class="status-wrapper">
+    <div class="elapsed"></div>
     <div class="status"></div>
     <div class="remaining"></div>
   </div>
-  <?!= data.help ? `<div class="help">${data.help}</div>` : '' ?>
 </div>
