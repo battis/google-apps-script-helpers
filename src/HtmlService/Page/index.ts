@@ -19,7 +19,7 @@ export class Page {
     ): Page.Configuration.Constructor {
       if (arg instanceof Base) {
         return {
-          html: arg.getHtml().getContent(),
+          html: arg.getHtmlOutput().getContent(),
           css: arg.getCss(),
           js: arg.getJs()
         };

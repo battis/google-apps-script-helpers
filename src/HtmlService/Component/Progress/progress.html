@@ -1,8 +1,8 @@
 <div
   class="g progress"
-  data-job="<?= data.job ?>"
-  data-callback="<?= data.callback ?>"
-  data-args="<?= JSON.stringify(data.args) ?>"
+  data-job="<?= job ?>"
+  data-callback="<?= callback ?>"
+  data-args="<?= args ?>"
 >
   <progress></progress>
   <div class="status-wrapper">
@@ -10,4 +10,5 @@
     <div class="status"></div>
     <div class="remaining"></div>
   </div>
+  <?!= children ?>
 </div>

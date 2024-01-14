@@ -19,11 +19,14 @@ const SEC_TO_MS = 1000;
 export class Progress extends Base {
   private threadEnd: number;
   private starter?: Callback.Function;
+  public readonly job: string;
 
   public constructor(private config: Progress.Configuration = {}) {
     super();
-    if (this.config.job === undefined) {
-      this.config.job = Utilities.getUuid();
+    if (this.config.job) {
+      this.job = this.config.job;
+    } else {
+      this.job = Utilities.getUuid();
     }
     if (this.config.callback) {
       this.starter = this.config.callback;
@@ -131,15 +134,21 @@ export class Progress extends Base {
 
   protected _html?: GoogleAppsScript.HTML.HtmlOutput;
 
-  public getHtml(config: Progress.Configuration.HTML = {}) {
+  public getHtmlOutput(data: Template.Data = {}) {
     if (!this._html) {
-      this._html = Template.create(html, {
-        ...config,
-        job: this.config.job,
-        ...(config.callback || this.starter
-          ? Callback.standardize({ callback: config.callback || this.starter })
-          : {})
-      });
+      this._html = Template.create(
+        html,
+        {
+          ...this.data,
+          ...data,
+          job: this.job
+        },
+        {
+          job: this.job,
+          children: this.getChildren(data),
+          ...Callback.standardize(this.config.callback || '')
+        }
+      );
     }
     return this._html;
   }
