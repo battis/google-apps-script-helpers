@@ -1,3 +1,4 @@
+export * as API from './API';
 export * as CacheService from './CacheService';
 export * as CardService from './CardService';
 export * as DriveApp from './DriveApp';
