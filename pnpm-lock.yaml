@@ -1,10 +1,13 @@
 lockfileVersion: '6.0'
 
 settings:
-  autoInstallPeers: false
+  autoInstallPeers: true
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@battis/typescript-tricks':
+    specifier: ^0.5.0
+    version: 0.5.0
   '@google/clasp':
     specifier: ^2.4.2
     version: 2.4.2
@@ -100,7 +103,7 @@ packages:
     dependencies:
       '@tsconfig/recommended': 1.0.2
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.47.0)(typescript@5.1.6)
-      '@typescript-eslint/parser': 5.62.0(eslint@8.47.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.47.0)(typescript@4.9.5)
       eslint: 8.47.0
       eslint-config-prettier: 8.10.0(eslint@8.47.0)
       eslint-plugin-html: 7.1.0
@@ -119,6 +122,10 @@ packages:
       prettier: 2.8.8
       prettier-plugin-sql: 0.13.0(prettier@2.8.8)
     dev: true
+
+  /@battis/typescript-tricks@0.5.0:
+    resolution: {integrity: sha512-iUl0J3RJISi9KZj2xGfUv3X+Iu+WdYp25JmYhAZamVF1TjnBft6MVNqJTnWkFARBMINMcQti4vRp/e81D9leqg==}
+    dev: false
 
   /@bconnorwhite/module@2.0.2:
     resolution: {integrity: sha512-ck1me5WMgZKp06gnJrVKEkytpehTTQbvsAMbF1nGPeHri/AZNhj87++PSE2LOxmZqM0EtGMaqeLdx7Lw7SUnTA==}
@@ -470,7 +477,7 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.6.2
-      '@typescript-eslint/parser': 5.62.0(eslint@8.47.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.47.0)(typescript@4.9.5)
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.47.0)(typescript@5.1.6)
       '@typescript-eslint/utils': 5.62.0(eslint@8.47.0)(typescript@5.1.6)
@@ -486,7 +493,7 @@ packages:
       - supports-color
     dev: true
 
-  /@typescript-eslint/parser@5.62.0(eslint@8.47.0)(typescript@5.1.6):
+  /@typescript-eslint/parser@5.62.0(eslint@8.47.0)(typescript@4.9.5):
     resolution: {integrity: sha512-VlJEV0fOQ7BExOsHYAGrgbEiZoi8D+Bl2+f6V2RrXerRSylnp+ZBHmPvaIa8cz0Ajx7WO7Z5RqfgYg7ED1nRhA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -498,10 +505,10 @@ packages:
     dependencies:
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/types': 5.62.0
-      '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.1.6)
+      '@typescript-eslint/typescript-estree': 5.62.0(typescript@4.9.5)
       debug: 4.3.4
       eslint: 8.47.0
-      typescript: 5.1.6
+      typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -537,6 +544,27 @@ packages:
   /@typescript-eslint/types@5.62.0:
     resolution: {integrity: sha512-87NVngcbVXUahrRTqIK27gD2t5Cu1yuCXxbLcFtCzZGlfyVWWh8mLHkoxzjsB6DDNnvdL+fW8MiwPEJyGJQDgQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@typescript-eslint/typescript-estree@5.62.0(typescript@4.9.5):
+    resolution: {integrity: sha512-CmcQ6uY7b9y694lKdRB8FEel7JbU/40iSAPomu++SjLMntB+2Leay2LO6i8VnJk58MtE9/nQSFIH6jpyRWyYzA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/types': 5.62.0
+      '@typescript-eslint/visitor-keys': 5.62.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      semver: 7.5.4
+      tsutils: 3.21.0(typescript@4.9.5)
+      typescript: 4.9.5
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@typescript-eslint/typescript-estree@5.62.0(typescript@5.1.6):
@@ -5084,6 +5112,16 @@ packages:
 
   /tslib@2.6.1:
     resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
+
+  /tsutils@3.21.0(typescript@4.9.5):
+    resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
+    engines: {node: '>= 6'}
+    peerDependencies:
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+    dependencies:
+      tslib: 1.14.1
+      typescript: 4.9.5
+    dev: true
 
   /tsutils@3.21.0(typescript@5.1.6):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
