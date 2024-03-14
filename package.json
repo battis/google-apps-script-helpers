@@ -39,7 +39,7 @@
     "release": "run-s release:**",
     "release:build": "run build",
     "release:changeset": "changeset version",
-    "release:publish": "publish --otp $(op item get npm --otp)",
+    "release:publish": "pnpm publish --otp $(op item get npm --otp)",
     "release:docs:build": "run-s docs:*",
     "release:docs:publish": "node ./bin/docs/publish.mjs"
   },
