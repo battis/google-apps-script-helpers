@@ -1,7 +1,7 @@
 import * as Callback from '../../../../../shared/Callback';
 import * as Template from '../../../../Template';
 import Input from '../../Input';
-import select from './select.html';
+import html from './select.html';
 import css from './select.scss';
 
 export class Select extends Input {
@@ -11,11 +11,13 @@ export class Select extends Input {
 
   private _html?: GoogleAppsScript.HTML.HtmlOutput;
 
-  protected standAlone(id: string) {}
+  protected standAlone(id: string) {
+    // TODO need to define standalone form for Select
+  }
 
   public getHtml(config: Input.Configuration = {}) {
     if (!this._html) {
-      this._html = Template.create(select, {
+      this._html = Template.create(html, {
         ...config,
         ...this.config,
         ...Callback.standardize({
@@ -30,6 +32,23 @@ export class Select extends Input {
             })
           : {})
       });
+    }
+    return this._html;
+  }
+
+  public getHtmlOutput(data: Template.Data = {}) {
+    if (!this._html) {
+      this._html = Template.create(
+        html,
+        {
+          ...this.data,
+          ...data
+        },
+        {
+          children: this.getChildren(data),
+          ...Callback.standardize({ callback: this.config.callback || '' })
+        }
+      );
     }
     return this._html;
   }

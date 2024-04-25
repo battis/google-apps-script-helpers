@@ -105,14 +105,14 @@ export class Progress extends Base {
   }
 
   public getProgress() {
-    let message = {
+    const message = {
       job: this.config.job,
       value: this.value,
       max: this.max,
       status: this.status
     };
 
-    let callback = this.callback;
+    const callback = this.callback;
     if (callback) {
       this.callback = undefined;
       Object.assign(message, Callback.standardize({ callback }));
@@ -146,7 +146,7 @@ export class Progress extends Base {
         {
           job: this.job,
           children: this.getChildren(data),
-          ...Callback.standardize(this.config.callback || '')
+          ...Callback.standardize({ callback: this.config.callback || '' })
         }
       );
     }
