@@ -34,8 +34,8 @@ class Progress {
     );
   }
 
-  // FIXME I don't think "remove" means what you think it means
   private remove(token: string) {
+    gCacheService.getUserCache(this.prefix(token), null); // TODO remove isn't working, nullify first
     return gCacheService.removeUserCache(this.prefix(token));
   }
 

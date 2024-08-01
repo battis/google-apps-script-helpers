@@ -1,4 +1,5 @@
 import * as Cache_module from './shared/EncodeDecode';
+
 export import Cache = Cache_module;
 
 type CacheGetter = () => GoogleAppsScript.Cache.Cache;
@@ -70,7 +71,7 @@ export const putUserCache = (
 
 function removeCache(cache: CacheGetter, key: string) {
   const c = cache();
-  c.put(key, null); // FIXME experience suggests that caches don't get removed
+  c.put(key, null); // TODO remove isn't working, nullify first
   return c.remove(key);
 }
 
