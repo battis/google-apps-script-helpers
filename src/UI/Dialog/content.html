@@ -15,7 +15,6 @@
 </form>
 <? if (data.script) { ?>
 <script>
-  // TODO restructure this to be either cleaner JS or invisible to eslint
   <? if (data.functionName) { ?>
   function handleResponse_<?!= data.id ?>(response) {
       if (!response) {

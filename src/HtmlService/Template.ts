@@ -1,3 +1,6 @@
+// TODO better to encapsulate lib.html script objects in a single global object (g)
+// TODO minify HTML templates
+// TODO pre-bundle scripts embedded in templates
 import lib from './lib.html';
 import style from './style.html';
 

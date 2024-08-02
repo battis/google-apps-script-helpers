@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const GasPlugin = require('gas-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = ({
   root,
@@ -34,7 +35,14 @@ module.exports = ({
         }
       ]
     },
-    plugins: [new CleanWebpackPlugin(), new GasPlugin(), ...plugins]
+    plugins: [
+      new CleanWebpackPlugin(),
+      new GasPlugin(),
+      new HtmlWebpackPlugin({
+        minify: { collapseWhitespace: production, removeComments: production }
+      }),
+      ...plugins
+    ]
   };
   if (!production) {
     config.mode = 'development';
