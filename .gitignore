@@ -1,6 +1,6 @@
 .clasp.json
 .DS_Store
 .env
-/node_modules
-/dist
-/docs
+**/node_modules/
+**/dist/
+/packages/gas-lighter/docs/

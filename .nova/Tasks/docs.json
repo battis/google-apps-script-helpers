@@ -2,7 +2,7 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "pnpm run docs\n"
+      "script" : "pnpm -F @battis\/gas-lighter run docs\n"
     }
   },
   "openLogOnRun" : "start"
