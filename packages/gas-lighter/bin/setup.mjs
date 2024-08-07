@@ -9,7 +9,7 @@ const __filename = process.argv[1].replace(
 );
 const __dirname = path.dirname(__filename);
 
-const templateDir = path.join('../project');
+const templateDir = path.join('../template');
 const template = {
   '.claspignore': path.join(templateDir, 'claspignore'),
   '.gitignore': path.join(templateDir, 'gitignore.inc'),
