@@ -1,6 +1,7 @@
-.clasp.json
-.DS_Store
-.env
+**/.clasp.json
+**/.clasprc.json
+**/.env
+**/creds.json
 **/node_modules/
 **/dist/
 /packages/gas-lighter/docs/
