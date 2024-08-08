@@ -16,6 +16,8 @@
 <a href="#battisgas-lighter" id="battisgas-lighter" style="color: inherit; text-decoration: none;">
   <h1>@battis/gas-lighter</h1>
 </a>
+<p><a href="https://badge.fury.io/js/@battis%2Fgas-lighter"><img src="https://badge.fury.io/js/@battis%2Fgas-lighter.svg" alt="npm version"></a>
+<a href="https://nodejs.org/api/modules.html#modules-commonjs-modules"><img src="https://img.shields.io/badge/module%20type-cjs-brightgreen" alt="Module type: CJS"></a></p>
 
 <a href="#caution" id="caution" style="color: inherit; text-decoration: none;">
   <h2>Caution</h2>
@@ -27,38 +29,36 @@
 <a href="#install" id="install" style="color: inherit; text-decoration: none;">
   <h2>Install</h2>
 </a>
-<p>In <code>.npmrc</code>:</p>
-<pre><code><span class="hl-0">auto</span><span class="hl-1">-</span><span class="hl-0">install</span><span class="hl-1">-</span><span class="hl-0">peers</span><span class="hl-1">=</span><span class="hl-2">true</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=*</span><span class="hl-0">prettier</span><span class="hl-1">*</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=*</span><span class="hl-0">eslint</span><span class="hl-1">*</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">tsconfig</span><span class="hl-1">/</span><span class="hl-0">recommended</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">google</span><span class="hl-1">/</span><span class="hl-0">clasp</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">tsconfig</span><span class="hl-1">/</span><span class="hl-0">recommended</span><br/><span class="hl-0">public</span><span class="hl-1">-</span><span class="hl-0">hoist</span><span class="hl-1">-</span><span class="hl-0">pattern</span><span class="hl-1">[]=@</span><span class="hl-0">types</span><span class="hl-3">/*</span><br/><span class="hl-3">public-hoist-pattern[]=typescript</span><br/><span class="hl-3">public-hoist-pattern[]=*webpack*</span><br/><span class="hl-3">public-hoist-pattern[]=*loader*</span>
+<pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">i</span><span class="hl-1"> </span><span class="hl-2">@battis/gas-lighter</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">i</span><span class="hl-1"> </span><span class="hl-3">-D</span><span class="hl-1"> </span><span class="hl-2">npm-run-all</span>
 </code></pre>
-<pre><code class="language-bash"><span class="hl-4">pnpm</span><span class="hl-1"> </span><span class="hl-5">init</span><br/><span class="hl-4">pnpm</span><span class="hl-1"> </span><span class="hl-5">i</span><span class="hl-1"> </span><span class="hl-2">-D</span><span class="hl-1"> </span><span class="hl-5">@battis/gas-lighter</span><span class="hl-1"> </span><span class="hl-5">shx</span>
-</code></pre>
+<p>If installing with <code>pnpm</code> a postinstall script will &quot;shamefully&quot; hoist dependencies</p>
 <p>If working on an existing Google Apps Script project:</p>
-<pre><code class="language-bash"><span class="hl-4">npx</span><span class="hl-1"> </span><span class="hl-5">clasp</span><span class="hl-1"> </span><span class="hl-5">clone</span><span class="hl-1"> [script </span><span class="hl-5">ID]</span>
+<pre><code class="language-bash"><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">clasp</span><span class="hl-1"> </span><span class="hl-2">clone</span><span class="hl-1"> [script </span><span class="hl-2">ID]</span>
 </code></pre>
 <p>If creating a new project:</p>
-<pre><code class="language-bash"><span class="hl-4">npx</span><span class="hl-1"> </span><span class="hl-5">clasp</span><span class="hl-1"> </span><span class="hl-5">create</span><span class="hl-1"> [Script </span><span class="hl-5">Title]</span>
+<pre><code class="language-bash"><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">clasp</span><span class="hl-1"> </span><span class="hl-2">create</span><span class="hl-1"> [Script </span><span class="hl-2">Title]</span>
+</code></pre>
+<p>In <code>.claspignore</code>:</p>
+<pre><code><span class="hl-1">**</span><span class="hl-4">/**</span><br/><span class="hl-4">!appsscript.json</span><br/><span class="hl-4">!build/*.js</span><br/><span class="hl-4">!css/*.html</span><br/><span class="hl-4">!js/*.html</span><br/><span class="hl-4">!templates/*.html</span><br/><span class="hl-4">.git/**</span><br/><span class="hl-4">node_modules/**</span>
 </code></pre>
 <p>In <code>.gitignore</code>:</p>
-<pre><code><span class="hl-1">/.</span><span class="hl-0">clasp</span><span class="hl-1">.</span><span class="hl-0">json</span><br/><span class="hl-6">/build/</span>
-</code></pre>
-<p>In <code>.eslint.json</code>:</p>
-<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;extends&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;@battis/gas-lighter/.eslint.json&quot;</span><br/><span class="hl-1">}</span>
+<pre><code><span class="hl-1">/.</span><span class="hl-5">clasp</span><span class="hl-1">.</span><span class="hl-5">json</span><br/><span class="hl-6">/build/</span>
 </code></pre>
 <p>In <code>tsconfig.json</code>:</p>
-<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;extends&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;@battis/gas-lighter/tsconfig.json&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;compilerOptions&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;outDir&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;build&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;extends&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;@battis/gas-lighter/tsconfig.json&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;compilerOptions&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;outDir&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;build&quot;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;include&quot;</span><span class="hl-1">: [</span><span class="hl-2">&quot;src&quot;</span><span class="hl-1">]</span><br/><span class="hl-1">}</span>
 </code></pre>
 <p>In <code>webpack.config.js</code>:</p>
-<pre><code class="language-js"><span class="hl-8">module</span><span class="hl-1">.</span><span class="hl-8">exports</span><span class="hl-1"> = </span><span class="hl-4">require</span><span class="hl-1">(</span><span class="hl-5">&#39;@battis/gas-lighter/webpack.config&#39;</span><span class="hl-1">)({</span><br/><span class="hl-1">  </span><span class="hl-0">root:</span><span class="hl-1"> </span><span class="hl-0">__dirname</span><br/><span class="hl-1">});</span>
+<pre><code class="language-js"><span class="hl-8">module</span><span class="hl-1">.</span><span class="hl-8">exports</span><span class="hl-1"> = </span><span class="hl-0">require</span><span class="hl-1">(</span><span class="hl-2">&#39;@battis/gas-lighter/webpack.config&#39;</span><span class="hl-1">)({</span><br/><span class="hl-1">  </span><span class="hl-5">root:</span><span class="hl-1"> </span><span class="hl-5">__dirname</span><br/><span class="hl-1">});</span>
+</code></pre>
+<p>In <code>package.json</code>:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;build&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;webpack&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;deploy&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;run-s deploy:*&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;deploy:build&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;npm run build&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;deploy:push&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;clasp push&quot;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;eslintConfig&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;extends&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;@battis/gas-lighter/.eslintrc.json&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
 </code></pre>
 
 <a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
   <h2>Configuration</h2>
 </a>
 <p>Configuration options include, with defaults:</p>
-<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-0">root</span><span class="hl-1">, </span><span class="hl-3">// absolute path</span><br/><span class="hl-1">  </span><span class="hl-9">build</span><span class="hl-1">: </span><span class="hl-5">&quot;build&quot;</span><span class="hl-1">, </span><span class="hl-3">// path relative to root</span><br/><span class="hl-1">  </span><span class="hl-9">bundle</span><span class="hl-1">: </span><span class="hl-5">&quot;main&quot;</span><span class="hl-1">, </span><span class="hl-3">// string name</span><br/><span class="hl-1">  </span><span class="hl-9">entry</span><span class="hl-1">: </span><span class="hl-5">&quot;./src/index.ts&quot;</span><span class="hl-1"> </span><span class="hl-3">// path relative to webpack.config.js</span><br/><span class="hl-1">}</span>
-</code></pre>
-<p>In <code>package.json</code>:</p>
-<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;clean&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;shx rm -rf build&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;build&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;webpack&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;deploy&quot;</span><span class="hl-1">: </span><span class="hl-5">&quot;clasp push&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-5">root</span><span class="hl-1">, </span><span class="hl-4">// absolute path</span><br/><span class="hl-1">  </span><span class="hl-9">build</span><span class="hl-1">: </span><span class="hl-2">&quot;build&quot;</span><span class="hl-1">, </span><span class="hl-4">// path relative to root</span><br/><span class="hl-1">  </span><span class="hl-9">bundle</span><span class="hl-1">: </span><span class="hl-2">&quot;main&quot;</span><span class="hl-1">, </span><span class="hl-4">// string name</span><br/><span class="hl-1">  </span><span class="hl-9">entry</span><span class="hl-1">: </span><span class="hl-2">&quot;./src/index.ts&quot;</span><span class="hl-1"> </span><span class="hl-4">// path relative to webpack.config.js</span><br/><span class="hl-1">}</span>
 </code></pre>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -101,7 +101,9 @@
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Element.html">Element</a>
 <ul>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Element.Picker.html">Picker</a></li>
-<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Element.Progress.html">Progress</a></li></ul></li>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Element.Progress.html">Progress</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Element.Progress.Paged.html">Paged</a></li></ul></li></ul></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.HtmlService.Template.html">Template</a></li></ul></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.PropertiesService.html">Properties<wbr/>Service</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="modules/default.SpreadsheetApp.html">Spreadsheet<wbr/>App</a>
