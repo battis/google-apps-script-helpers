@@ -1,5 +1,11 @@
 import Batch from './Batch';
-import { Request } from './Request';
+import RequestType from './Request';
 import Response from './Response';
 
-export default { Batch, Request, Response };
+const API = { Batch, Response };
+
+namespace API {
+  export type Request = RequestType;
+}
+
+export default API;

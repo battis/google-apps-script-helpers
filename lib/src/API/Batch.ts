@@ -1,5 +1,5 @@
 import EOL from '../shared/EOL';
-import { type Request } from './Request';
+import type Request from './Request';
 import Response from './Response';
 
 export default class Batch {
