@@ -22,7 +22,7 @@
   },
   "scripts": {
     "dev": "run-s dev:*",
-    "dev:docs-worktree": "git worktree add docs docs",
+    "dev:docs-worktree": "git worktree add docs docs-v1.x",
     "clean": "shx rm -rf dist",
     "docs": "run-s docs:**",
     "docs:clean": "shx rm -rf docs/docs",
