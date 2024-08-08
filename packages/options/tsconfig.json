@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/recommended",
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false
+  },
+  "include": ["./src/**/*"]
+}

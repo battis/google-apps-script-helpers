@@ -4,4 +4,5 @@
 **/creds.json
 **/node_modules/
 **/dist/
-/packages/gas-lighter/docs/
+**/build/
+/lib/docs/

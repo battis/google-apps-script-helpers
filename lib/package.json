@@ -1,0 +1,86 @@
+{
+  "name": "@battis/gas-lighter",
+  "version": "0.4.4",
+  "author": "Seth Battis <seth@battis.net>",
+  "license": "GPL-3.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/gas-lighter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/gas-lighter"
+  },
+  "bugs": {
+    "url": "https://github.com/battis/gas-lighter/issues"
+  },
+  "engines": {
+    "node": ">=12.7"
+  },
+  "bin": {
+    "setup": "./bin/setup.mjs"
+  },
+  "scripts": {
+    "dev": "run-s dev:*",
+    "dev:docs-worktree": "git worktree add docs docs",
+    "clean": "shx rm -rf dist",
+    "docs": "run-s docs:**",
+    "docs:clean": "shx rm -rf docs/docs",
+    "docs:build": "typedoc --tsconfig ./tsconfig.typedoc.json --plugin typedoc-plugin-missing-exports",
+    "docs:assets": "shx cp -R assets/* docs/docs/assets/",
+    "docs:build:open": "node ./bin/docs/launch.mjs",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc -p tsconfig.g.json",
+    "build:html": "copyfiles -u 1 './src/**/*.html' dist",
+    "build:scss": "copyfiles -u 1 './src/**/*.scss' dist",
+    "build:minify": "node bin/build/minify.mjs dist",
+    "release": "run-s release:**",
+    "release:build": "run build",
+    "release:changeset": "changeset version",
+    "release:publish": "pnpm publish --otp $(op item get npm --otp)",
+    "release:docs:build": "run-s docs:*",
+    "release:docs:publish": "node ./bin/docs/publish.mjs"
+  },
+  "peerDependencies": {
+    "@battis/gas-lighter.client": "workspace:*",
+    "@battis/qui-cli": "^0.4.0",
+    "@battis/typescript-tricks": "^0.5.0",
+    "@effortlessmotion/html-webpack-inline-source-plugin": "^1.0.3",
+    "@google/clasp": "^2.4.2",
+    "@tsconfig/recommended": "^1.0.3",
+    "@types/google-apps-script": "^1.0.78",
+    "@types/node": "^18.19.5",
+    "app-root-path": "^3.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "gas-webpack-plugin": "^2.5.0",
+    "html-loader": "^4.2.0",
+    "html-minifier-terser": "^7.2.0",
+    "html-minimizer-webpack-plugin": "^4.4.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^7.3.4",
+    "postcss-preset-env": "^9.3.0",
+    "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
+    "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "typescript": "^4.9.5",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "@battis/gas-lighter.options": "workspace:*",
+    "@battis/eslint-config": "latest",
+    "@battis/prettier-config": "latest",
+    "copyfiles": "^2.4.1",
+    "glob": "^10.4.5",
+    "open": "^9.1.0",
+    "shx": "^0.3.4",
+    "typedoc": "^0.25.13",
+    "typedoc-plugin-missing-exports": "^2.3.0"
+  },
+  "prettier": "@battis/prettier-config"
+}

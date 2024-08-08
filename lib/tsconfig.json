@@ -1,0 +1,1 @@
+{ "extends": "@battis/gas-lighter.options/tsconfig.json" }

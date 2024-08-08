@@ -1,0 +1,40 @@
+{
+  "name": "@battis/gas-lighter.client",
+  "version": "0.4.4",
+  "author": "Seth Battis <seth@battis.net>",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/client"
+  },
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/client#readme",
+  "scripts": {
+    "build": "run-s build:*",
+    "build:compile": "webpack",
+    "build:htmlify": "tsx bin/htmlify.ts dist/client.js"
+  },
+  "devDependencies": {
+    "@battis/gas-lighter.options": "workspace:*",
+    "@battis/qui-cli": "^0.4.2",
+    "@tsconfig/recommended": "^1.0.7",
+    "@types/node": "^18.19.43",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.11.0",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "glob": "^10.4.5",
+    "html-minimizer-webpack-plugin": "^4.4.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^7.3.4",
+    "postcss-preset-env": "^9.6.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^13.3.3",
+    "style-loader": "^3.3.4",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "tsx": "^4.16.5",
+    "typescript": "^4.9.5",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

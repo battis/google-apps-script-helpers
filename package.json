@@ -5,12 +5,22 @@
     "url": "git+https://github.com/battis/gas-lighter.git"
   },
   "workspaces": [
+    "lib",
     "packages/*",
     "examples/*"
   ],
   "devDependencies": {
     "@battis/prettier-config": "latest",
-    "@changesets/cli": "^2.27.1"
+    "@changesets/cli": "^2.27.7"
   },
-  "prettier": "@battis/prettier-config"
+  "prettier": "@battis/prettier-config",
+  "scripts": {
+    "build": "webpack",
+    "deploy": "run-s deploy:*",
+    "deploy:build": "npm run build",
+    "deploy:push": "clasp push --force"
+  },
+  "eslintConfig": {
+    "extends": "@battis/gas-lighter/.eslintrc.json"
+  }
 }

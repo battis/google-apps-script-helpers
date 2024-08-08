@@ -1,0 +1,4 @@
+{
+  "extends": "@battis/gas-lighter.options/tsconfig.json",
+  "include": ["src"]
+}
