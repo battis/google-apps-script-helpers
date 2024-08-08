@@ -55,6 +55,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
+    "dotenv-webpack": "^8.1.0",
     "gas-webpack-plugin": "^2.5.0",
     "html-loader": "^4.2.0",
     "html-minifier-terser": "^7.2.0",
@@ -72,8 +73,8 @@
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
-    "@battis/gas-lighter.options": "workspace:*",
     "@battis/eslint-config": "latest",
+    "@battis/gas-lighter.options": "workspace:*",
     "@battis/prettier-config": "latest",
     "copyfiles": "^2.4.1",
     "glob": "^10.4.5",

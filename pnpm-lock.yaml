@@ -57,6 +57,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -145,6 +148,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -233,6 +239,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -321,6 +330,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -409,6 +421,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -497,6 +512,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.6.0
         version: 2.6.0
@@ -581,6 +599,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^5.0.1
         version: 5.0.1(webpack@5.93.0(webpack-cli@5.1.4))
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.93.0(webpack-cli@5.1.4))
       gas-webpack-plugin:
         specifier: ^2.5.0
         version: 2.6.0
@@ -2313,9 +2334,22 @@ packages:
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
+  dotenv-defaults@2.0.2:
+    resolution: {integrity: sha512-iOIzovWfsUHU91L5i8bJce3NYK5JXeAwH50Jh6+ARUdLiiGlYWfGw6UkzsYqaXZH/hjE/eCd/PlfM/qqyK0AMg==}
+
+  dotenv-webpack@8.1.0:
+    resolution: {integrity: sha512-owK1JcsPkIobeqjVrk6h7jPED/W6ZpdFsMPR+5ursB7/SdgDyO+VzAU+szK8C8u3qUhtENyYnj8eyXMR5kkGag==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      webpack: ^4 || ^5
+
   dotenv@16.4.5:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
+
+  dotenv@8.6.0:
+    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
+    engines: {node: '>=10'}
 
   dotf@2.0.2:
     resolution: {integrity: sha512-4cN2fwEqHimE11jVc8uMNiEB2A2YOL5Fdyd1p14UbAvRh/5vAxjEaiVPx45zD5IQcwc/uQIxI9Jh18skB/uYFQ==}
@@ -6788,7 +6822,18 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.6.3
 
+  dotenv-defaults@2.0.2:
+    dependencies:
+      dotenv: 8.6.0
+
+  dotenv-webpack@8.1.0(webpack@5.93.0(webpack-cli@5.1.4)):
+    dependencies:
+      dotenv-defaults: 2.0.2
+      webpack: 5.93.0(webpack-cli@5.1.4)
+
   dotenv@16.4.5: {}
+
+  dotenv@8.6.0: {}
 
   dotf@2.0.2:
     dependencies:
