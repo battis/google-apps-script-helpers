@@ -1,6 +1,7 @@
 import Page from '../../../Page';
 import Base from '../../Base';
-import html from './formComponent.html';
+import _Select from './Select';
+import html from './input.html';
 
 export abstract class Input extends Base {
   protected abstract standAlone(id: string);
@@ -12,6 +13,7 @@ export abstract class Input extends Base {
 
 export namespace Input {
   export type Configuration = Base.Configuration;
+  export import Select = _Select;
 }
 
 export default Input;
