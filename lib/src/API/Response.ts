@@ -39,6 +39,7 @@ export default class Response {
 
     this.responses = responses.map((response) => {
       const [, s, h, , b] = response.match(
+        // @ts-ignore
         /\r\nContent-Type: application\/http\r\n\r\nHTTP\/1\.1 (\d+)[^\r\n]*\r\n(([^:]+: [^\r\n]+\r\n)+)\r\n(.*)$/ms
       );
       const status = parseInt(s);
