@@ -1,5 +1,5 @@
 import * as HtmlService from '../../HtmlService';
-import templates from './templates';
+import html from './dialog.html';
 
 export type Root = { getUi: () => GoogleAppsScript.Base.Ui };
 export type Button = {
@@ -47,17 +47,19 @@ function standardizeButton(button: Button | string) {
   return { value: button.name, ...button };
 }
 
-function show(showFunctionName: string, { root, title, ...dialog }: Options) {
-  root.getUi()[showFunctionName](
-    HtmlService.Template.create(templates.dialog, {
-      content: getHtml(dialog)
-    }),
+export function showModal({ root, title, ...dialog }: Options) {
+  HtmlService.Page.from(getHtml(dialog)).modal({
+    root,
     title
-  );
+  });
 }
 
-export const showModal = show.bind(null, 'showModalDialog');
-export const showModeless = show.bind(null, 'showModelessDialog');
+export function showModeless({ root, title, ...dialog }: Options) {
+  HtmlService.Page.from(getHtml(dialog)).modeless({
+    root,
+    title
+  });
+}
 
 export const dialogClose = () => null;
 const CLOSE = 'dialogClose';
@@ -70,13 +72,13 @@ export function getHtmlOutput({
   handler,
   script = true
 }: HtmlOptions) {
-  const id = Utilities.getUuid().replaceAll(/[^a-z0-9]/gi, '');
+  const id = Utilities.getUuid().replace(/[^a-z0-9]/gi, '');
   if (handler) {
     handler = handler.replace('{{id}}', id);
   } else if (!functionName && script) {
     functionName = CLOSE;
   }
-  return HtmlService.Template.create(templates.content, {
+  return HtmlService.Template.create(html, {
     message,
     buttons: buttons.map(standardizeButton),
     script,
