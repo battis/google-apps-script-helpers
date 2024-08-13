@@ -1,3 +1,4 @@
+/// <reference path="../types.d.ts" />
 import client from '@battis/gas-lighter.client/dist/client.html';
 
 function build(
