@@ -2,7 +2,7 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "pnpm -F @battis\/gas-lighter run build"
+      "script" : "lerna run build"
     }
   },
   "openLogOnRun" : "start"

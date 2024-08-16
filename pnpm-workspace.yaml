@@ -1,4 +1,7 @@
 packages:
-  - 'lib'
-  - 'packages/*'
   - 'examples/*'
+  - 'packages/api/*'
+  - 'packages/apps/*'
+  - 'packages/gas-lighter'
+  - 'packages/services/*'
+  - 'packages/util/*'

@@ -1,11 +1,13 @@
-import g from '@battis/gas-lighter';
+import { CardService } from 'gas-lighter';
+
+declare const global: Record<string, any>;
 
 global.onHomepage = () => {
-  return g.CardService.Card.$({
+  return CardService.Card.$({
     header: 'Welcome!',
     widgets: [
       'Lorem ipsum dolor.',
-      g.CardService.Widget.TextButton.$({
+      CardService.Widget.TextButton.$({
         text: 'Example',
         url: 'https://example.com'
       })

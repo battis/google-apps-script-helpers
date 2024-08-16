@@ -1,6 +1,0 @@
-{
-  "name": "@battis/gas-lighter.options",
-  "dependencies": {
-    "@tsconfig/recommended": "^1.0.7"
-  }
-}

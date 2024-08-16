@@ -1,7 +1,7 @@
 {
-  "extends": "@battis/gas-lighter/tsconfig.json",
+  "extends": "gas-lighter/tsconfig.json",
   "compilerOptions": {
-    "outDir": "build"
+    "declaration": false
   },
-  "include": ["src"]
+  "include": ["./src"]
 }
