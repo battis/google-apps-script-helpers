@@ -1,4 +1,4 @@
-import { Encoding } from '@gas-lighter/core';
+import { Encoding } from '@gas-lighter/shared';
 
 export function get(sheet: GoogleAppsScript.Spreadsheet.Sheet, key: string) {
   const meta = sheet.createDeveloperMetadataFinder().withKey(key).find();

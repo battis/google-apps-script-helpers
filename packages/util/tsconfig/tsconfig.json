@@ -1,9 +1,0 @@
-{
-  "extends": "@tsconfig/recommended",
-  "compilerOptions": {
-    "module": "nodenext",
-    "lib": ["es2022"],
-    "moduleResolution": "nodenext",
-    "declaration": true
-  }
-}

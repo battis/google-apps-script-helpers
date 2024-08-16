@@ -10,7 +10,7 @@
     "build:compile": "tsc"
   },
   "dependencies": {
-    "@gas-lighter/core": "workspace:*"
+    "@gas-lighter/shared": "workspace:*"
   },
   "devDependencies": {
     "@gas-lighter/tsconfig": "workspace:*",

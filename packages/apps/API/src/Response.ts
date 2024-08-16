@@ -1,5 +1,5 @@
 import type { JSONValue } from '@battis/typescript-tricks';
-import { EOL } from '@gas-lighter/core';
+import { EOL } from '@gas-lighter/shared';
 
 export default class Response {
   private responses?: APIResponse[];

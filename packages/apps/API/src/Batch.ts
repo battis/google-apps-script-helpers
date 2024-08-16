@@ -1,6 +1,6 @@
 import type Request from './Request.js';
 import Response from './Response.js';
-import { EOL } from '@gas-lighter/core';
+import { EOL } from '@gas-lighter/shared';
 
 export default class Batch {
   private api?: string;

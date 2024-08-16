@@ -1,4 +1,4 @@
-import { Encoding } from '@gas-lighter/core';
+import { Encoding } from '@gas-lighter/shared';
 
 export import Cache = Encoding;
 

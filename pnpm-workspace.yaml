@@ -1,7 +1,8 @@
 packages:
-  - 'examples/*'
+  - 'packages/gas-lighter'
+  - 'packages/shared'
   - 'packages/api/*'
   - 'packages/apps/*'
-  - 'packages/gas-lighter'
   - 'packages/services/*'
-  - 'packages/util/*'
+  - 'packages/build/*'
+  - 'examples/*'

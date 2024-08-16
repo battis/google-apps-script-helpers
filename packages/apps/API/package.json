@@ -10,7 +10,7 @@
     "build:compile": "tsc"
   },
   "dependencies": {
-    "@gas-lighter/core": "workspace:*"
+    "@gas-lighter/shared": "workspace:*"
   },
   "devDependencies": {
     "@battis/typescript-tricks": "^0.5.4",
