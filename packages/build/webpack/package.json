@@ -1,5 +1,16 @@
 {
   "name": "@gas-lighter/webpack",
+  "version": "0.0.0",
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/build/webpack#readme",
+  "repository": {
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "type": "git",
+    "directory": "packages/build/webpack"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

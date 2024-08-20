@@ -10,13 +10,26 @@
   "dependencies": {
     "gas-lighter": "workspace:*"
   },
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/examples/CardService#readme",
+  "repository": {
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "type": "git",
+    "directory": "examples/CardService"
+  },
   "devDependencies": {
     "@gas-lighter/webpack": "workspace:*",
-    "@types/node": "^22.3.0",
+    "@types/node": "^22.4.1",
+    "acorn": "^8.12.1",
+    "browserslist": "^4.23.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "gas-webpack-plugin": "^2.6.0",
     "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
     "typescript": "~5.5.4",
     "webpack": "~5.93.0",
     "webpack-cli": "^5.1.4"
