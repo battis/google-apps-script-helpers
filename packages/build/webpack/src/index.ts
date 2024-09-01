@@ -22,7 +22,7 @@ export default function config({
   mode = 'production',
   entryPath = 'src/index.ts',
   bundleName = 'Code',
-  outputFilename = '[name].gs',
+  outputFilename = '[name].js',
   outputPath = 'dist',
   appscriptPath = './appsscript.json',
   rules = [],
