@@ -1,16 +1,6 @@
-import * as DeveloperMetadata from './DeveloperMetadata.js';
-import * as Function from './Function.js';
-import * as Permission from './Permission.js';
-import * as Protection from './Protection.js';
-import * as Range from './Range.js';
-import * as Value from './Value.js';
-
-export { DeveloperMetadata, Function, Permission, Protection, Range, Value };
-export default {
-  DeveloperMetadata,
-  Function,
-  Permission,
-  Protection,
-  Range,
-  Value
-};
+export * as DeveloperMetadata from './DeveloperMetadata.js';
+export * as Function from './Function.js';
+export * as Permission from './Permission.js';
+export * as Protection from './Protection.js';
+export * as Range from './Range.js';
+export * as Value from './Value.js';

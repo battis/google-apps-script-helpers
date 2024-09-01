@@ -1,23 +1,7 @@
-import API from '@gas-lighter/API';
-import CacheService from '@gas-lighter/CacheService';
-import CardService from '@gas-lighter/CardService';
-import DriveApp from '@gas-lighter/DriveApp';
-import PropertiesService from '@gas-lighter/PropertiesService';
-import SpreadsheetApp from '@gas-lighter/SpreadsheetApp';
-
-export {
-  API,
-  CacheService,
-  CardService,
-  DriveApp,
-  PropertiesService,
-  SpreadsheetApp
-};
-export default {
-  API,
-  CacheService,
-  CardService,
-  DriveApp,
-  PropertiesService,
-  SpreadsheetApp
-};
+export * as CacheService from '@gas-lighter/CacheService';
+export * as CardService from '@gas-lighter/CardService';
+export * as DriveApp from '@gas-lighter/DriveApp';
+export * as HtmlService from '@gas-lighter/HtmlService';
+export * as PropertiesService from '@gas-lighter/PropertiesService';
+export * as SpreadsheetApp from '@gas-lighter/SpreadsheetApp';
+export * as API from '@gas-lighter/API';

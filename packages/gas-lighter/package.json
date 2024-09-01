@@ -29,6 +29,7 @@
     "@gas-lighter/CacheService": "workspace:*",
     "@gas-lighter/CardService": "workspace:*",
     "@gas-lighter/DriveApp": "workspace:*",
+    "@gas-lighter/HtmlService": "workspace:*",
     "@gas-lighter/PropertiesService": "workspace:*",
     "@gas-lighter/SpreadsheetApp": "workspace:*",
     "@gas-lighter/tsconfig": "workspace:*"

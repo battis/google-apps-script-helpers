@@ -1,6 +1,3 @@
-import * as Batch from './Batch.js';
-import * as Request from './Request.js';
-import * as Response from './Response.js';
-
-export { Batch, Response, Request };
-export default { Batch, Response, Request };
+export * as Batch from './Batch.js';
+export * as Request from './Request.js';
+export * as Response from './Response.js';

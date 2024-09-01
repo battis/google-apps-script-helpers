@@ -5,4 +5,5 @@ packages:
   - 'packages/apps/*'
   - 'packages/services/*'
   - 'packages/build/*'
+  - 'packages/components/*'
   - 'examples/*'

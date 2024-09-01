@@ -6,7 +6,7 @@
   "addOns": {
     "common": {
       "name": "CardService Example",
-      "logoUrl": "https://battis.github.io/gas-lighter/docs/assets/logo.png",
+      "logoUrl": "https://battis.github.io/gas-lighter/assets/logo.png",
       "homepageTrigger": {
         "runFunction": "onHomepage"
       }
