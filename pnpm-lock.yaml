@@ -39,9 +39,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/gas-lighter
     devDependencies:
-      '@gas-lighter/webpack':
+      '@gas-lighter/pack-app':
         specifier: workspace:*
-        version: link:../../packages/build/webpack
+        version: link:../../packages/build/pack-app
       '@types/node':
         specifier: ^22.5.2
         version: 22.5.2
@@ -141,9 +141,7 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
 
-  packages/build/tsconfig: {}
-
-  packages/build/webpack:
+  packages/build/pack-app:
     dependencies:
       '@types/node':
         specifier: '*'
@@ -183,6 +181,8 @@ importers:
         specifier: ^0.3.4
         version: 0.3.4
 
+  packages/build/tsconfig: {}
+
   packages/components/base:
     devDependencies:
       '@gas-lighter/tsconfig':
@@ -203,9 +203,15 @@ importers:
 
   packages/components/progress:
     dependencies:
-      '@gas-lighter/Component.Base':
+      '@gas-lighter/CacheService':
+        specifier: workspace:*
+        version: link:../../services/CacheService
+      '@gas-lighter/component.base':
         specifier: workspace:*
         version: link:../base
+      '@gas-lighter/shared':
+        specifier: workspace:*
+        version: link:../../shared
     devDependencies:
       '@gas-lighter/tsconfig':
         specifier: workspace:*
@@ -246,12 +252,12 @@ importers:
       '@gas-lighter/SpreadsheetApp':
         specifier: workspace:*
         version: link:../apps/SpreadsheetApp
+      '@gas-lighter/pack-app':
+        specifier: workspace:*
+        version: link:../build/pack-app
       '@gas-lighter/tsconfig':
         specifier: workspace:*
         version: link:../build/tsconfig
-      '@gas-lighter/webpack':
-        specifier: workspace:*
-        version: link:../build/webpack
     devDependencies:
       npm-run-all:
         specifier: ^4.1.5

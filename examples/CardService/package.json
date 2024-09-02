@@ -21,7 +21,7 @@
     "gas-lighter": "workspace:*"
   },
   "devDependencies": {
-    "@gas-lighter/webpack": "workspace:*",
+    "@gas-lighter/pack-app": "workspace:*",
     "@types/node": "^22.5.2",
     "acorn": "^8.12.1",
     "browserslist": "^4.23.3",

@@ -1,0 +1,39 @@
+{
+  "name": "@gas-lighter/pack-app",
+  "version": "0.0.0",
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
+  },
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/build/pack-app#readme",
+  "repository": {
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "type": "git",
+    "directory": "packages/build/pack-app"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf dist/*",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:compile": "tsc"
+  },
+  "peerDependencies": {
+    "@types/node": "*",
+    "clean-webpack-plugin": "*",
+    "copy-webpack-plugin": "*",
+    "gas-webpack-plugin": "*",
+    "ts-loader": "*",
+    "ts-node": "*",
+    "typescript": "5.x",
+    "webpack": "5.x",
+    "webpack-cli": "*"
+  },
+  "devDependencies": {
+    "@gas-lighter/tsconfig": "workspace:*",
+    "npm-run-all": "^4.1.5",
+    "shx": "^0.3.4"
+  }
+}

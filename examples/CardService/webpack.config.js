@@ -1,3 +1,3 @@
-import config from '@gas-lighter/webpack';
+import config from '@gas-lighter/pack-app';
 
 export default config({ rootPath: import.meta.dirname });

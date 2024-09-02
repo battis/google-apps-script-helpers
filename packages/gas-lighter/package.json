@@ -39,6 +39,6 @@
     "shx": "^0.3.4"
   },
   "peerDependencies": {
-    "@gas-lighter/webpack": "workspace:*"
+    "@gas-lighter/pack-app": "workspace:*"
   }
 }
