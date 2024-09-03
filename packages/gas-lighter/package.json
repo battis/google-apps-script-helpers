@@ -1,23 +1,23 @@
 {
   "name": "gas-lighter",
   "version": "0.4.4",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/gas-lighter#readme",
+  "bugs": {
+    "url": "https://github.com/battis/gas-lighter/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/gas-lighter"
+  },
+  "license": "GPL-3.0",
   "author": {
     "name": "Seth Battis",
     "url": "https://github.com/battis"
   },
-  "license": "GPL-3.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/gas-lighter#readme",
-  "repository": {
-    "url": "git+https://github.com/battis/gas-lighter.git",
-    "type": "git",
-    "directory": "packages/gas-lighter"
-  },
-  "bugs": {
-    "url": "https://github.com/battis/gas-lighter/issues"
-  },
   "scripts": {
     "clean": "shx rm -rf dist/*",
     "build": "run-s build:*",
@@ -42,3 +42,4 @@
     "@gas-lighter/pack-app": "workspace:*"
   }
 }
+

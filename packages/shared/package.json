@@ -1,15 +1,15 @@
 {
   "name": "@gas-lighter/shared",
   "version": "0.0.0",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/shared#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/shared"
+  },
   "author": {
     "name": "Seth Battis",
     "url": "https://github.com/battis"
-  },
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/shared#readme",
-  "repository": {
-    "url": "git+https://github.com/battis/gas-lighter.git",
-    "type": "git",
-    "directory": "packages/shared"
   },
   "type": "module",
   "main": "./dist/index.js",
@@ -29,3 +29,4 @@
     "typescript": "^4.9.5"
   }
 }
+

@@ -1,15 +1,16 @@
 {
   "name": "@gas-lighter/tsconfig",
   "version": "0.0.0",
-  "main": "./tsconfig.json",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/build/tsconfig#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/build/tsconfig"
+  },
   "author": {
     "name": "Seth Battis",
     "url": "https://github.com/battis"
   },
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/build/tsconfig#readme",
-  "repository": {
-    "url": "git+https://github.com/battis/gas-lighter.git",
-    "type": "git",
-    "directory": "packages/build/tsconfig"
-  }
+  "main": "./tsconfig.json"
 }
+

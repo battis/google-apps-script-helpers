@@ -1,28 +1,18 @@
 {
-  "author": {
-    "name": "Seth Battis",
-    "url": "https://github.com/battis"
-  },
   "homepage": "https://github.com/battis/gas-lighter#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/battis/gas-lighter.git"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "url": "https://github.com/battis"
   },
   "scripts": {
     "build": "webpack",
     "deploy": "run-s deploy:*",
     "deploy:build": "npm run build",
     "deploy:push": "clasp push --force"
-  },
-  "devDependencies": {
-    "@battis/prettier-config": "latest",
-    "@changesets/cli": "^2.27.7",
-    "@tsconfig/recommended": "^1.0.7",
-    "add-peer-dependencies": "^0.1.4",
-    "lerna": "^8.1.8",
-    "monorepo-package-paths": "^0.2.1",
-    "syncpack": "^12.4.0",
-    "typescript": "^4.9.5"
   },
   "prettier": "@battis/prettier-config",
   "eslintConfig": {
@@ -38,5 +28,16 @@
         }
       }
     ]
+  },
+  "devDependencies": {
+    "@battis/prettier-config": "^1.5.1",
+    "@changesets/cli": "^2.27.7",
+    "@tsconfig/recommended": "^1.0.7",
+    "add-peer-dependencies": "^0.1.4",
+    "lerna": "^8.1.8",
+    "monorepo-package-paths": "^0.2.1",
+    "syncpack": "^12.4.0",
+    "typescript": "^4.9.5"
   }
 }
+

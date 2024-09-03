@@ -1,15 +1,15 @@
 {
   "name": "@gas-lighter/HtmlService",
   "version": "0.0.0",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/services/HtmlService#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/services/HtmlService"
+  },
   "author": {
     "name": "Seth Battis",
     "url": "https://github.com/battis"
-  },
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/services/HtmlService#readme",
-  "repository": {
-    "url": "git+https://github.com/battis/gas-lighter.git",
-    "type": "git",
-    "directory": "packages/services/HtmlService"
   },
   "type": "module",
   "main": "./dist/index.js",
@@ -28,3 +28,4 @@
     "typescript": "^4.9.5"
   }
 }
+
