@@ -8,6 +8,16 @@
     "name": "Seth Battis",
     "url": "https://github.com/battis"
   },
+  "workspaces": [
+    "packages/gas-lighter",
+    "packages/shared",
+    "packages/api/*",
+    "packages/apps/*",
+    "packages/services/*",
+    "packages/build/*",
+    "packages/components/*",
+    "examples/*"
+  ],
   "scripts": {
     "build": "webpack",
     "deploy": "run-s deploy:*",
@@ -30,7 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@battis/prettier-config": "^1.5.1",
+    "@battis/prettier-config": "^1.5.2",
     "@changesets/cli": "^2.27.7",
     "@tsconfig/recommended": "^1.0.7",
     "add-peer-dependencies": "^0.1.4",
