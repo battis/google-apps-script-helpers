@@ -40,14 +40,13 @@
     ]
   },
   "devDependencies": {
-    "@battis/prettier-config": "^1.5.2",
-    "@changesets/cli": "^2.27.7",
+    "@battis/prettier-config": "^1.5.3",
+    "@changesets/cli": "^2.27.8",
     "@tsconfig/recommended": "^1.0.7",
-    "add-peer-dependencies": "^0.1.4",
+    "add-peer-dependencies": "^0.1.5",
     "lerna": "^8.1.8",
-    "monorepo-package-paths": "^0.2.1",
+    "monorepo-package-paths": "^0.3.0",
     "syncpack": "^12.4.0",
     "typescript": "^4.9.5"
   }
 }
-

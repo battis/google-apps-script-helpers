@@ -19,7 +19,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "shx rm -rf dist/*",
+    "clean": "del ./dist/*",
     "build": "run-s build:*",
     "build:clean": "run-s clean",
     "build:compile": "tsc"
@@ -35,11 +35,10 @@
     "@gas-lighter/tsconfig": "workspace:*"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "shx": "^0.3.4"
+    "del-cli": "^5.1.0",
+    "npm-run-all": "^4.1.5"
   },
   "peerDependencies": {
     "@gas-lighter/pack-app": "workspace:*"
   }
 }
-

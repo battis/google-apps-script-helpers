@@ -15,7 +15,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "shx rm -rf ./dist/*",
+    "clean": "del ./dist/*",
     "build": "run-s build:*",
     "build:clean": "run-s clean",
     "build:compile": "tsc"
@@ -24,12 +24,11 @@
     "@gas-lighter/shared": "workspace:*"
   },
   "devDependencies": {
-    "@battis/typescript-tricks": "^0.5.4",
+    "@battis/typescript-tricks": "^0.5.5",
     "@gas-lighter/tsconfig": "workspace:*",
     "@types/google-apps-script": "^1.0.83",
+    "del-cli": "^5.1.0",
     "npm-run-all": "^4.1.5",
-    "shx": "^0.3.4",
     "typescript": "^4.9.5"
   }
 }
-

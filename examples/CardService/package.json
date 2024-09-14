@@ -1,16 +1,16 @@
 {
   "name": "@gas-lighter/examples.CardService",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/examples/CardService#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "examples/CardService"
+  },
   "author": {
     "name": "Seth Battis",
     "url": "https://github.com/battis"
   },
   "type": "module",
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/examples/CardService#readme",
-  "repository": {
-    "url": "git+https://github.com/battis/gas-lighter.git",
-    "type": "git",
-    "directory": "examples/CardService"
-  },
   "scripts": {
     "build": "webpack",
     "deploy": "run-s deploy:*",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@gas-lighter/pack-app": "workspace:*",
-    "@types/node": "^22.5.2",
+    "@types/node": "^22.5.5",
     "acorn": "^8.12.1",
     "browserslist": "^4.23.3",
     "clean-webpack-plugin": "^4.0.0",
