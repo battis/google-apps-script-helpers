@@ -1,0 +1,35 @@
+{
+  "name": "@gas-lighter/component.progress",
+  "version": "0.0.0",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/components/progress#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/battis/gas-lighter.git",
+    "directory": "packages/components/progress"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "del ./dist/*",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:client": "tsc -p tsconfig.client.json",
+    "build:templates": "copyfiles -u 1 ./src/**/*.ejs ./dist",
+    "build:compile": "tsc"
+  },
+  "dependencies": {
+    "@gas-lighter/CacheService": "workspace:*",
+    "@gas-lighter/component.base": "workspace:*",
+    "@gas-lighter/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@gas-lighter/tsconfig": "workspace:*",
+    "@tsconfig/recommended": "^1.0.7",
+    "@types/google-apps-script": "^1.0.83",
+    "copyfiles": "^2.4.1",
+    "del-cli": "^5.1.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^4.9.5"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "@gas-lighter/tsconfig",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "include": ["./src/**/*.gs.ts"]
+}

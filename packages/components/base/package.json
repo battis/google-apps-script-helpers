@@ -1,44 +1,43 @@
 {
-  "name": "@gas-lighter/examples.CardService",
-  "homepage": "https://github.com/battis/gas-lighter/tree/main/examples/CardService#readme",
+  "name": "@gas-lighter/component.base",
+  "version": "0.0.0",
+  "homepage": "https://github.com/battis/gas-lighter/tree/main/packages/components/base#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/battis/gas-lighter.git",
-    "directory": "examples/CardService"
-  },
-  "author": {
-    "name": "Seth Battis",
-    "url": "https://github.com/battis"
+    "directory": "packages/components/base"
   },
   "type": "module",
+  "main": "./dist/index.gs.js",
+  "types": "./dist/index.gs.d.ts",
   "scripts": {
-    "build": "webpack",
-    "deploy": "run-s deploy:*",
-    "deploy:build": "pnpm run build",
-    "deploy:push": "clasp push --force"
+    "clean": "del ./dist/*",
+    "build": "run-s build:*",
+    "build:clean": "run-s clean",
+    "build:component": "webpack",
+    "build:compile": "tsc"
   },
   "dependencies": {
-    "gas-lighter": "workspace:*"
+    "@gas-lighter/google-runtime": "workspace:*"
   },
   "devDependencies": {
-    "@battis/webpack": "^1.0.5",
     "@csstools/css-parser-algorithms": "^3.0.1",
     "@csstools/css-tokenizer": "^3.0.1",
-    "@gas-lighter/bundle": "workspace:*",
-    "@types/node": "^22.5.5",
+    "@gas-lighter/tsconfig": "workspace:*",
+    "@tsconfig/recommended": "^1.0.7",
+    "@types/google-apps-script": "^1.0.83",
     "acorn": "^8.12.1",
-    "add-peer-dependencies": "^0.1.5",
     "app-root-path": "^3.1.0",
     "browserslist": "^4.23.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
+    "del-cli": "^5.1.0",
     "dotenv-webpack": "^8.1.0",
     "favicons": "^7.2.0",
     "favicons-webpack-plugin": "^6.0.1",
     "file-loader": "^6.2.0",
-    "gas-webpack-plugin": "^2.6.0",
     "html-webpack-plugin": "^5.6.0",
     "image-minimizer-webpack-plugin": "^4.1.0",
     "imagemin": "^9.0.0",
@@ -47,6 +46,7 @@
     "imagemin-optipng": "^8.0.0",
     "imagemin-svgo": "^11.0.1",
     "mini-css-extract-plugin": "^2.9.1",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.0.3",
@@ -57,12 +57,20 @@
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2",
     "tslib": "^2.7.0",
-    "typescript": "~5.6.2",
+    "typescript": "^5.6.2",
     "url-loader": "^4.1.1",
-    "webpack": "~5.94.0",
+    "webpack": "5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@battis/webpack": "^1.0",
+    "add-peer-dependencies": "^0.1"
+  },
+  "peerDependenciesMeta": {
+    "add-peer-dependencies": {
+      "optional": true
+    }
   }
 }

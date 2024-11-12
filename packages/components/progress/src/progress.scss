@@ -1,0 +1,28 @@
+.g.progress {
+  progress {
+    width: 100%;
+  }
+
+  .status-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1em;
+
+    .status {
+      text-align: center;
+    }
+
+    .elapsed,
+    .remaining {
+      font-size: smaller;
+    }
+
+    .elapsed {
+      text-align: left;
+    }
+
+    .remaining {
+      text-align: right;
+    }
+  }
+}

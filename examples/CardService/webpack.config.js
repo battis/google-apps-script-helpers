@@ -1,3 +1,3 @@
-import config from '@gas-lighter/pack-app';
+import bundle from '@gas-lighter/bundle';
 
-export default config({ rootPath: import.meta.dirname });
+export default bundle({ rootPath: import.meta.dirname });
