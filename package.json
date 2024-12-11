@@ -31,7 +31,7 @@
     "release": "run-s release:**",
     "release:build": "npm run build",
     "release:changeset": "changeset version",
-    "release:publish": "pnpm publish -r --tag v0.x-latest --otp $(op item get npm --otp)",
+    "release:publish": "pnpm publish -r --otp $(op item get npm --otp) --access public",
     "release:docs:build": "run-s docs:*",
     "release:docs:publish": "node ./bin/docs/publish.mjs"
   },
