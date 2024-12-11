@@ -4,7 +4,7 @@ import * as Template from '../../Template';
 import page from './page.html';
 import progress from './progress.html';
 
-class Progress {
+export class Progress {
   public static DEFAULT_HEIGHT = 100;
 
   public get job(): string {
@@ -255,7 +255,7 @@ class Progress {
     })();
 }
 
-namespace Progress {
+export namespace Progress {
   export type Completion =
     | string
     | true
