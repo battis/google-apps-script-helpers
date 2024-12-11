@@ -1,5 +1,11 @@
 # @battis/gas-lighter
 
+## 0.5.6
+
+### Patch Changes
+
+- 3d82819: fiddling with namespaces
+
 ## 0.5.5
 
 ### Patch Changes
