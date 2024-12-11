@@ -1,5 +1,11 @@
 # @battis/gas-lighter
 
+## 0.5.4
+
+### Patch Changes
+
+- 35a255f: bypass previously published 0.5.3
+
 ## 0.5.3
 
 ### Patch Changes
