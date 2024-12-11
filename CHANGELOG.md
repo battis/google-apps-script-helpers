@@ -1,5 +1,11 @@
 # @battis/gas-lighter
 
+## 0.5.3
+
+### Patch Changes
+
+- 3daf8d7: attempting rebuild to export Progress.Completion
+
 ## 0.5.2
 
 ### Patch Changes
