@@ -238,7 +238,7 @@ importers:
     dependencies:
       '@battis/webpack':
         specifier: ^1.0.5
-        version: 1.0.5(keylq3ltb7f325ahyrvybqtdbi)
+        version: 1.0.5(yfpc3mtlm4xogsmjsnam5xbose)
       '@types/node':
         specifier: '*'
         version: 22.5.5
@@ -4579,6 +4579,12 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
 
+  mini-css-extract-plugin@2.9.2:
+    resolution: {integrity: sha512-GJuACcS//jtq4kCtd5ii/M0SZf7OZRH+BxdqXZHaJfb8TJiVl+NgQRPwiYt2EuqeSkNydn/7vP+bcE27C5mb9w==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+
   minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
 
@@ -7149,42 +7155,6 @@ snapshots:
 
   '@battis/typescript-tricks@0.5.5': {}
 
-  '@battis/webpack@1.0.5(keylq3ltb7f325ahyrvybqtdbi)':
-    dependencies:
-      app-root-path: 3.1.0
-      clean-webpack-plugin: 4.0.0(webpack@5.94.0)
-      copy-webpack-plugin: 12.0.2(webpack@5.94.0)
-      css-loader: 7.1.2(webpack@5.94.0)
-      css-minimizer-webpack-plugin: 7.0.0(webpack@5.94.0)
-      dotenv-webpack: 8.1.0(webpack@5.94.0)
-      favicons: 7.2.0
-      favicons-webpack-plugin: 6.0.1(favicons@7.2.0)(webpack@5.94.0)
-      file-loader: 6.2.0(webpack@5.94.0)
-      html-webpack-plugin: 5.6.0(webpack@5.94.0)
-      image-minimizer-webpack-plugin: 4.1.1(imagemin@9.0.0)(webpack@5.94.0)
-      imagemin: 9.0.0
-      imagemin-gifsicle: 7.0.0
-      imagemin-jpegtran: 7.0.0
-      imagemin-optipng: 8.0.0
-      imagemin-svgo: 11.0.1
-      mini-css-extract-plugin: 2.9.1(webpack@5.94.0)
-      postcss: 8.4.47
-      postcss-loader: 8.1.1(postcss@8.4.47)(typescript@5.6.2)(webpack@5.94.0)
-      postcss-preset-env: 10.0.3(postcss@8.4.47)
-      raw-loader: 4.0.2(webpack@5.94.0)
-      sass: 1.78.0
-      sass-loader: 16.0.1(sass@1.78.0)(webpack@5.94.0)
-      style-loader: 4.0.0(webpack@5.94.0)
-      terser-webpack-plugin: 5.3.11(webpack@5.94.0)
-      ts-loader: 9.5.1(typescript@5.6.2)(webpack@5.94.0)
-      typescript: 5.6.2
-      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.94.0))(webpack@5.94.0)
-      webpack: 5.94.0(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack-dev-server@5.1.0)(webpack@5.94.0)
-      webpack-dev-server: 5.1.0(webpack-cli@5.1.4)(webpack@5.94.0)
-    optionalDependencies:
-      add-peer-dependencies: 0.1.5
-
   '@battis/webpack@1.0.5(wmzeevxbhgs2wnyco22px37jhy)':
     dependencies:
       app-root-path: 3.1.0
@@ -7218,6 +7188,42 @@ snapshots:
       webpack: 5.97.1(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.1.0)(webpack@5.97.1)
       webpack-dev-server: 5.1.0(webpack-cli@5.1.4)(webpack@5.97.1)
+    optionalDependencies:
+      add-peer-dependencies: 0.1.5
+
+  '@battis/webpack@1.0.5(yfpc3mtlm4xogsmjsnam5xbose)':
+    dependencies:
+      app-root-path: 3.1.0
+      clean-webpack-plugin: 4.0.0(webpack@5.94.0)
+      copy-webpack-plugin: 12.0.2(webpack@5.94.0)
+      css-loader: 7.1.2(webpack@5.94.0)
+      css-minimizer-webpack-plugin: 7.0.0(webpack@5.94.0)
+      dotenv-webpack: 8.1.0(webpack@5.94.0)
+      favicons: 7.2.0
+      favicons-webpack-plugin: 6.0.1(favicons@7.2.0)(webpack@5.94.0)
+      file-loader: 6.2.0(webpack@5.94.0)
+      html-webpack-plugin: 5.6.0(webpack@5.94.0)
+      image-minimizer-webpack-plugin: 4.1.1(imagemin@9.0.0)(webpack@5.94.0)
+      imagemin: 9.0.0
+      imagemin-gifsicle: 7.0.0
+      imagemin-jpegtran: 7.0.0
+      imagemin-optipng: 8.0.0
+      imagemin-svgo: 11.0.1
+      mini-css-extract-plugin: 2.9.2(webpack@5.94.0)
+      postcss: 8.4.47
+      postcss-loader: 8.1.1(postcss@8.4.47)(typescript@5.6.2)(webpack@5.94.0)
+      postcss-preset-env: 10.0.3(postcss@8.4.47)
+      raw-loader: 4.0.2(webpack@5.94.0)
+      sass: 1.78.0
+      sass-loader: 16.0.1(sass@1.78.0)(webpack@5.94.0)
+      style-loader: 4.0.0(webpack@5.94.0)
+      terser-webpack-plugin: 5.3.11(webpack@5.94.0)
+      ts-loader: 9.5.1(typescript@5.6.2)(webpack@5.94.0)
+      typescript: 5.6.2
+      url-loader: 4.1.1(file-loader@6.2.0(webpack@5.94.0))(webpack@5.94.0)
+      webpack: 5.94.0(webpack-cli@5.1.4)
+      webpack-cli: 5.1.4(webpack-dev-server@5.1.0)(webpack@5.94.0)
+      webpack-dev-server: 5.1.0(webpack-cli@5.1.4)(webpack@5.94.0)
     optionalDependencies:
       add-peer-dependencies: 0.1.5
 
@@ -11810,17 +11816,17 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  mini-css-extract-plugin@2.9.1(webpack@5.94.0):
-    dependencies:
-      schema-utils: 4.2.0
-      tapable: 2.2.1
-      webpack: 5.94.0(webpack-cli@5.1.4)
-
   mini-css-extract-plugin@2.9.1(webpack@5.97.1):
     dependencies:
       schema-utils: 4.2.0
       tapable: 2.2.1
       webpack: 5.97.1(webpack-cli@5.1.4)
+
+  mini-css-extract-plugin@2.9.2(webpack@5.94.0):
+    dependencies:
+      schema-utils: 4.3.0
+      tapable: 2.2.1
+      webpack: 5.94.0(webpack-cli@5.1.4)
 
   minimalistic-assert@1.0.1: {}
 
@@ -14294,7 +14300,7 @@ snapshots:
       mime-types: 2.1.35
       on-finished: 2.4.1
       range-parser: 1.2.1
-      schema-utils: 4.2.0
+      schema-utils: 4.3.0
     optionalDependencies:
       webpack: 5.94.0(webpack-cli@5.1.4)
 
@@ -14305,7 +14311,7 @@ snapshots:
       mime-types: 2.1.35
       on-finished: 2.4.1
       range-parser: 1.2.1
-      schema-utils: 4.2.0
+      schema-utils: 4.3.0
     optionalDependencies:
       webpack: 5.97.1(webpack-cli@5.1.4)
 
