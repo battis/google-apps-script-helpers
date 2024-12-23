@@ -8,6 +8,6 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     target-branch: "v0.x"
     target-branch: "v1.x"
