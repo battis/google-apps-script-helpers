@@ -1,0 +1,40 @@
+{
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "deploy": {
+      "dependsOn": []
+    },
+    "deploy:build": {
+      "dependsOn": []
+    },
+    "deploy:push": {
+      "dependsOn": []
+    },
+    "clean": {
+      "dependsOn": []
+    },
+    "build:clean": {
+      "dependsOn": []
+    },
+    "build:compile": {
+      "dependsOn": []
+    },
+    "build:component": {
+      "dependsOn": []
+    },
+    "build:client": {
+      "dependsOn": []
+    },
+    "build:templates": {
+      "dependsOn": []
+    }
+  }
+}
